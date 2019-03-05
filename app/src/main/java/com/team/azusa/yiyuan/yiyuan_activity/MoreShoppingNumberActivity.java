@@ -1,13 +1,13 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -27,18 +27,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MoreShoppingNumberActivity extends Activity {
+public class MoreShoppingNumberActivity extends AppCompatActivity {
 
 
-    @Bind(R.id.more_number_GV)
+    @BindView(R.id.more_number_GV)
     GridView moreNumberGV;
-    @Bind(R.id.get_yun_number)
+    @BindView(R.id.get_yun_number)
     TextView get_yun_number;
-    @Bind(R.id.number_time)
+    @BindView(R.id.number_time)
     TextView numberTime;
     private ArrayAdapter sim_adapter;
     private List<String> GV_list;

@@ -1,18 +1,11 @@
 package com.team.azusa.yiyuan.adapter;
 
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
 import com.team.azusa.yiyuan.R;
-import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.ImageLoader;
 

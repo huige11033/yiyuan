@@ -1,14 +1,13 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.MyBuyRecordLvAdapter;
 import com.team.azusa.yiyuan.bean.BuyRecordInfo;
@@ -25,18 +24,17 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class MyBuyRecordActivity extends AppCompatActivity {
+public class MyBuyRecordActivity extends BaseActivity {
 
 
-    @Bind(R.id.mybuyrecordlv)
+    @BindView(R.id.mybuyrecordlv)
     PulluptoRefreshListview mybuyrecordlv;
-    @Bind(R.id.buyrecordptrpulltorefresh)
+    @BindView(R.id.buyrecordptrpulltorefresh)
     PtrFrameLayout buyrecordptrpulltorefresh;
     private MyBuyRecordLvAdapter adapter;
     private ArrayList<BuyRecordInfo> datas;
@@ -64,17 +62,7 @@ public class MyBuyRecordActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_buy_record);
-        ButterKnife.bind(this);
-        initData();
-        initView();
-        setListener();
-    }
-
-    private void setListener() {
+    public void setListener() {
         mybuyrecordlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -97,7 +85,7 @@ public class MyBuyRecordActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
+    public void initData() {
         datas = new ArrayList<>();
         adapter = new MyBuyRecordLvAdapter(datas, MyBuyRecordActivity.this);
         mybuyrecordlv.setAdapter(adapter);
@@ -146,7 +134,12 @@ public class MyBuyRecordActivity extends AppCompatActivity {
         });
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_my_buy_record;
+    }
+
+    public void initView() {
         refreshHead = new RefreshHead(MyBuyRecordActivity.this, "buyRecordPage");
         buyrecordptrpulltorefresh.setHeaderView(refreshHead);
         buyrecordptrpulltorefresh.addPtrUIHandler(refreshHead); //添加下拉刷新头部UI变化接口
@@ -181,10 +174,9 @@ public class MyBuyRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         cancelrequest = true;
-        ButterKnife.unbind(this);
         OkHttpUtils.getInstance().cancelTag("MyBuyRecordActivity");
     }
 

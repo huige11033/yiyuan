@@ -2,16 +2,12 @@ package com.team.azusa.yiyuan.adapter;
 
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
@@ -19,12 +15,9 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.listener.PhotoRvItemClickLitener;
-import com.team.azusa.yiyuan.listener.RecyclerViewItemClickLitener;
-import com.team.azusa.yiyuan.utils.MyToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Azusa on 2016/3/12.

@@ -1,21 +1,19 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.Advice;
 import com.team.azusa.yiyuan.config.Config;
@@ -33,30 +31,29 @@ import org.json.JSONObject;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.Date;
 import java.util.Enumeration;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SuggestionsActivity extends Activity {
+public class SuggestionsActivity extends BaseActivity {
 
-    @Bind(R.id.spinner)
+    @BindView(R.id.spinner)
     Spinner spinner;
-    @Bind(R.id.et_phone)
+    @BindView(R.id.et_phone)
     EditText etPhone;
-    @Bind(R.id.et_suggestion_detial)
+    @BindView(R.id.et_suggestion_detial)
     EditText etSuggestionDetial;
-    @Bind(R.id.mobile_text)
+    @BindView(R.id.mobile_text)
     TextView mobileText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestions);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_suggestions;
+    }
 
+    @Override
+    public void initView() {
         mobileText.setText("手机型号 : " + Build.MODEL +
                 "\n安卓版本 : " + Build.VERSION.RELEASE +
                 "\n网络类型 : " + getCurrentNetType(this) +
@@ -64,6 +61,16 @@ public class SuggestionsActivity extends Activity {
                 "\nAPP版本名 : " + getVersionName(this) +
                 "\nAPP版本号 : " + getVersionCode(this)
         );
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     /**
@@ -203,9 +210,8 @@ public class SuggestionsActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         OkHttpUtils.getInstance().cancelTag("SuggestionsActivity");
-        ButterKnife.unbind(this);
         super.onDestroy();
     }
 }

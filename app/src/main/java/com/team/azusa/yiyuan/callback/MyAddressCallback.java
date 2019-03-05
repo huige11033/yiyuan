@@ -1,7 +1,5 @@
 package com.team.azusa.yiyuan.callback;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Response;

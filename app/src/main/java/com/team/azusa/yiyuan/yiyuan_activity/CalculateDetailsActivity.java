@@ -1,37 +1,32 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.CalculateDetailsLvAdapter;
 import com.team.azusa.yiyuan.bean.CalculateDto;
-import com.team.azusa.yiyuan.bean.User;
 import com.team.azusa.yiyuan.callback.CalculateCallback;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.DateUtil;
 import com.team.azusa.yiyuan.utils.MyToast;
-import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.widget.MyDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CalculateDetailsActivity extends AppCompatActivity {
+public class CalculateDetailsActivity extends BaseActivity {
 
-    @Bind(R.id.lv_calculate)
+    @BindView(R.id.lv_calculate)
     ListView listview;
     private boolean cancelreq = false;
     private CalculateDetailsLvAdapter adapter;
@@ -45,15 +40,11 @@ public class CalculateDetailsActivity extends AppCompatActivity {
     private TextView tv_footer_qiuhe, tv_footer_quyu, tv_footer_result; //尾部显示的求和、取余、结果
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculate_details);
-        ButterKnife.bind(this);
-        initView();
-        initData();
+    public int layout() {
+        return R.layout.activity_calculate_details;
     }
 
-    private void initView() {
+    public void initView() {
         dialog = new MyDialog().showLodingDialog(CalculateDetailsActivity.this);
         // 初始化头部和尾部
         header = View.inflate(ConstanceUtils.CONTEXT, R.layout.headview_calculate, null);
@@ -71,11 +62,16 @@ public class CalculateDetailsActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
     }
 
-    private void initData() {
+    public void initData() {
         jiexiaoTime = getIntent().getLongExtra("time", 0);
         total_count = getIntent().getIntExtra("count", 0);
         YunNumId = getIntent().getStringExtra("yunNumId");
         getData();
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     /**
@@ -138,8 +134,7 @@ public class CalculateDetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("CalculateDetailsActivity");
         super.onDestroy();

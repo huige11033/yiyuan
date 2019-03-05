@@ -1,8 +1,6 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.OrderProgressLvAdapter;
 import com.team.azusa.yiyuan.bean.BuyRecordInfo;
@@ -35,34 +34,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 订单进度页面
  */
-public class OrderProgressActivity extends AppCompatActivity {
+public class OrderProgressActivity extends BaseActivity {
 
-    @Bind(R.id.return_orderprogress)
+    @BindView(R.id.return_orderprogress)
     ImageView btn_back;
-    @Bind(R.id.btn_shaidanorshouhuo)
+    @BindView(R.id.btn_shaidanorshouhuo)
     Button btn_shaidanorshouhuo;
-    @Bind(R.id.tv_adressmsg)
+    @BindView(R.id.tv_adressmsg)
     TextView tv_adressmsg;
-    @Bind(R.id.lv_orderprogress)
+    @BindView(R.id.lv_orderprogress)
     WrapHeightListView listview;
-    @Bind(R.id.img_product)
+    @BindView(R.id.img_product)
     SimpleDraweeView img_product;
-    @Bind(R.id.tv_productname)
+    @BindView(R.id.tv_productname)
     TextView tv_productname;
-    @Bind(R.id.tv_luckyunnum)
+    @BindView(R.id.tv_luckyunnum)
     TextView tv_luckyunnum;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tv_time;
-    @Bind(R.id.rl_productmsg)
+    @BindView(R.id.rl_productmsg)
     RelativeLayout rlProductmsg;
-    @Bind(R.id.rl_setaddress)
+    @BindView(R.id.rl_setaddress)
     RelativeLayout rlSetaddress;
 
     private OrderProgressLvAdapter adapter; //进度lv适配器
@@ -73,19 +71,15 @@ public class OrderProgressActivity extends AppCompatActivity {
     private MyDialog dialog;
     private boolean cancelrequest = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_progress);
-        ButterKnife.bind(this);
-        initData();
-        initView();
+    public void initData() {
+        buyRecordInfo = JsonUtils.getObjectfromString(
+                getIntent().getStringExtra("buyRecordInfo"), BuyRecordInfo.class);
         getData();
     }
 
-    private void initData() {
-        buyRecordInfo = JsonUtils.getObjectfromString(
-                getIntent().getStringExtra("buyRecordInfo"), BuyRecordInfo.class);
+    @Override
+    public void setListener() {
+
     }
 
     //从服务器获取订单进度信息
@@ -146,7 +140,12 @@ public class OrderProgressActivity extends AppCompatActivity {
         });
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_order_progress;
+    }
+
+    public void initView() {
 
         adapter = new OrderProgressLvAdapter(datas);
         listview.setAdapter(adapter);
@@ -256,8 +255,7 @@ public class OrderProgressActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("OrderProgressActivity");
         super.onDestroy();

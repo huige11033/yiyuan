@@ -1,21 +1,17 @@
 package com.team.azusa.yiyuan.yiyuan_search_fragment;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -23,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AllgoodsLvAdapter;
 import com.team.azusa.yiyuan.bean.ProductDto;
@@ -43,26 +40,24 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 
-public class SearchResoultFragment extends Fragment {
+public class SearchResoultFragment extends BaseFragment {
 
-    @Bind(R.id.search_find)
+    @BindView(R.id.search_find)
     TextView tv_searchFind;
-    @Bind(R.id.search_lv)
+    @BindView(R.id.search_lv)
     PulluptoRefreshListview mlistview;
-    @Bind(R.id.search_floatbtn)
+    @BindView(R.id.search_floatbtn)
     FrameLayout float_btn;
-    @Bind(R.id.car_img)
+    @BindView(R.id.car_img)
     ImageView car_img;
     private AlertDialog dialog;
     private AllgoodsLvAdapter adapter;
     private ArrayList<ProductDto> datas;
-    private View view;
     private String search_key;
     private int lastX, lastY;
     private BadgeView badge;
@@ -78,20 +73,7 @@ public class SearchResoultFragment extends Fragment {
         }
     };
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.search_fg2, null);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
-        initData();
-        iniView();
-        setListener();
-        getData(0, 0);
-        return view;
-    }
-
-    private void setListener() {
+    public void setListener() {
         WindowManager wm = getActivity().getWindowManager();
         final int screenWidth = wm.getDefaultDisplay().getWidth();
 
@@ -167,7 +149,7 @@ public class SearchResoultFragment extends Fragment {
         });
     }
 
-    private void iniView() {
+    public void initView() {
         dialog = new MyDialog().showLodingDialog(getActivity());
         mlistview.setOnLoadListener(new OnLoadListener() {
             @Override
@@ -181,15 +163,27 @@ public class SearchResoultFragment extends Fragment {
         badge.setBadgeCount(car_count);
         badge.setBadgeMargin(0, 10, 10, 0);
         badge.setPadding(2, 2, 2, 2);
+
+        getData(0, 0);
     }
 
-    private void initData() {
+    @Override
+    public int layout() {
+        return R.layout.search_fg2;
+    }
+
+    public void initData() {
         datas = new ArrayList<>();
         adapter = new AllgoodsLvAdapter(datas, ConstanceUtils.CONTEXT);
         mlistview.setAdapter(adapter);
 
         car_count = ConstanceUtils.carcount;
         search_key = getArguments().getString("search_key");
+
+    }
+
+    @Override
+    public void initAnimation() {
 
     }
 
@@ -209,7 +203,7 @@ public class SearchResoultFragment extends Fragment {
      *
      * @param firstResult 要加载的第一条数据的position
      */
-    private void getData(final int firstResult, final int what) {
+    public void getData(final int firstResult, final int what) {
         OkHttpUtils.get().url(Config.IP + "/yiyuan/b_getYunNumsByKey")
                 .addParams("keyWords", search_key)
                 .addParams("firstResult", firstResult + "")
@@ -270,7 +264,6 @@ public class SearchResoultFragment extends Fragment {
         super.onDestroyView();
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("SearchResoultFragment");
-        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 
@@ -279,5 +272,4 @@ public class SearchResoultFragment extends Fragment {
         EventBus.getDefault().post(new IntParameterEvent(3));
         getActivity().finish();
     }
-
 }

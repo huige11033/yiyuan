@@ -1,10 +1,8 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.animation.ObjectAnimator;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.CommentAdapter;
 import com.team.azusa.yiyuan.adapter.ShareDetailGvAdapter;
@@ -43,35 +42,34 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ShareOrderDetailActivity extends AppCompatActivity {
+public class ShareOrderDetailActivity extends BaseActivity {
 
-    @Bind(R.id.return_shaidandetail)
+    @BindView(R.id.return_shaidandetail)
     ImageView returnShaidandetail;
-    @Bind(R.id.lv_sharedetail)
+    @BindView(R.id.lv_sharedetail)
     PulluptoRefreshListview listview;
-    @Bind(R.id.tv_like)
+    @BindView(R.id.tv_like)
     TextView tvLike;
-    @Bind(R.id.tv_like_anim)
+    @BindView(R.id.tv_like_anim)
     TextView tvLikeAnim;
-    @Bind(R.id.rl_like)
+    @BindView(R.id.rl_like)
     RelativeLayout rlLike;
-    @Bind(R.id.tv_comment)
+    @BindView(R.id.tv_comment)
     TextView tvComment;
-    @Bind(R.id.rl_comment)
+    @BindView(R.id.rl_comment)
     RelativeLayout rlComment;
-    @Bind(R.id.rl_share)
+    @BindView(R.id.rl_share)
     RelativeLayout rlShare;
-    @Bind(R.id.btn_sentcomment)
+    @BindView(R.id.btn_sentcomment)
     Button btnSentcomment;
-    @Bind(R.id.edit_commentcontent)
+    @BindView(R.id.edit_commentcontent)
     EditText editCommentcontent;
-    @Bind(R.id.edit_comment_rl)
+    @BindView(R.id.edit_comment_rl)
     RelativeLayout editCommentRl;
-    @Bind(R.id.tv_textlimi)
+    @BindView(R.id.tv_textlimi)
     TextView tvTextlimi;
 
     private View headView; //晒单详情的布局，listview头部
@@ -89,16 +87,7 @@ public class ShareOrderDetailActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private boolean cancelrequest = false; //是否取消网络请求
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_order_detail);
-        ButterKnife.bind(this);
-        initData();
-        setListener();
-    }
-
-    private void setListener() {
+    public void setListener() {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -114,7 +103,7 @@ public class ShareOrderDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
+    public void initData() {
         dialog = new MyDialog().showLodingDialog(ShareOrderDetailActivity.this);
         String data = getIntent().getStringExtra("showOrderDto");
         showOrderDto = JsonUtils.getObjectfromString(data, ShowOrderDto.class);
@@ -277,7 +266,12 @@ public class ShareOrderDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_share_order_detail;
+    }
+
+    public void initView() {
         setheadView();
         adapter = new CommentAdapter(commentdatas);
         listview.setAdapter(adapter);
@@ -317,8 +311,7 @@ public class ShareOrderDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("ShareOrderDetailActivity");
         super.onDestroy();

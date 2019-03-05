@@ -12,7 +12,7 @@ import com.team.azusa.yiyuan.utils.DateUtil;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -66,11 +66,11 @@ public class AccountDetails_Chongzhi_LvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.time_chongzhi)
+        @BindView(R.id.time_chongzhi)
         TextView timeChongzhi;
-        @Bind(R.id.money_channel)
+        @BindView(R.id.money_channel)
         TextView moneyChannel;
-        @Bind(R.id.money_chongzhi_amount)
+        @BindView(R.id.money_chongzhi_amount)
         TextView moneyAmount;
 
         ViewHolder(View view) {

@@ -1,17 +1,12 @@
 package com.team.azusa.yiyuan.utils;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.team.azusa.yiyuan.bean.BuyRecordInfo;
 import com.team.azusa.yiyuan.bean.GoodsCar;
 import com.team.azusa.yiyuan.bean.RecordDto;
-import com.team.azusa.yiyuan.bean.YunNumDto;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,11 +1,10 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -19,22 +18,34 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class IntPutPhoneActivity extends AppCompatActivity {
+public class IntPutPhoneActivity extends BaseActivity {
 
-    @Bind(R.id.intput_phone_edit)
+    @BindView(R.id.intput_phone_edit)
     ClearEditText intputPhoneEdit;
     private String phone;
     private boolean cancelreq = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_int_put_phone);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_int_put_phone;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     private void myFinish(String str) {
@@ -116,8 +127,7 @@ public class IntPutPhoneActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("IntPutPhoneActivity");
         super.onDestroy();

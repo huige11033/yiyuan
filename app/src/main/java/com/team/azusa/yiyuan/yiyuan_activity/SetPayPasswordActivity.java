@@ -1,9 +1,7 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -12,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -26,21 +25,20 @@ import org.json.JSONObject;
 
 import java.util.TimerTask;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SetPayPasswordActivity extends AppCompatActivity {
+public class SetPayPasswordActivity extends BaseActivity {
 
-    @Bind(R.id.phone_number)
+    @BindView(R.id.phone_number)
     TextView phoneNumber;
-    @Bind(R.id.et_verification_code)
+    @BindView(R.id.et_verification_code)
     EditText etVerificationCode;
-    @Bind(R.id.set_pp_ll)
+    @BindView(R.id.set_pp_ll)
     LinearLayout setppLl;
-    @Bind(R.id.pay_mima_wiperSwitch)
+    @BindView(R.id.pay_mima_wiperSwitch)
     WiperSwitch payMimaWiperSwitch;
-    @Bind(R.id.set_pay_mima_save)
+    @BindView(R.id.set_pay_mima_save)
     Button btnSave;
     private Button setPayGetVer;
     private String userPhoneNumber;
@@ -61,6 +59,39 @@ public class SetPayPasswordActivity extends AppCompatActivity {
             handler.postDelayed(this, 1000);
         }
     };
+
+    @Override
+    public int layout() {
+        return R.layout.activity_set_pay_password;
+    }
+
+    @Override
+    public void initView() {
+        setPayGetVer = (Button) findViewById(R.id.set_pay_get_ver);
+        userPhoneNumber = UserUtils.user.getMobile();
+        userPhoneNumber = userPhoneNumber.substring(0, 5) + "****" + userPhoneNumber.substring(9, 11);
+        phoneNumber.setText(userPhoneNumber);
+        payMimaWiperSwitch.setChecked(true);
+        payMimaWiperSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    setppLl.setVisibility(View.VISIBLE);
+                else
+                    setppLl.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
 
     //    class myTimerTask extends TimerTask{
 //        private Button btnGetVer;
@@ -86,26 +117,6 @@ public class SetPayPasswordActivity extends AppCompatActivity {
 //            this.handler = handler;
 //        }
 //    }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_pay_password);
-        ButterKnife.bind(this);
-        setPayGetVer = (Button) findViewById(R.id.set_pay_get_ver);
-        userPhoneNumber = UserUtils.user.getMobile();
-        userPhoneNumber = userPhoneNumber.substring(0, 5) + "****" + userPhoneNumber.substring(9, 11);
-        phoneNumber.setText(userPhoneNumber);
-        payMimaWiperSwitch.setChecked(true);
-        payMimaWiperSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    setppLl.setVisibility(View.VISIBLE);
-                else
-                    setppLl.setVisibility(View.GONE);
-            }
-        });
-    }
 
     @Override
     protected void onRestart() {
@@ -226,11 +237,5 @@ public class SetPayPasswordActivity extends AppCompatActivity {
 //        if (result.equals("finish3"))
 //            myFinish("finish2");
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

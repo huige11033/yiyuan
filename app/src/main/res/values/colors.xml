@@ -48,5 +48,10 @@
     <color name="tips_text">#ffdddddd</color>
     <color name="signature_text">#ffbbbbbb</color>
 
-
+    <color name="yellow_nav">#FFFF7F24</color>
+    <color name="gray_nav">#FF969696</color>
+    <color name="gray_title">#FFcbcbcb</color>
+    <color name="black_title">#FF1f1f1f</color>
+    <color name="black_title2">#FF323232</color>
+    <color name="red_title">#FFdf1932</color>
 </resources>

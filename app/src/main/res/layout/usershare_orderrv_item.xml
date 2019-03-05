@@ -198,7 +198,7 @@
                 android:focusable="false"
                 android:paddingLeft="8.0dip"
                 android:paddingRight="8.0dip"
-                android:src="@drawable/shaidan_share" />
+                fresco:srcCompat="@drawable/shaidan_share" />
         </RelativeLayout>
     </LinearLayout>
 

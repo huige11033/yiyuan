@@ -1,13 +1,11 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,6 +15,7 @@ import android.widget.ProgressBar;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.YunNumRviewAdapter;
 import com.team.azusa.yiyuan.bean.YunNumDto;
@@ -30,13 +29,12 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class YunNumberActivity extends Activity {
+public class YunNumberActivity extends BaseActivity {
 
-    @Bind(R.id.rv_yunnun)
+    @BindView(R.id.rv_yunnun)
     XRecyclerView recyclerview;
     private ArrayList<String> data = new ArrayList<String>();
     private YunNumRviewAdapter adapter;
@@ -68,17 +66,8 @@ public class YunNumberActivity extends Activity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_yun_number);
-        ButterKnife.bind(this);
-        initData();
-        initView();
-    }
-
     //获取其他activity传过来的数据
-    private void initData() {
+    public void initData() {
         Intent intent = getIntent();
         yuncount = intent.getIntExtra("yuncount", 0);
         lastNumber = yuncount;
@@ -86,7 +75,12 @@ public class YunNumberActivity extends Activity {
         yunNum = intent.getStringExtra("yunNum");
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_yun_number;
+    }
+
+    public void initView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         recyclerview.setLayoutManager(gridLayoutManager);
         recyclerview.setHasFixedSize(true);
@@ -160,6 +154,11 @@ public class YunNumberActivity extends Activity {
         recyclerview.loadMoreComplete();
     }
 
+    @Override
+    public void setListener() {
+
+    }
+
     //初次获取data的数据
     private void getdata() {
         if (yuncount <= 90) {
@@ -197,8 +196,7 @@ public class YunNumberActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("YunNumberActivity");
         super.onDestroy();

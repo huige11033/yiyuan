@@ -1,16 +1,12 @@
 package com.team.azusa.yiyuan.yiyuan_mainfragment;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -18,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.NewPublishLvAdapter;
 import com.team.azusa.yiyuan.adapter.NewPublishedLvAdapter;
@@ -36,23 +33,21 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class NewestFragment extends Fragment {
-    @Bind(R.id.fgtab_three_rl)
+public class NewestFragment extends BaseFragment {
+    @BindView(R.id.fgtab_three_rl)
     RelativeLayout fgtabThreeRl;
-    @Bind(R.id.newpublic_lv)
+    @BindView(R.id.newpublic_lv)
     ListView newpublicingLv;
-    @Bind(R.id.newpublic_ed_lv)
+    @BindView(R.id.newpublic_ed_lv)
     PulluptoRefreshListview newpublicEdLv;
-    @Bind(R.id.jiexiao_ing)
+    @BindView(R.id.jiexiao_ing)
     RadioButton jiexiaoIng;
-    @Bind(R.id.jiexiao_ed)
+    @BindView(R.id.jiexiao_ed)
     RadioButton jiexiaoEd;
-    private View view;
     private PopupWindow mPopupWindow;
     private AlertDialog loding_dialog;
     private boolean isinited;
@@ -150,18 +145,30 @@ public class NewestFragment extends Fragment {
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_fgtab03, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public int layout() {
+        return R.layout.main_fgtab03;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     //当前页面可见时再加载页面
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {                                   //viewpager切换进来该fragment时候调用
-            iniView();
+            initView();
             isinited = true;
             if (!isLoop && isInPartjiexiaoing) {
                 handler.post(runnable);
@@ -176,7 +183,7 @@ public class NewestFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-    private void iniView() {
+    public void initView() {
         initDataTime();
         adapter_ing = new NewPublishLvAdapter(datas_jiexiaoing, itemBeginTime, getContext());
         adapter_ed = new NewPublishedLvAdapter(datas_jiexiaoed, getContext());
@@ -243,7 +250,6 @@ public class NewestFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("NewestFragment");
     }

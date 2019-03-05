@@ -1,11 +1,11 @@
 package com.team.azusa.yiyuan.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,7 +26,7 @@ public class AddCarAnimation {
     //是否完成清理
     private boolean isClean = false;
     private FrameLayout animation_viewGroup;
-    private Activity context;
+    private FragmentActivity context;
     private Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -44,7 +44,7 @@ public class AddCarAnimation {
         }
     };
 
-    public AddCarAnimation(Activity context) {
+    public AddCarAnimation(FragmentActivity context) {
         this.context = context;
     }
 

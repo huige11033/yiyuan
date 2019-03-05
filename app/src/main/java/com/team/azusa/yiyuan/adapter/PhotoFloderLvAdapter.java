@@ -1,7 +1,6 @@
 package com.team.azusa.yiyuan.adapter;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,7 +18,7 @@ import com.team.azusa.yiyuan.utils.ConstanceUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -83,11 +82,11 @@ public class PhotoFloderLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.floder_img)
+        @BindView(R.id.floder_img)
         SimpleDraweeView img;
-        @Bind(R.id.tv_floder)
+        @BindView(R.id.tv_floder)
         TextView tv_flodername;
-        @Bind(R.id.tv_foloadcount)
+        @BindView(R.id.tv_foloadcount)
         TextView tv_flodercount;
 
         ViewHolder(View view) {

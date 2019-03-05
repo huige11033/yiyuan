@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"
             android:padding="10dp"
-            android:src="@drawable/button_left_arrow"/>
+            fresco:srcCompat="@drawable/button_left_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                     android:layout_marginTop="30.0dip"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/about_logo"/>
+                    fresco:srcCompat="@drawable/about_logo"/>
 
                 <TextView
                     android:id="@+id/tv_version"

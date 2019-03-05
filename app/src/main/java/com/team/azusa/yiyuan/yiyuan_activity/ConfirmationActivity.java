@@ -1,14 +1,13 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -21,21 +20,20 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ConfirmationActivity extends Activity {
+public class ConfirmationActivity extends BaseActivity {
 
-    @Bind(R.id.confirmation_edit)
+    @BindView(R.id.confirmation_edit)
     ClearEditText confirmationEdit;
-    @Bind(R.id.confirmation_second)
+    @BindView(R.id.confirmation_second)
     TextView confirmationSecond;
-    @Bind(R.id.tx1)
+    @BindView(R.id.tx1)
     TextView tx1;
-    @Bind(R.id.tx2)
+    @BindView(R.id.tx2)
     TextView tx2;
-    @Bind(R.id.confirmation_again)
+    @BindView(R.id.confirmation_again)
     Button confirmation_again;
     private boolean cancelreq;
     private String phone;
@@ -62,13 +60,25 @@ public class ConfirmationActivity extends Activity {
     private Handler handler = new Handler();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirmation);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_confirmation;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
         phone = getIntent().getStringExtra("phone");
         type = getIntent().getIntExtra("type", 0);
         handler.post(runnable);
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     @OnClick({R.id.return_confirmation, R.id.confirmation_ensuer, R.id.confirmation_again})
@@ -152,8 +162,7 @@ public class ConfirmationActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("ConfirmationActivity");
         super.onDestroy();

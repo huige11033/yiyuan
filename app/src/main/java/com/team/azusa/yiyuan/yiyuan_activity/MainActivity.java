@@ -3,28 +3,26 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.event.AddCarsEvent;
 import com.team.azusa.yiyuan.event.IntParameterEvent;
-import com.team.azusa.yiyuan.event.SortEvent;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.DepthPageTransformer;
 import com.team.azusa.yiyuan.widget.BadgeView;
-import com.team.azusa.yiyuan.widget.MyDialog;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.AllGoodsFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.CartFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.HomeFragment;
@@ -32,48 +30,31 @@ import com.team.azusa.yiyuan.yiyuan_mainfragment.MeFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.NewestFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends FragmentActivity implements OnClickListener {
+public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
 
-    private LinearLayout mTabHome;
-    private LinearLayout mTabAllGoods;
-    private LinearLayout mTabNewest;
-    private LinearLayout mTabCart;
-    private LinearLayout mTabMe;
+    @BindViews({R.id.id_tab_home, R.id.id_all_goods, R.id.id_tab_newest, R.id.id_tab_cart, R.id.id_tab_me})
+    List<LinearLayout> mTabs;
 
-    private ImageButton mImgHome;
-    private ImageButton mImgAllGoods;
-    private ImageButton mImgNewest;
-    private ImageButton mImgCart;
-    private ImageButton mImgMe;
+    @BindViews({R.id.id_tab_home_img, R.id.id_all_goods_img, R.id.id_tab_newest_img, R.id.id_tab_cart_img, R.id.id_tab_me_img})
+    List<ImageButton> mImgs;
 
-    private TextView mTestHome;
-    private TextView mTestAllGoods;
-    private TextView mTestNewest;
-    private TextView mTestCart;
-    private TextView mTestMe;
+    @BindViews({R.id.text_home, R.id.text_all_goods, R.id.text_newest, R.id.text_cart, R.id.text_me})
+    List<TextView> mTextViews;
+
     private int[] car_location; //购物车的位置
     public int car_count; //购物车商品个数
     private BadgeView badge; //购物车商品个数小圆点
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        EventBus.getDefault().register(this);
-        initView();
-        setListener();
-        setSelect(0);
-        badge = new BadgeView(ConstanceUtils.CONTEXT);
-        badge.setTargetView(mTabCart);
-        badge.setBackgroundResource(R.drawable.cart_count_bg);
-        badge.setBadgeMarginRight(16);
-    }
+    private int selectIndex = 0;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,7 +71,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     //获取购物车位置
     public int[] getCar_location() {
         car_location = new int[2];
-        mTabCart.getLocationInWindow(car_location);
+        mTabs.get(3).getLocationInWindow(car_location);
         return car_location;
     }
 
@@ -109,37 +90,47 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     public void onEventMainThread(IntParameterEvent event) {
         setSelect(event.getI());
     }
-    private void setListener() {
-        mTabHome.setOnClickListener(this);
-        mTabAllGoods.setOnClickListener(this);
-        mTabNewest.setOnClickListener(this);
-        mTabCart.setOnClickListener(this);
-        mTabMe.setOnClickListener(this);
+
+    public void setListener() {
+        setSelect(selectIndex);
+        badge = new BadgeView(ConstanceUtils.CONTEXT);
+        badge.setTargetView(mTabs.get(3));
+        badge.setBackgroundResource(R.drawable.cart_count_bg);
+        badge.setBadgeMarginRight(16);
     }
 
-    private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+    @OnClick({R.id.id_tab_home, R.id.id_all_goods, R.id.id_tab_newest, R.id.id_tab_cart, R.id.id_tab_me})
+    public void click(View v) {
+        switch (v.getId()) {
+            case R.id.id_tab_home:
+                setSelect(0);
+                break;
+            case R.id.id_all_goods:
+                setSelect(1);
+                break;
+            case R.id.id_tab_newest:
+                setSelect(2);
+                break;
+            case R.id.id_tab_cart:
+                setSelect(3);
+                break;
+            case R.id.id_tab_me:
+                setSelect(4);
+                break;
+            default:
+                break;
+        }
+    }
 
-        mTabHome = (LinearLayout) findViewById(R.id.id_tab_home);
-        mTabAllGoods = (LinearLayout) findViewById(R.id.id_all_goods);
-        mTabNewest = (LinearLayout) findViewById(R.id.id_tab_newest);
-        mTabCart = (LinearLayout) findViewById(R.id.id_tab_cart);
-        mTabMe = (LinearLayout) findViewById(R.id.id_tab_me);
+    @Override
+    public int layout() {
+        return R.layout.activity_main;
+    }
 
-        mImgHome = (ImageButton) findViewById(R.id.id_tab_home_img);
-        mImgAllGoods = (ImageButton) findViewById(R.id.id_all_goods_img);
-        mImgNewest = (ImageButton) findViewById(R.id.id_tab_newest_img);
-        mImgCart = (ImageButton) findViewById(R.id.id_tab_cart_img);
-        mImgMe = (ImageButton) findViewById(R.id.id_tab_me_img);
+    public void initView() {
+        mViewPager = findViewById(R.id.id_viewpager);
 
-        mTestHome = (TextView) findViewById(R.id.text_home);
-        mTestAllGoods = (TextView) findViewById(R.id.text_all_goods);
-        mTestNewest = (TextView) findViewById(R.id.text_newest);
-        mTestCart = (TextView) findViewById(R.id.text_cart);
-        mTestMe = (TextView) findViewById(R.id.text_me);
-
-
-        mFragments = new ArrayList<Fragment>();
+        mFragments = new ArrayList<>();
         Fragment mTab01 = new HomeFragment();
         Fragment mTab02 = new AllGoodsFragment();
         Fragment mTab03 = new NewestFragment();
@@ -171,7 +162,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             @Override
             public void onPageSelected(int arg0) {
                 int currentItem = mViewPager.getCurrentItem();
-                setTab(currentItem);
+                setSelect(currentItem);
             }
 
             @Override
@@ -186,76 +177,24 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.id_tab_home:
-                setSelect(0);
-                break;
-            case R.id.id_all_goods:
-                setSelect(1);
-                break;
-            case R.id.id_tab_newest:
-                setSelect(2);
-                break;
-            case R.id.id_tab_cart:
-                setSelect(3);
-                break;
-            case R.id.id_tab_me:
-                setSelect(4);
-                break;
-
-            default:
-                break;
-        }
+    public void initData() {
+        EventBus.getDefault().register(this);
     }
 
     private void setSelect(int i) {
-        setTab(i);
-        mViewPager.setCurrentItem(i, false);
-    }
+        mImgs.get(selectIndex).setSelected(false);
+        mTextViews.get(selectIndex).setEnabled(false);
 
-    private void setTab(int i) {
-        resetImgs();
-        switch (i) {
-            case 0:
-                mImgHome.setImageResource(R.drawable.home_select);
-                mTestHome.setTextColor(Color.parseColor("#FF7F24"));
-                break;
-            case 1:
-                mImgAllGoods.setImageResource(R.drawable.allgoods_select);
-                mTestAllGoods.setTextColor(Color.parseColor("#FF7F24"));
-                break;
-            case 2:
-                mImgNewest.setImageResource(R.drawable.newest_select);
-                mTestNewest.setTextColor(Color.parseColor("#FF7F24"));
-                break;
-            case 3:
-                mImgCart.setImageResource(R.drawable.cart_select);
-                mTestCart.setTextColor(Color.parseColor("#FF7F24"));
-                break;
-            case 4:
-                mImgMe.setImageResource(R.drawable.me_select);
-                mTestMe.setTextColor(Color.parseColor("#FF7F24"));
-                break;
-        }
-    }
+        mImgs.get(i).setSelected(true);
+        mTextViews.get(i).setEnabled(true);
 
-    private void resetImgs() {
-        mImgHome.setImageResource(R.drawable.home);
-        mImgAllGoods.setImageResource(R.drawable.allgoods);
-        mImgNewest.setImageResource(R.drawable.newest);
-        mImgCart.setImageResource(R.drawable.cart);
-        mImgMe.setImageResource(R.drawable.me);
-
-        mTestHome.setTextColor(Color.parseColor("#696969"));
-        mTestAllGoods.setTextColor(Color.parseColor("#696969"));
-        mTestNewest.setTextColor(Color.parseColor("#696969"));
-        mTestCart.setTextColor(Color.parseColor("#696969"));
-        mTestMe.setTextColor(Color.parseColor("#696969"));
+        if (i != mViewPager.getCurrentItem())
+            mViewPager.setCurrentItem(i, false);
+        selectIndex = i;
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

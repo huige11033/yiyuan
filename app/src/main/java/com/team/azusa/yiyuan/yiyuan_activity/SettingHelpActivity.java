@@ -1,32 +1,32 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.widget.MyDialog;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SettingHelpActivity extends AppCompatActivity {
+public class SettingHelpActivity extends BaseActivity {
 
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webview;
     private MyDialog myDialog = new MyDialog();
     private AlertDialog loding_dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_help);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_setting_help;
+    }
+
+    @Override
+    public void initView() {
         loding_dialog = myDialog.showLodingDialog(this);
         loding_dialog.setOnKeyListener(backlistener);
         try {
@@ -37,6 +37,16 @@ public class SettingHelpActivity extends AppCompatActivity {
         } finally {
             myDialog.dismissDialog();
         }
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     private DialogInterface.OnKeyListener backlistener = new DialogInterface.OnKeyListener() {
@@ -53,12 +63,6 @@ public class SettingHelpActivity extends AppCompatActivity {
     @OnClick(R.id.help_go_back)
     public void onClick() {
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
 }

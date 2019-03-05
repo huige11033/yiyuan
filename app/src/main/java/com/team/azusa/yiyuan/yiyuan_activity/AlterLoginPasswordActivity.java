@@ -1,13 +1,12 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -24,19 +23,18 @@ import org.json.JSONObject;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AlterLoginPasswordActivity extends AppCompatActivity {
+public class AlterLoginPasswordActivity extends BaseActivity {
 
-    @Bind(R.id.account_name)
+    @BindView(R.id.account_name)
     TextView accountName;
-    @Bind(R.id.et_now_password)
+    @BindView(R.id.et_now_password)
     EditText etNowPassword;
-    @Bind(R.id.et_new_password)
+    @BindView(R.id.et_new_password)
     EditText etNewPassword;
-    @Bind(R.id.et_ensure_password)
+    @BindView(R.id.et_ensure_password)
     EditText etEnsurePassword;
     private String phoneNumber;
     private String oldPassword;
@@ -46,13 +44,25 @@ public class AlterLoginPasswordActivity extends AppCompatActivity {
     private boolean cancelreq = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alter_login_password);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_alter_login_password;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
         phoneNumber = UserUtils.user.getMobile();
         phoneNumber = phoneNumber.substring(0, 5) + "****" + phoneNumber.substring(9, 11);
         accountName.setText(phoneNumber);
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     //注销
@@ -165,8 +175,7 @@ public class AlterLoginPasswordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("AlterLoginPasswordActivity");
         super.onDestroy();

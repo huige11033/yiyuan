@@ -1,33 +1,33 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.widget.MyDialog;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ServiceAgreementActivity extends AppCompatActivity {
+public class ServiceAgreementActivity extends BaseActivity {
 
-    @Bind(R.id.wv_ser_agreement)
+    @BindView(R.id.wv_ser_agreement)
     WebView SerAgreement;
     private MyDialog myDialog = new MyDialog();
     private AlertDialog loding_dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_agreement);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_service_agreement;
+    }
+
+    @Override
+    public void initView() {
         loding_dialog = myDialog.showLodingDialog(this);
         loding_dialog.setOnKeyListener(backlistener);
         try {
@@ -39,6 +39,16 @@ public class ServiceAgreementActivity extends AppCompatActivity {
             myDialog.dismissDialog();
         }
 //        SerAgreement.loadUrl("http://192.168.1.109:8080/Rico_Client_Server_Data_Exchange/");
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     private DialogInterface.OnKeyListener backlistener = new DialogInterface.OnKeyListener() {
@@ -55,11 +65,5 @@ public class ServiceAgreementActivity extends AppCompatActivity {
     @OnClick(R.id.return_service)
     public void onClick() {
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

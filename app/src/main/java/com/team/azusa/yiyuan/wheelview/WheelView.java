@@ -19,9 +19,6 @@
 
 package com.team.azusa.yiyuan.wheelview;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
@@ -38,6 +35,9 @@ import android.widget.LinearLayout;
 
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.wheelview.adapter.WheelViewAdapter;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class WheelView extends View {
 

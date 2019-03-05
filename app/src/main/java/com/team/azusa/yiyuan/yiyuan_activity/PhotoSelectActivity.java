@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,14 +7,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.PhotoFloderLvAdapter;
 import com.team.azusa.yiyuan.adapter.PhotoSelectRvAdapter;
@@ -44,28 +43,27 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class PhotoSelectActivity extends AppCompatActivity {
+public class PhotoSelectActivity extends BaseActivity {
 
-    @Bind(R.id.return_yundetail)
+    @BindView(R.id.return_yundetail)
     ImageView returnYundetail;
-    @Bind(R.id.tv_foload)
+    @BindView(R.id.tv_foload)
     TextView tvFoload;
-    @Bind(R.id.raw)
+    @BindView(R.id.raw)
     ImageView raw;
-    @Bind(R.id.rl_category)
+    @BindView(R.id.rl_category)
     RelativeLayout rlCategory;
-    @Bind(R.id.btn_nest)
+    @BindView(R.id.btn_nest)
     Button btnNest;
-    @Bind(R.id.photo_rv)
+    @BindView(R.id.photo_rv)
     RecyclerView img_rview;
-    @Bind(R.id.titlerl)
+    @BindView(R.id.titlerl)
     RelativeLayout titlerl;
-    @Bind(R.id.img_count)
+    @BindView(R.id.img_count)
     TextView tv_imgcount;
 
     private PhotoSelectRvAdapter adapter; //图片显示的适配器
@@ -108,15 +106,16 @@ public class PhotoSelectActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_select);
-        ButterKnife.bind(this);
-        initData();
+    public int layout() {
+        return R.layout.activity_photo_select;
+    }
+
+    @Override
+    public void initView() {
         getImgUrl();
     }
 
-    private void initData() {
+    public void initData() {
         Intent intent = getIntent();
         what_count = intent.getIntExtra("pic_count", 0);
         isneedcutimg = intent.getBooleanExtra("isneedcutimg", false);
@@ -180,7 +179,7 @@ public class PhotoSelectActivity extends AppCompatActivity {
         startActivityForResult(intent, ConstanceUtils.CUT_PHOTO_REQUESTCODE);
     }
 
-    private void setListener() {
+    public void setListener() {
         adapter.setOnItemClickLitener(new PhotoRvItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, String url, Boolean bool) {
@@ -401,11 +400,5 @@ public class PhotoSelectActivity extends AppCompatActivity {
                 }
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

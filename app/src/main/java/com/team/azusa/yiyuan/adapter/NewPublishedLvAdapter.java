@@ -9,14 +9,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.JieXiaoDto;
-import com.team.azusa.yiyuan.bean.ProductDto;
 import com.team.azusa.yiyuan.utils.DateUtil;
 import com.team.azusa.yiyuan.utils.ImageLoader;
-import com.team.azusa.yiyuan.utils.StringUtil;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -68,17 +66,17 @@ public class NewPublishedLvAdapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        @Bind(R.id.img_lv_newpublish)
+        @BindView(R.id.img_lv_newpublish)
         SimpleDraweeView imgLvNewPublish;
-        @Bind(R.id.tv_lv_newpublish_winner)
+        @BindView(R.id.tv_lv_newpublish_winner)
         TextView tvLvNewPublishWinner;
-        @Bind(R.id.tx_lv_newpublic_peoplenum)
+        @BindView(R.id.tx_lv_newpublic_peoplenum)
         TextView txLvNewPublicPeoplenum;
-        @Bind(R.id.tv_lv_newpublish_winTime)
+        @BindView(R.id.tv_lv_newpublish_winTime)
         TextView tvLvNewPublishWinTime;
-        @Bind(R.id.winner_head)
+        @BindView(R.id.winner_head)
         SimpleDraweeView winnerHead;
-        @Bind(R.id.new_publish_worth)
+        @BindView(R.id.new_publish_worth)
         TextView newpublishworth;
 
         ViewHolder(View view) {

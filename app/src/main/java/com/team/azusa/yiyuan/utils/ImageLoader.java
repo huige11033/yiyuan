@@ -122,9 +122,9 @@ public class ImageLoader {
         if (loadUri == null) {
             return false;
         }
-        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri));
-        return ImagePipelineFactory.getInstance().getMainDiskStorageCache().hasKey(cacheKey) ||
-                ImagePipelineFactory.getInstance().getSmallImageDiskStorageCache().hasKey(cacheKey);
+        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), null);
+        return ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey) ||
+                ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey);
     }
 
 }

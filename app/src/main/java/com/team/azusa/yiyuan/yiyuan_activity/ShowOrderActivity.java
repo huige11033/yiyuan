@@ -1,12 +1,11 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.ShowOrderLvAdapter;
 import com.team.azusa.yiyuan.bean.ShowOrderDto;
@@ -22,13 +21,12 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ShowOrderActivity extends Activity {
+public class ShowOrderActivity extends BaseActivity {
 
-    @Bind(R.id.listview_shaidan)
+    @BindView(R.id.listview_shaidan)
     PulluptoRefreshListview listviewShaidan;
     private ShowOrderLvAdapter adapter;
     private String productId = "";//晒单ID
@@ -38,16 +36,11 @@ public class ShowOrderActivity extends Activity {
     private boolean cancelrequest = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_order);
-        ButterKnife.bind(this);
-        initView();
-        iniData();
-        setListener();
+    public int layout() {
+        return R.layout.activity_show_order;
     }
 
-    private void initView() {
+    public void initView() {
         adapter = new ShowOrderLvAdapter(ConstanceUtils.CONTEXT, datas, R.layout.show_order_item);
         listviewShaidan.setFooterDividersEnabled(false);
         listviewShaidan.setAdapter(adapter);
@@ -59,7 +52,7 @@ public class ShowOrderActivity extends Activity {
         });
     }
 
-    private void setListener() {
+    public void setListener() {
         listviewShaidan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +78,7 @@ public class ShowOrderActivity extends Activity {
         startActivity(intent);
     }
 
-    private void iniData() {
+    public void initData() {
         Intent intent = getIntent();
         what = intent.getIntExtra("what", -1);
         if (what == -1) {
@@ -132,9 +125,8 @@ public class ShowOrderActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("ShowOrderActivity");
     }

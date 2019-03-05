@@ -1,21 +1,18 @@
 package com.team.azusa.yiyuan.widget;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.team.azusa.yiyuan.R;
-import com.team.azusa.yiyuan.utils.ConstanceUtils;
-
-import java.util.ArrayList;
 
 
 /**
@@ -26,7 +23,7 @@ public class MyDialog {
     private ProgressBar progressBar;
     private Context context;
 
-    public AlertDialog showLodingDialog(Activity activity) {
+    public AlertDialog showLodingDialog(FragmentActivity activity) {
         this.context = activity;
         View view_dialog = View.inflate(activity, R.layout.loding_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -56,7 +53,7 @@ public class MyDialog {
         return dialog;
     }
 
-    public AlertDialog showAddrDialog(View view_dialog, Activity activity) {
+    public AlertDialog showAddrDialog(View view_dialog, AppCompatActivity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         dialog = builder.create();
         dialog.show();
@@ -71,7 +68,7 @@ public class MyDialog {
         return dialog;
     }
 
-    public AlertDialog showDialog(View view, Activity activity) {
+    public AlertDialog showDialog(View view, AppCompatActivity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         dialog = builder.create();
         dialog.show();

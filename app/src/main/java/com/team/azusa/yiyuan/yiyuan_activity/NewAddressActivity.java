@@ -1,10 +1,8 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AddressSelectAdapter;
 import com.team.azusa.yiyuan.bean.AddressMessage;
@@ -35,27 +34,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewAddressActivity extends AppCompatActivity {
+public class NewAddressActivity extends BaseActivity {
 
-    @Bind(R.id.et_address_name)
+    @BindView(R.id.et_address_name)
     EditText etAddressName;
-    @Bind(R.id.et_address_tel)
+    @BindView(R.id.et_address_tel)
     EditText etAddressTel;
-    @Bind(R.id.et_address_moblie)
+    @BindView(R.id.et_address_moblie)
     EditText etAddressMoblie;
-    @Bind(R.id.et_address_area)
+    @BindView(R.id.et_address_area)
     TextView etAddressArea;
-    @Bind(R.id.et_address_street)
+    @BindView(R.id.et_address_street)
     TextView txAddressStreet;
-    @Bind(R.id.et_address_detial)
+    @BindView(R.id.et_address_detial)
     EditText etAddressDetial;
-    @Bind(R.id.et_address_mailcode)
+    @BindView(R.id.et_address_mailcode)
     EditText etAddressMailcode;
-    @Bind(R.id.cb_address_default)
+    @BindView(R.id.cb_address_default)
     CheckBox cbAddressDefault;
 
     private String name = "";
@@ -78,40 +76,47 @@ public class NewAddressActivity extends AppCompatActivity {
     private boolean cancelrequest = false; //是否取消网络请求
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_address);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_new_address;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         String addressMessageStr = getIntent().getStringExtra("address");
         if (!StringUtil.isEmpty(addressMessageStr)) {
             isadd = false;
             addressMessage = JsonUtils.getObjectfromString(addressMessageStr, AddressMessage.class);
-            initViews();
+
+            etAddressName.setText(addressMessage.getName());
+            etAddressTel.setText(addressMessage.getTelephone());
+            etAddressMoblie.setText(addressMessage.getMobile());
+
+            String rough = addressMessage.getRough();
+            int i = addressMessage.getRough().lastIndexOf(" ");
+            String area = rough.substring(0, i - 1);
+            String street = rough.substring(i + 1);
+
+            etAddressArea.setText(area);
+            txAddressStreet.setText(street);
+            etAddressDetial.setText(addressMessage.getDatail());
+            etAddressMailcode.setText(addressMessage.getPostcode());
+
+            cbAddressDefault.setChecked("1".equals(addressMessage.getDefaults()));
+
         } else {
             isadd = true;
             addressMessage = new AddressMessage();
         }
         initAddress();
-    }
-
-    private void initViews() {
-        etAddressName.setText(addressMessage.getName());
-        etAddressTel.setText(addressMessage.getTelephone());
-        etAddressMoblie.setText(addressMessage.getMobile());
-
-        String rough = addressMessage.getRough();
-        int i = addressMessage.getRough().lastIndexOf(" ");
-        String area = rough.substring(0, i - 1);
-        String street = rough.substring(i + 1);
-
-        etAddressArea.setText(area);
-        txAddressStreet.setText(street);
-        etAddressDetial.setText(addressMessage.getDatail());
-        etAddressMailcode.setText(addressMessage.getPostcode());
-
-        cbAddressDefault.setChecked("1".equals(addressMessage.getDefaults()));
-
-
     }
 
     private void initAddress() {
@@ -322,8 +327,7 @@ public class NewAddressActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("NewAddressActivity");
         super.onDestroy();

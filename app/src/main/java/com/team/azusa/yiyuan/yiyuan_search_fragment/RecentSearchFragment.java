@@ -1,14 +1,11 @@
 package com.team.azusa.yiyuan.yiyuan_search_fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.RecentSearchLvAdapter;
 import com.team.azusa.yiyuan.database.SharedPreferenceData;
@@ -17,34 +14,22 @@ import com.team.azusa.yiyuan.utils.UserUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 
-public class RecentSearchFragment extends Fragment {
+public class RecentSearchFragment extends BaseFragment {
 
-    @Bind(R.id.btn_clearrecord)
+    @BindView(R.id.btn_clearrecord)
     Button btnClearrecord;
-    @Bind(R.id.recent_lv)
+    @BindView(R.id.recent_lv)
     ListView mlistView;
-    private View view;
     private ArrayList<String> datas;
     private String user_id;
     private RecentSearchLvAdapter adapter;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.search_fg1_recent, null);
-        ButterKnife.bind(this, view);
-        initData();
-        setListener();
-        return view;
-    }
-
-    private void setListener() {
+    public void setListener() {
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,7 +38,17 @@ public class RecentSearchFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    @Override
+    public int layout() {
+        return R.layout.search_fg1_recent;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    public void initData() {
         if (UserUtils.userisLogin) {
             user_id = UserUtils.user.getId();
         } else {
@@ -65,9 +60,8 @@ public class RecentSearchFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public void initAnimation() {
+
     }
 
     @OnClick(R.id.btn_clearrecord)

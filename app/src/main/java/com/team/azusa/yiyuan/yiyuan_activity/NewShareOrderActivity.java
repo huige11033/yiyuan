@@ -1,11 +1,9 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.NewShaidanGvAdapter;
 import com.team.azusa.yiyuan.config.Config;
@@ -38,29 +37,28 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import java.io.File;
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Azusa on 2016/3/19.
  */
-public class NewShareOrderActivity extends AppCompatActivity {
+public class NewShareOrderActivity extends BaseActivity {
 
-    @Bind(R.id.return_newshaidan)
+    @BindView(R.id.return_newshaidan)
     ImageView btn_back;
-    @Bind(R.id.send_shaidan)
+    @BindView(R.id.send_shaidan)
     Button btn_send;
-    @Bind(R.id.tv_textlimi)
+    @BindView(R.id.tv_textlimi)
     TextView tvTextlimi;
-    @Bind(R.id.edit_shaidantitle)
+    @BindView(R.id.edit_shaidantitle)
     EditText edit_title;
-    @Bind(R.id.img_shaidan)
+    @BindView(R.id.img_shaidan)
     SimpleDraweeView img_product;
-    @Bind(R.id.edit_shaidancontent)
+    @BindView(R.id.edit_shaidancontent)
     EditText edit_content;
-    @Bind(R.id.shaidan_gridview)
+    @BindView(R.id.shaidan_gridview)
     WrapHeightGridView gridview;
 
     private NewShaidanGvAdapter adapter; //晒单图片grideview
@@ -88,19 +86,7 @@ public class NewShareOrderActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_share_order);
-        ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
-        initDate();
-        initView();
-        setListener();
-
-    }
-
-    private void setListener() {
+    public void setListener() {
         //监听内容输入框，最多不超过200字
         edit_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -139,14 +125,20 @@ public class NewShareOrderActivity extends AppCompatActivity {
         });
     }
 
-    private void initDate() {
+    public void initData() {
         productimgurl = getIntent().getStringExtra("productimgurl");
         productId = getIntent().getStringExtra("productId");
         //设置商品图片
         ImageLoader.getInstance().displayImage(productimgurl, img_product);
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        EventBus.getDefault().register(this);
+        return R.layout.activity_new_share_order;
+    }
+
+    public void initView() {
         imgdatas.add(""); //第一个位置放添加图片的图标
         adapter = new NewShaidanGvAdapter(imgdatas);
         gridview.setAdapter(adapter);
@@ -256,8 +248,7 @@ public class NewShareOrderActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }

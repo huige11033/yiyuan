@@ -4,7 +4,6 @@ package com.team.azusa.yiyuan.callback;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Response;
-import com.team.azusa.yiyuan.bean.BuyRecordInfo;
 import com.team.azusa.yiyuan.bean.ProductDto;
 import com.zhy.http.okhttp.callback.Callback;
 

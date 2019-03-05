@@ -1,15 +1,14 @@
 package com.team.azusa.yiyuan.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ public class SelectPicPopupWindow extends PopupWindow {
     private TextView tv_girl, tv_boy, tv_cancel,tv_secret;
     private View mMenuView;
 
-    public SelectPicPopupWindow(Activity context,OnClickListener itemsOnClick) {
+    public SelectPicPopupWindow(AppCompatActivity context, OnClickListener itemsOnClick) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

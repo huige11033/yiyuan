@@ -10,7 +10,7 @@ import com.team.azusa.yiyuan.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -56,7 +56,7 @@ public class RecentSearchLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_recentsearchtext)
+        @BindView(R.id.tv_recentsearchtext)
         TextView tv_text;
 
         ViewHolder(View view) {

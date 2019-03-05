@@ -1,51 +1,64 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.team.azusa.yiyuan"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+//        multiDexEnabled true
     }
     buildTypes {
-        release {
-            minifyEnabled false
+        assembleRelease {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+        }
+
+        assembleDebug {
+            minifyEnabled false
+            debuggable true
         }
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
-    sourceSets.main{
+    sourceSets.main {
         jniLibs.srcDirs = ['libs']
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
-    compile 'com.github.iwgang:countdownview:1.2'
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.zhy:okhttputils:2.0.2'
-    compile files('libs/jackson-annotations-2.5.3.jar')
-    compile files('libs/jackson-core-2.5.3.jar')
-    compile files('libs/jackson-databind-2.5.3.jar')
-    compile files('libs/jpush-android-2.1.0.jar')
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.jcodecraeer:xrecyclerview:1.2.6'
-    compile 'com.facebook.fresco:fresco:0.9.0+'
-    compile 'com.commit451:PhotoView:1.2.5'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'com.yqritc:recyclerview-flexibledivider:1.2.6'
+    implementation 'com.github.iwgang:countdownview:1.2'
+    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.zhy:okhttputils:2.0.2'
+    implementation files('libs/jackson-annotations-2.5.3.jar')
+    implementation files('libs/jackson-core-2.5.3.jar')
+    implementation files('libs/jackson-databind-2.5.3.jar')
+    implementation files('libs/jpush-android-2.1.0.jar')
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    implementation 'com.jcodecraeer:xrecyclerview:1.2.6'
+    implementation 'com.facebook.fresco:fresco:1.5.0+'
+    implementation 'com.commit451:PhotoView:1.2.5'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 }

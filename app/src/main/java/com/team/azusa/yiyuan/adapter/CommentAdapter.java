@@ -14,7 +14,7 @@ import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -65,13 +65,13 @@ public class CommentAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.comment_img_head)
+        @BindView(R.id.comment_img_head)
         SimpleDraweeView img_head;
-        @Bind(R.id.tv_commentusername)
+        @BindView(R.id.tv_commentusername)
         TextView tv_username;
-        @Bind(R.id.tv_commenttime)
+        @BindView(R.id.tv_commenttime)
         TextView tv_time;
-        @Bind(R.id.tv_commentcontent)
+        @BindView(R.id.tv_commentcontent)
         TextView tv_content;
 
         ViewHolder(View view) {

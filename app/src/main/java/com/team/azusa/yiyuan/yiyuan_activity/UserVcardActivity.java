@@ -2,7 +2,7 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,27 +19,27 @@ import com.team.azusa.yiyuan.utils.StringUtil;
 import com.team.azusa.yiyuan.widget.MyDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UserVcardActivity extends AppCompatActivity {
 
-    @Bind(R.id.return_vcard)
+    @BindView(R.id.return_vcard)
     ImageView returnVcard;
-    @Bind(R.id.img_userhead)
+    @BindView(R.id.img_userhead)
     SimpleDraweeView imgUserhead;
-    @Bind(R.id.tv_username)
+    @BindView(R.id.tv_username)
     TextView tvUsername;
-    @Bind(R.id.tv_userphone)
+    @BindView(R.id.tv_userphone)
     TextView tvUserphone;
-    @Bind(R.id.tv_sex)
+    @BindView(R.id.tv_sex)
     TextView tvSex;
-    @Bind(R.id.tv_jinyan)
+    @BindView(R.id.tv_jinyan)
     TextView tvJinyan;
-    @Bind(R.id.tv_dengji)
+    @BindView(R.id.tv_dengji)
     TextView tvDengji;
-    @Bind(R.id.tv_sign)
+    @BindView(R.id.tv_sign)
     TextView tvSign;
     private MyDialog dialog;
     private String userId; //用户id

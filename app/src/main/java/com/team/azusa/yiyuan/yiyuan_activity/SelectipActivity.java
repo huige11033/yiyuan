@@ -2,7 +2,7 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -12,27 +12,27 @@ import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.StringUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SelectipActivity extends AppCompatActivity {
 
-    @Bind(R.id.editip)
+    @BindView(R.id.editip)
     EditText editip;
-    @Bind(R.id.tvip1)
+    @BindView(R.id.tvip1)
     RadioButton tvip1;
-    @Bind(R.id.tvip2)
+    @BindView(R.id.tvip2)
     RadioButton tvip2;
-    @Bind(R.id.tvip3)
+    @BindView(R.id.tvip3)
     RadioButton tvip3;
-    @Bind(R.id.tvip4)
+    @BindView(R.id.tvip4)
     RadioButton tvip4;
-    @Bind(R.id.radio_group)
+    @BindView(R.id.radio_group)
     RadioGroup radioGroup;
-    @Bind(R.id.btn)
+    @BindView(R.id.btn)
     Button btn;
-    @Bind(R.id.tvip5)
+    @BindView(R.id.tvip5)
     RadioButton tvip5;
 
     @Override

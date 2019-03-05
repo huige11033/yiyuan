@@ -3,16 +3,12 @@ package com.team.azusa.yiyuan.yiyuan_mainfragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,6 +17,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.HomePopularityRviewAdapter;
 import com.team.azusa.yiyuan.adapter.HomePublicRviewAdapter;
@@ -54,64 +51,62 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
-    @Bind(R.id.title_search)
+    @BindView(R.id.title_search)
     ImageView titleSearch;
-    @Bind(R.id.flash_view)
+    @BindView(R.id.flash_view)
     FlashView flashView;
-    @Bind(R.id.new_recommend)
+    @BindView(R.id.new_recommend)
     ImageButton newRecommend;
-    @Bind(R.id.nav_shaidan)
+    @BindView(R.id.nav_shaidan)
     ImageButton navShaidan;
-    @Bind(R.id.nav_map)
+    @BindView(R.id.nav_map)
     ImageButton navMap;
-    @Bind(R.id.nav_recharge)
+    @BindView(R.id.nav_recharge)
     ImageButton navRecharge;
-    @Bind(R.id.ptrpulltorefresh)
+    @BindView(R.id.ptrpulltorefresh)
     PtrFrameLayout ptrpulltorefresh;
-    @Bind(R.id.recyclerview_popularity)
+    @BindView(R.id.recyclerview_popularity)
     RecyclerView recyclerview;
-    @Bind(R.id.homescrollview)
+    @BindView(R.id.homescrollview)
     ScrollView homescrollview;
-    @Bind(R.id.recyclerview_newpublic)
+    @BindView(R.id.recyclerview_newpublic)
     WrapScrollRview recyclerviewNewpublic;
-    @Bind(R.id.img_shaidan1)
+    @BindView(R.id.img_shaidan1)
     SimpleDraweeView imgShaidan1;
-    @Bind(R.id.tv_shaidan_title1)
+    @BindView(R.id.tv_shaidan_title1)
     TextView tvShaidanTitle1;
-    @Bind(R.id.img_shaidan2)
+    @BindView(R.id.img_shaidan2)
     SimpleDraweeView imgShaidan2;
-    @Bind(R.id.tv_shaidan_title2)
+    @BindView(R.id.tv_shaidan_title2)
     TextView tvShaidanTitle2;
-    @Bind(R.id.img_shaidan3)
+    @BindView(R.id.img_shaidan3)
     SimpleDraweeView imgShaidan3;
-    @Bind(R.id.tv_shaidan_title3)
+    @BindView(R.id.tv_shaidan_title3)
     TextView tvShaidanTitle3;
-    @Bind(R.id.click_xiangou)
+    @BindView(R.id.click_xiangou)
     ImageView clickXiangou;
-    @Bind(R.id.click_jiadian)
+    @BindView(R.id.click_jiadian)
     ImageView clickJiadian;
-    @Bind(R.id.click_phone)
+    @BindView(R.id.click_phone)
     ImageView clickPhone;
-    @Bind(R.id.click_gold)
+    @BindView(R.id.click_gold)
     ImageView clickGold;
-    @Bind(R.id.click_car)
+    @BindView(R.id.click_car)
     ImageView clickCar;
-    @Bind(R.id.home_rl_newpublic)
+    @BindView(R.id.home_rl_newpublic)
     RelativeLayout homeRlNewpublic;
-    @Bind(R.id.home_rl_popularity)
+    @BindView(R.id.home_rl_popularity)
     RelativeLayout homeRlPopularity;
-    @Bind(R.id.home_shaidan)
+    @BindView(R.id.home_shaidan)
     RelativeLayout homeShaidan;
-    private View view;
     private ArrayList<Advert> advertDatas = new ArrayList<>();
     private ArrayList<String> advimageUrls = new ArrayList<>(); //广告为图片url集合
     private RefreshHead refreshHead; //自定义下拉刷新头部
@@ -140,19 +135,6 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_fgtab01, container, false);
-        ButterKnife.bind(this, view);
-        iniView();
-        initnewpublicRecyclerview();
-        initpopularityRecyclerview();
-        initShareOrderView();
-        setListener();
-        return view;
-    }
-
     //初始化晒单分享界面
     private void initShareOrderView() {
         shaidanimgs.add(imgShaidan1);
@@ -162,7 +144,6 @@ public class HomeFragment extends Fragment {
         shaidantvs.add(tvShaidanTitle1);
         shaidantvs.add(tvShaidanTitle2);
         shaidantvs.add(tvShaidanTitle3);
-
     }
 
     /**
@@ -279,7 +260,50 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setListener() {
+    @Override
+    public int layout() {
+        return R.layout.main_fgtab01;
+    }
+
+    @Override
+    public void initView() {
+        ptrpulltorefresh.disableWhenHorizontalMove(true); //解决跟viewpager的滑动冲突
+        refreshHead = new RefreshHead(getActivity(), "mainpager");
+        ptrpulltorefresh.setHeaderView(refreshHead);
+        ptrpulltorefresh.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                getAdvertData();
+                getPopularityData();
+                updatePublicData();
+                getShaidanData();
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return homescrollview.getScrollY() == 0;
+            }
+        });
+
+        ptrpulltorefresh.addPtrUIHandler(refreshHead); //添加下拉刷新头部UI变化接口
+        homescrollview.scrollTo(0, 0);
+        setAutoRefresh();
+        initnewpublicRecyclerview();
+        initpopularityRecyclerview();
+        initShareOrderView();
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    public void setListener() {
         //广告位图片点击监听
         flashView.setOnPageClickListener(new MyOnClickListener() {
             @Override
@@ -316,31 +340,6 @@ public class HomeFragment extends Fragment {
                 handler.sendEmptyMessage(2);
             }
         });
-    }
-
-    private void iniView() {
-
-        ptrpulltorefresh.disableWhenHorizontalMove(true); //解决跟viewpager的滑动冲突
-        refreshHead = new RefreshHead(getActivity(), "mainpager");
-        ptrpulltorefresh.setHeaderView(refreshHead);
-        ptrpulltorefresh.setPtrHandler(new PtrDefaultHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                getAdvertData();
-                getPopularityData();
-                updatePublicData();
-                getShaidanData();
-            }
-
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return homescrollview.getScrollY() == 0;
-            }
-        });
-
-        ptrpulltorefresh.addPtrUIHandler(refreshHead); //添加下拉刷新头部UI变化接口
-        homescrollview.scrollTo(0, 0);
-        setAutoRefresh();
     }
 
     //设置自动刷新
@@ -391,7 +390,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         cancelRequest = true;
         OkHttpUtils.getInstance().cancelTag("HomeFragment");
     }

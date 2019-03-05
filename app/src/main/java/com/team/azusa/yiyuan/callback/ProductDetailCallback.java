@@ -3,10 +3,8 @@ package com.team.azusa.yiyuan.callback;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Response;
-import com.team.azusa.yiyuan.bean.ProductDto;
 import com.team.azusa.yiyuan.bean.YunNumDto;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -14,8 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Azusa on 2016/1/21.

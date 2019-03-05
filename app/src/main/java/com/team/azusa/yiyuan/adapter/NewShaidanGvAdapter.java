@@ -1,24 +1,18 @@
 package com.team.azusa.yiyuan.adapter;
 
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.common.ResizeOptions;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -80,11 +74,11 @@ public class NewShaidanGvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.newshaidan_itemImage)
+        @BindView(R.id.newshaidan_itemImage)
         SimpleDraweeView img;
-        @Bind(R.id.btn_delete)
+        @BindView(R.id.btn_delete)
         Button btn_delete;
-        @Bind(R.id.addview)
+        @BindView(R.id.addview)
         View addview;
 
         ViewHolder(View view) {

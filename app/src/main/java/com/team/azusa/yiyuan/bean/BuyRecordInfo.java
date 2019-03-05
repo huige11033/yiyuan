@@ -1,8 +1,6 @@
 package com.team.azusa.yiyuan.bean;
 
 
-import java.util.ArrayList;
-
 public class BuyRecordInfo {
 
     private String yunNumId;                  //云期数ID

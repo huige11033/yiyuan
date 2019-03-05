@@ -2,9 +2,7 @@ package com.team.azusa.yiyuan.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.team.azusa.yiyuan.bean.GoodsCar;
 import com.team.azusa.yiyuan.utils.JsonUtils;
 

@@ -1,9 +1,9 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,42 +36,42 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 public class PayActivity extends AppCompatActivity {
 
-    @Bind(R.id.return_pay)
+    @BindView(R.id.return_pay)
     ImageView returnPay;
-    @Bind(R.id.tv_totalmoney)
+    @BindView(R.id.tv_totalmoney)
     TextView tv_totalmoney;
-    @Bind(R.id.cb_fufen)
+    @BindView(R.id.cb_fufen)
     CheckBox cbFufen;
-    @Bind(R.id.rl_fufen)
+    @BindView(R.id.rl_fufen)
     RelativeLayout rl_fufen;
-    @Bind(R.id.cb_yuer)
+    @BindView(R.id.cb_yuer)
     CheckBox cbYuer;
-    @Bind(R.id.rl_yuer)
+    @BindView(R.id.rl_yuer)
     RelativeLayout rl_yuer;
-    @Bind(R.id.cb_weichatpay)
+    @BindView(R.id.cb_weichatpay)
     CheckBox cbWeichatpay;
-    @Bind(R.id.rl_weichat_pay)
+    @BindView(R.id.rl_weichat_pay)
     RelativeLayout rl_weichatPay;
-    @Bind(R.id.cb_alipay)
+    @BindView(R.id.cb_alipay)
     CheckBox cbAlipay;
-    @Bind(R.id.rl_ali_pay)
+    @BindView(R.id.rl_ali_pay)
     RelativeLayout rl_aliPay;
-    @Bind(R.id.btn_gotopay)
+    @BindView(R.id.btn_gotopay)
     Button btnGotopay;
-    @Bind(R.id.paylv)
+    @BindView(R.id.paylv)
     WrapHeightListView listview;
-    @Bind(R.id.tv_fufen)
+    @BindView(R.id.tv_fufen)
     TextView tv_fufen;
-    @Bind(R.id.tv_yuer)
+    @BindView(R.id.tv_yuer)
     TextView tv_yuer;
-    @Bind(R.id.rl_moreraw)
+    @BindView(R.id.rl_moreraw)
     RelativeLayout rl_moreraw;
 
     private PayLvAdapter adapter;  //显示商品信息的adapter

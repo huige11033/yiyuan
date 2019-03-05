@@ -1,41 +1,48 @@
 package com.team.azusa.yiyuan.yiyuan_search_fragment;
 
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.TabFragmentPagerAdapter;
+
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 
-public class SearchRemindFragment extends Fragment {
+public class SearchRemindFragment extends BaseFragment {
 
-    @Bind(R.id.tablayout_search)
+    @BindView(R.id.tablayout_search)
     TabLayout tb_search;
-    @Bind(R.id.vp_search)
+    @BindView(R.id.vp_search)
     ViewPager mviewpager;
-    private View view;
     ArrayList<Fragment> fragmentsList;
     ArrayList<String> titles;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.search_fg1, null);
-        ButterKnife.bind(this, view);
-        iniView();
-        return view;
+    public int layout() {
+        return R.layout.search_fg1;
     }
 
-    private void iniView() {
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         titles = new ArrayList<>();
         titles.add("最近搜索");
         titles.add("热门搜索");
@@ -66,7 +73,5 @@ public class SearchRemindFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
-
 }
