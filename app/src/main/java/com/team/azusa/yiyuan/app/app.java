@@ -5,9 +5,6 @@ import android.app.Notification;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.halcyon.logger.HttpLogInterceptor;
-import com.halcyon.logger.ILogger;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;

@@ -75,6 +75,7 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingTop="4dp"
+                    android:layout_marginLeft="8dip"
                     android:weightSum="10">
 
                     <LinearLayout
@@ -85,7 +86,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/show_order_enter"
+                            android:id="@+id/nav_show"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="4dp"
@@ -109,7 +110,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/new_recommend"
+                            android:id="@+id/nav_invite"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="4dp"
@@ -121,7 +122,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="新品"
+                            android:text="邀请"
                             android:textColor="#777777"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -133,7 +134,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/nav_shaidan"
+                            android:id="@+id/nav_recharge"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="4dp"
@@ -145,7 +146,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:gravity="center"
-                            android:text="晒单"
+                            android:text="充值"
                             android:textColor="#777777"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -158,7 +159,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/nav_map"
+                            android:id="@+id/nav_notice"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="4dp"
@@ -170,7 +171,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:gravity="center"
-                            android:text="云购记录"
+                            android:text="开奖公告"
                             android:textColor="#777777"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -183,7 +184,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/nav_recharge"
+                            android:id="@+id/nav_help"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="4dp"
@@ -195,7 +196,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:gravity="center"
-                            android:text="充值"
+                            android:text="帮助中心"
                             android:textColor="#777777"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -432,8 +433,6 @@
                             android:id="@+id/img_shaidan1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
                             android:background="#cccccc"
                             fresco:actualImageScaleType="focusCrop" />
 

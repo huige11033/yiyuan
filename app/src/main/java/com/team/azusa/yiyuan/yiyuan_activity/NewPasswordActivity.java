@@ -34,9 +34,7 @@ public class NewPasswordActivity extends BaseActivity {
     CheckBox cbNewpass;
 
     private String phone;
-    private int type;
     private String time;
-    private boolean cancelrequest = false;
 
     @Override
     public int layout() {
@@ -51,7 +49,6 @@ public class NewPasswordActivity extends BaseActivity {
     @Override
     public void initData() {
         phone = getIntent().getStringExtra("phone");
-        type = getIntent().getIntExtra("type", 0);
         time = getIntent().getStringExtra("time");
     }
 
@@ -109,9 +106,4 @@ public class NewPasswordActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        OkHttpUtils.getInstance().cancelTag("NewPasswordActivity");
-        super.onDestroy();
-    }
 }

@@ -25,7 +25,6 @@ public class JumpUtils {
                                        String phone, String type,String time){
         Intent intent = new Intent(activity, NewPasswordActivity.class);
         intent.putExtra("phone", phone);
-        intent.putExtra("type", type);
         intent.putExtra("time", time);
         activity.startActivityForResult(intent, 200);
     }

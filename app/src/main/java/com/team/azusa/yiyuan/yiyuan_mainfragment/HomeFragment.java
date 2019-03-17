@@ -64,14 +64,16 @@ public class HomeFragment extends BaseFragment {
     ImageView titleSearch;
     @BindView(R.id.flash_view)
     FlashView flashView;
-    @BindView(R.id.new_recommend)
-    ImageButton newRecommend;
-    @BindView(R.id.nav_shaidan)
-    ImageButton navShaidan;
-    @BindView(R.id.nav_map)
-    ImageButton navMap;
+    @BindView(R.id.nav_notice)
+    ImageButton navNotice;
+    @BindView(R.id.nav_show)
+    ImageButton navShow;
+    @BindView(R.id.nav_help)
+    ImageButton navHelp;
     @BindView(R.id.nav_recharge)
     ImageButton navRecharge;
+    @BindView(R.id.nav_invite)
+    ImageButton navInvite;
     @BindView(R.id.ptrpulltorefresh)
     PtrFrameLayout ptrpulltorefresh;
     @BindView(R.id.recyclerview_popularity)
@@ -394,19 +396,24 @@ public class HomeFragment extends BaseFragment {
         OkHttpUtils.getInstance().cancelTag("HomeFragment");
     }
 
-    @OnClick({R.id.home_rl_newpublic, R.id.home_rl_popularity, R.id.home_shaidan, R.id.click_xiangou, R.id.click_jiadian, R.id.click_phone, R.id.click_gold, R.id.click_car, R.id.title_search, R.id.new_recommend, R.id.nav_shaidan, R.id.nav_map, R.id.nav_recharge})
+    @OnClick({R.id.home_rl_newpublic, R.id.home_rl_popularity, R.id.home_shaidan,
+            R.id.click_xiangou, R.id.click_jiadian, R.id.click_phone,
+            R.id.click_gold, R.id.click_car, R.id.title_search, R.id.nav_notice,
+            R.id.nav_show, R.id.nav_help,R.id.nav_invite, R.id.nav_recharge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_search:
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.new_recommend:
+            case R.id.nav_help:
                 break;
-            case R.id.nav_shaidan:
+            case R.id.nav_notice:
+                break;
+            case R.id.nav_show:
                 turntoShareOrderPage();
                 break;
-            case R.id.nav_map:
+            case R.id.nav_invite:
                 Intent intent1 = new Intent(getActivity(), AllPartakerActivity.class);
                 intent1.putExtra("what", 1);
                 startActivity(intent1);
