@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,33 +11,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.app.UserManager;
+import com.team.azusa.yiyuan.base.BaseActivity;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.database.SharedPreferenceData;
 import com.team.azusa.yiyuan.event.LoginEvent;
 import com.team.azusa.yiyuan.R;
-import com.team.azusa.yiyuan.bean.User;
-import com.team.azusa.yiyuan.utils.ConstanceUtils;
+import com.team.azusa.yiyuan.model.UserBean;
 import com.team.azusa.yiyuan.utils.MyToast;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.StringUtil;
 import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.widget.MyDialog;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 import de.greenrobot.event.EventBus;
 
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 
     private ImageView returnLogin;
     private Button buttonLogin;
@@ -99,50 +92,75 @@ public class LoginActivity extends Activity implements OnClickListener {
     private void login() {
         username = etUserName.getText().toString();
         password = eTpassword.getText().toString();
-        if (!StringUtil.isEmpty(username) && !StringUtil.isEmpty(password))
-            OkHttpUtils.get().url(Config.IP + "/yiyuan/user_UserLogin")
-                    .addParams("loginName", username)
-                    .addParams("loginPwd", password).build().execute(new StringCallback() {
-                @Override
-                public void onError(Request request, Exception e) {
-                    MyToast.showToast("网络连接出错");
-                    loding_dialog.dismiss();
-                }
+        if (!StringUtil.isEmpty(username) && !StringUtil.isEmpty(password)) {
+            Map<String,String> params = new HashMap<>();
+            params.put("mobile",username);
+            params.put("password",password);
 
-                @Override
-                public void onResponse(String response) {
-                    loding_dialog.dismiss();
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        String loginResponses = jsonObject.get("messageInfo").toString();
-                        if ("成功".equals(loginResponses)) {
-                            ObjectMapper mapper = new ObjectMapper();
-                            UserUtils.userisLogin = true;
-                            String userJson = jsonObject.get("user").toString();
-                            UserUtils.user = mapper.readValue(userJson, User.class);
-
-                            //JPush设置用户别名，后台用UserID当做别名区分唯一用户
-                            JPushInterface.setAlias(ConstanceUtils.CONTEXT, UserUtils.user.getId(), null);
-
-                            EventBus.getDefault().post(new LoginEvent(true));
-                            //保存用户名
-                            SharedPreferenceData.getInstance().saveLoginName(LoginActivity.this, username);
-                            finish();
+            RequestService.request(Config.LOGIN_URL,params,TAG
+                    , new RequestCallBack<UserBean>() {
+                        @Override
+                        public void onAfter() {
+                            loding_dialog.dismiss();
                         }
-                        if ("用户名不存在".equals(loginResponses) || "密码不正确".equals(loginResponses) || "服务器出错，请稍后重试".equals(loginResponses)) {
-                            MyToast.showToast(loginResponses);
+
+                        @Override
+                        public void onError(String errMsg) {
+
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (JsonMappingException e) {
-                        e.printStackTrace();
-                    } catch (JsonParseException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
+                        @Override
+                        public void onResult(UserBean result) {
+                            UserManager.getInstance().login(result);
+                        }
+
+
+                    });
+
+//            OkHttpUtils.get().url(Config.IP + "/yiyuan/user_UserLogin")
+//                    .addParams("loginName", username)
+//                    .addParams("loginPwd", password).build().execute(new StringCallback() {
+//                @Override
+//                public void onError(Request request, Exception e) {
+//                    MyToast.showToast("网络连接出错");
+//                    loding_dialog.dismiss();
+//                }
+//
+//                @Override
+//                public void onResponse(String response) {
+//                    loding_dialog.dismiss();
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response);
+//                        String loginResponses = jsonObject.get("messageInfo").toString();
+//                        if ("成功".equals(loginResponses)) {
+//                            ObjectMapper mapper = new ObjectMapper();
+//                            UserUtils.userisLogin = true;
+//                            String userJson = jsonObject.get("user").toString();
+//                            UserUtils.user = mapper.readValue(userJson, User.class);
+//
+//                            //JPush设置用户别名，后台用UserID当做别名区分唯一用户
+//                            JPushInterface.setAlias(ConstanceUtils.CONTEXT, UserUtils.user.getId(), null);
+//
+//                            EventBus.getDefault().post(new LoginEvent(true));
+//                            //保存用户名
+//                            SharedPreferenceData.getInstance().saveLoginName(LoginActivity.this, username);
+//                            finish();
+//                        }
+//                        if ("用户名不存在".equals(loginResponses) || "密码不正确".equals(loginResponses) || "服务器出错，请稍后重试".equals(loginResponses)) {
+//                            MyToast.showToast(loginResponses);
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    } catch (JsonMappingException e) {
+//                        e.printStackTrace();
+//                    } catch (JsonParseException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+        }
         else {
             MyToast.showToast("用户名或密码不能为空");
         }

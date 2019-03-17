@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.team.azusa.yiyuan.bean.User;
+import com.team.azusa.yiyuan.model.UserBean;
 
 /**
  * Created by Azusa on 2016/1/19.
@@ -13,6 +14,7 @@ import com.team.azusa.yiyuan.bean.User;
 public class UserUtils {
     public static boolean userisLogin = false;
     public static User user = new User();
+    public static UserBean userBean ;
 
     public static void sendConfirmCodeTo(String phone) {
         ConstanceUtils.THE_COUNT_DOWN_TIME = System.currentTimeMillis();
@@ -39,5 +41,8 @@ public class UserUtils {
             }
         }
         return false;
+    }
+
+    public static void saveUser(UserBean user){
     }
 }

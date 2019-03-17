@@ -7,7 +7,10 @@ import android.view.View;
 
 import com.squareup.okhttp.Request;
 import com.team.azusa.yiyuan.R;
+import com.team.azusa.yiyuan.base.BaseActivity;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.utils.StringUtil;
@@ -19,11 +22,14 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ForgetPasswordActivity extends Activity {
+public class ForgetPasswordActivity extends BaseActivity {
 
     @Bind(R.id.forgetPassword_edit)
     ClearEditText forgetPasswordEdit;
@@ -53,41 +59,24 @@ public class ForgetPasswordActivity extends Activity {
                     MyToast.showToast("号码不是手机号");
                     return;
                 }
-                OkHttpUtils.get().tag("ForgetPasswordActivity")
-                        .url(Config.IP + "/yiyuan/user_forgetPwd")
-                        .addParams("mobile", Phone)
-                        .tag("ForgetPasswordActivity")
-                        .build().execute(new StringCallback() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-                        if (cancelreq) {
-                            return;
-                        }
-                        MyToast.showToast("网络连接错误");
-                    }
+                Map<String,String> params = new HashMap<>();
+                params.put("mobile",Phone);
+                params.put("act","restpwd");
 
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            UserUtils.sendConfirmCodeTo(Phone);
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            if ("null".equals(message)) {
-                                MyToast.showToast_center("用户不存在");
-                            } else if ("fail".equals(message)) {
-                                MyToast.showToast_center("发送验证码失败");
-                            } else if ("success".equals(message)) {
-                                MyToast.showToast_center("验证码发送成功");
-                                Intent intent = new Intent(ForgetPasswordActivity.this, ConfirmationActivity.class);
-                                intent.putExtra("phone", Phone);
-                                intent.putExtra("type", 321);
-                                startActivityForResult(intent, 100);
+                RequestService.request(Config.IP + "/app/register/sendCode",params,TAG
+                        , new RequestCallBack<String>() {
+                            @Override
+                            public void onError(String errMsg) {
+
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+
+                            @Override
+                            public void onResult(String result) {
+
+                            }
+
+
+                        });
                 break;
         }
     }

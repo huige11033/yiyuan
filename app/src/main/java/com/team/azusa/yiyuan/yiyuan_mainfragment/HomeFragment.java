@@ -27,15 +27,16 @@ import com.team.azusa.yiyuan.adapter.HomePublicRviewAdapter;
 import com.team.azusa.yiyuan.bean.Advert;
 import com.team.azusa.yiyuan.bean.ProductDto;
 import com.team.azusa.yiyuan.bean.ShowOrderDto;
-import com.team.azusa.yiyuan.callback.AdvertCallback;
 import com.team.azusa.yiyuan.callback.AllProductCallback;
 import com.team.azusa.yiyuan.callback.DaoJiShiCallback;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.callback.ShowOrderCallback;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.event.IntParameterEvent;
 import com.team.azusa.yiyuan.event.SortEvent;
 import com.team.azusa.yiyuan.listener.MyOnClickListener;
 import com.team.azusa.yiyuan.listener.RecyclerViewItemClickLitener;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.ImageLoader;
 import com.team.azusa.yiyuan.utils.MyToast;
@@ -284,38 +285,37 @@ public class HomeFragment extends Fragment {
         flashView.setOnPageClickListener(new MyOnClickListener() {
             @Override
             public void onClick(int position) {
-                clickSearch(advertDatas.get(position).getKey_word());
+                clickSearch(advertDatas.get(position).linkUrl);
             }
         });
     }
 
     //获取广告位信息
     private void getAdvertData() {
-        OkHttpUtils.get().url(Config.IP + "/yiyuan/b_getAdvert")
-                .tag("HomeFragment").build().execute(new AdvertCallback() {
-            @Override
-            public void onError(Request request, Exception e) {
-                if (cancelRequest) {
-                    return;
-                }
-                MyToast.showToast("网络链接出错");
-            }
+        RequestService.request(Config.IP + "/app/index/findByAdv",
+                "HomeFragment",
+                new RequestCallBack<ArrayList<Advert>>() {
+                    @Override
+                    public void onError(String errMsg) {
+                        MyToast.showToast(errMsg);
+                    }
 
-            @Override
-            public void onResponse(ArrayList<Advert> response) {
-                advertDatas = response;
-                ArrayList<String> temp = new ArrayList<>();
-                for (int i = 0; i < response.size(); i++) {
-                    temp.add(response.get(i).getUrl());
-                }
-                if (!advimageUrls.containsAll(temp)) {
-                    advimageUrls = temp;
-                    flashView.setImageUris(advimageUrls);
-                }
-                advfresh_ok = true;
-                handler.sendEmptyMessage(2);
-            }
-        });
+                    @Override
+                    public void onResult(ArrayList<Advert> result) {
+                        advertDatas = result;
+                        ArrayList<String> temp = new ArrayList<>();
+                        for (int i = 0; i < result.size(); i++) {
+                            temp.add(result.get(i).photoPath);
+                        }
+                        if (!advimageUrls.containsAll(temp)) {
+                            advimageUrls = temp;
+                            flashView.setImageUris(advimageUrls);
+                        }
+                        advfresh_ok = true;
+                        handler.sendEmptyMessage(2);
+
+                    }
+                });
     }
 
     private void iniView() {

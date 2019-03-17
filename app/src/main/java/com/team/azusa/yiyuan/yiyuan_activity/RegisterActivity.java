@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,25 +7,27 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.squareup.okhttp.Request;
 import com.team.azusa.yiyuan.R;
+import com.team.azusa.yiyuan.base.BaseActivity;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
+import com.team.azusa.yiyuan.event.LoginEvent;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
+import com.team.azusa.yiyuan.utils.JumpUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.StringUtil;
-import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.widget.ClearEditText;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends BaseActivity {
 
     @Bind(R.id.regisiter_edit)
     ClearEditText regisiterEdit;
@@ -70,37 +71,26 @@ public class RegisterActivity extends Activity {
                     MyToast.showToast("号码不是手机号");
                     return;
                 }
-                OkHttpUtils.get().tag("RegisterActivity")
-                        .url(Config.IP + "/yiyuan/user_registSendCode")
-                        .addParams("mobile", Phone)
-                        .build().execute(new StringCallback() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-                        MyToast.showToast("网络连接出错");
-                    }
+                Map<String,String>params = new HashMap<>();
+                params.put("mobile",Phone);
+                params.put("act","regist");
 
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            if ("exist".equals(message)) {
-                                MyToast.showToast_center("用户已存在");
-                            } else if ("fail".equals(message)) {
-                                MyToast.showToast_center("发送验证码失败");
-                            } else if ("success".equals(message)) {
-                                UserUtils.sendConfirmCodeTo(Phone);
-                                MyToast.showToast_center("验证码发送成功");
-                                Intent intent = new Intent(RegisterActivity.this, ConfirmationActivity.class);
-                                intent.putExtra("phone", Phone);
-                                intent.putExtra("type", 123);
-                                startActivityForResult(intent, 1000);
+                RequestService.request(Config.SEND_CODE ,params,TAG
+                , new RequestCallBack<String>() {
+                            @Override
+                            public void onError(String errMsg) {
+                                MyToast.showToast(errMsg);
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+
+                            @Override
+                            public void onResult(String result) {
+                                EventBus.getDefault().post(new LoginEvent(true));
+                                JumpUtils.jumpConfirmation(mContext,Phone,"regist");
+                            }
+
+
+                        });
+
                 break;
         }
     }
