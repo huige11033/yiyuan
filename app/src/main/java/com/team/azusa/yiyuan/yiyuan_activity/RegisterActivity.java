@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity {
                 params.put("mobile",Phone);
                 params.put("act","regist");
 
-                RequestService.request(Config.SEND_CODE ,params,TAG
+                RequestService.request(Config.SEND_CODE_URL,params,TAG
                 , new RequestCallBack<String>() {
                             @Override
                             public void onError(String errMsg) {

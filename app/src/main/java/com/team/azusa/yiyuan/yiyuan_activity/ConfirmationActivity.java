@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,24 +7,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.okhttp.Request;
 import com.team.azusa.yiyuan.R;
+import com.team.azusa.yiyuan.base.BaseActivity;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
+import com.team.azusa.yiyuan.utils.JumpUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.widget.ClearEditText;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ConfirmationActivity extends Activity {
+public class ConfirmationActivity extends BaseActivity {
 
     @Bind(R.id.confirmation_edit)
     ClearEditText confirmationEdit;
@@ -37,10 +38,8 @@ public class ConfirmationActivity extends Activity {
     TextView tx2;
     @Bind(R.id.confirmation_again)
     Button confirmation_again;
-    private boolean cancelreq;
     private String phone;
-    private int type;
-    private String time;//时间戳
+    private String type;
     int second = 120 - (int) (System.currentTimeMillis() - ConstanceUtils.THE_COUNT_DOWN_TIME) / 1000;
     private Runnable runnable = new Runnable() {
         @Override
@@ -67,7 +66,7 @@ public class ConfirmationActivity extends Activity {
         setContentView(R.layout.activity_confirmation);
         ButterKnife.bind(this);
         phone = getIntent().getStringExtra("phone");
-        type = getIntent().getIntExtra("type", 0);
+        type = getIntent().getStringExtra("type");
         handler.post(runnable);
     }
 
@@ -87,42 +86,21 @@ public class ConfirmationActivity extends Activity {
                     MyToast.showToast("验证码长度不足");
                     return;
                 }
-
-                OkHttpUtils.get().tag("ConfirmationActivity")
-                        .url(Config.IP + "/yiyuan//user_checkMsgCode")
-                        .addParams("mobile", phone)
-                        .addParams("msgCode", confirmCode)
-                        .tag("ConfirmationActivity")
-                        .build().execute(new StringCallback() {
+                Map<String,String> params = new HashMap<>();
+                params.put("msgCode",confirmCode);
+                params.put("mobile",phone);
+                RequestService.request(Config.CHECK_CODE_URL, params, TAG,
+                        new RequestCallBack<String> (){
                     @Override
-                    public void onError(Request request, Exception e) {
-                        if (cancelreq) {
-                            return;
-                        }
-                        MyToast.showToast("网络连接出错");
+                    public void onError(String errMsg) {
+                        MyToast.showToast(errMsg);
                     }
 
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            time = jsonObject.getString("time");
-
-                            if ("fail".equals(message)) {
-                                MyToast.showToast_center("验证码错误");
-                            } else if ("success".equals(message)) {
-                                MyToast.showToast_center("验证成功");
-                                Intent intent = new Intent(ConfirmationActivity.this, NewPasswordActivity.class);
-                                intent.putExtra("phone", phone);
-                                intent.putExtra("type", type);
-                                intent.putExtra("time", time);
-                                startActivityForResult(intent, 200);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onResult(String result) {
+                        JumpUtils.jumpNewPassword(ConfirmationActivity.this,phone,type,result);
                     }
+
                 });
                 break;
         }
@@ -154,7 +132,6 @@ public class ConfirmationActivity extends Activity {
     @Override
     protected void onDestroy() {
         ButterKnife.unbind(this);
-        cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("ConfirmationActivity");
         super.onDestroy();
     }

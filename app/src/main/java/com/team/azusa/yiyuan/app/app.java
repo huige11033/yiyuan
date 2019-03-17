@@ -5,6 +5,9 @@ import android.app.Notification;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.halcyon.logger.HttpLogInterceptor;
+import com.halcyon.logger.ILogger;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
@@ -54,7 +57,6 @@ public class app extends Application {
                 | Notification.DEFAULT_VIBRATE
                 | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
         JPushInterface.setPushNotificationBuilder(1, builder);
-
 
 //        //初始化内存检测工具
 //        LeakCanary.install(this);

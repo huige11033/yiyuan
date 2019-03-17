@@ -15,7 +15,9 @@ public class Config {
 
 
     public static String LOGIN_URL = IP + "/app/login/login";
-    public static String SEND_CODE = IP + "/app/register/sendCode";
+    public static String SEND_CODE_URL = IP + "/app/register/sendCode";
+    public static String CHECK_CODE_URL = IP + "/app/register/checkMsg";
+    public static String SAVE_PASSWORD_URL = IP + "/app/register/savePasswd";
 
 
 }

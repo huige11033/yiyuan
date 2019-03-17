@@ -1,9 +1,11 @@
 package com.team.azusa.yiyuan.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import com.team.azusa.yiyuan.yiyuan_activity.ConfirmationActivity;
+import com.team.azusa.yiyuan.yiyuan_activity.NewPasswordActivity;
 
 /**
  * @author : chenru
@@ -17,5 +19,14 @@ public class JumpUtils {
         intent.putExtra("phone",phone);
         intent.putExtra("type",type);
         context.startActivity(intent);
+    }
+
+    public static void jumpNewPassword(Activity activity,
+                                       String phone, String type,String time){
+        Intent intent = new Intent(activity, NewPasswordActivity.class);
+        intent.putExtra("phone", phone);
+        intent.putExtra("type", type);
+        intent.putExtra("time", time);
+        activity.startActivityForResult(intent, 200);
     }
 }

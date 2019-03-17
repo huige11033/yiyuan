@@ -44,6 +44,10 @@ public abstract class RequestCallBack<T> extends Callback<ResultBean<T>> {
 
     @Override
     public void onResponse(ResultBean<T> resultBean) {
+        if(resultBean == null){
+            onError("数据解析错误");
+            return;
+        }
         if (TextUtils.equals(resultBean.code, RESULT_OK)) {
             onResult(resultBean.data);
         } else {
