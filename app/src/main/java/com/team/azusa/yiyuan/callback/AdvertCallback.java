@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Response;
 import com.team.azusa.yiyuan.bean.Advert;
-import com.team.azusa.yiyuan.bean.JieXiaoDto;
 import com.zhy.http.okhttp.callback.Callback;
 
 import org.json.JSONException;

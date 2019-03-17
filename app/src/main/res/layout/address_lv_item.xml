@@ -1,4 +1,4 @@
-<com.daimajia.swipe.SwipeLayout
+<com.daimajia.swipe.SwipeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/example"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:background="@drawable/bg_gray2deepgray_sel"
-            android:src="@drawable/delete_up"
+            app:srcCompat="@drawable/delete_up"
             android:text="删除"
             android:textColor="#ffffff"/>
     </LinearLayout>
@@ -77,7 +77,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="20dp"
             android:background="@color/alpha_white"
-            android:src="@drawable/screening_select"
+            app:srcCompat="@drawable/screening_select"
             android:visibility="gone"/>
 
         <!--What you want to show in SurfaceView-->

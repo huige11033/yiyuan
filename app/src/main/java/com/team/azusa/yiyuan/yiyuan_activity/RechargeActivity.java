@@ -1,10 +1,10 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,19 +16,19 @@ import com.team.azusa.yiyuan.recharge_fragment.CardRechargeFragment;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RechargeActivity extends AppCompatActivity {
 
-    @Bind(R.id.return_recharge)
+    @BindView(R.id.return_recharge)
     ImageView returnRecharge;
-    @Bind(R.id.tv_acountdetail)
+    @BindView(R.id.tv_acountdetail)
     TextView tvAcountdetail;
-    @Bind(R.id.tablayout_recharge)
+    @BindView(R.id.tablayout_recharge)
     TabLayout mtablayout;
-    @Bind(R.id.vp_recharge)
+    @BindView(R.id.vp_recharge)
     ViewPager mviewpager;
 
     private View view;

@@ -2,6 +2,7 @@ package com.team.azusa.yiyuan.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -11,12 +12,11 @@ import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 
 import com.team.azusa.yiyuan.R;
 
 
-public class ClearEditText extends EditText implements OnFocusChangeListener,
+public class ClearEditText extends AppCompatEditText implements OnFocusChangeListener,
 		TextWatcher {
 	/**
 	 * 删除按钮的引用

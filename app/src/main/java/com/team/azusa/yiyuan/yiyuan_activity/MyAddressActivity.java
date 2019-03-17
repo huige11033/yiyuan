@@ -1,9 +1,7 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,6 +9,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AddressLvAdapter;
 import com.team.azusa.yiyuan.bean.AddressMessage;
@@ -25,18 +24,17 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class MyAddressActivity extends AppCompatActivity {
+public class MyAddressActivity extends BaseActivity {
 
-    @Bind(R.id.lv_address)
+    @BindView(R.id.lv_address)
     ListView lvAddress;
-    @Bind(R.id.address_nodata)
+    @BindView(R.id.address_nodata)
     RelativeLayout rl_addressNodata;
-    @Bind(R.id._sure)
+    @BindView(R.id._sure)
     Button sure;
 
     private ArrayList<AddressMessage> datas = new ArrayList<>();
@@ -50,10 +48,12 @@ public class MyAddressActivity extends AppCompatActivity {
     private boolean cancelrequest = false; //是否取消网络请求
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_address);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_my_address;
+    }
+
+    @Override
+    public void initView() {
         from_what = getIntent().getIntExtra("what", -1);
         if (from_what != -1) {
             sure.setVisibility(View.VISIBLE);
@@ -72,10 +72,20 @@ public class MyAddressActivity extends AppCompatActivity {
         });
         myDialog = new MyDialog();
         loding_dialog = myDialog.showLodingDialog(this);
-        initDatas();
+        getData();
     }
 
-    private void initDatas() {
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    private void getData() {
         OkHttpUtils.get().tag("MyAddressActivity")
                 .url(Config.IP + "/yiyuan/user_getUserAddress")
                 .addParams("firstResult", "0")
@@ -158,9 +168,8 @@ public class MyAddressActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         cancelrequest = true;
-        ButterKnife.unbind(this);
         OkHttpUtils.getInstance().cancelTag("MyAddressActivity");
         super.onDestroy();
     }

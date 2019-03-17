@@ -1,10 +1,8 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.YunDetailLvAdapter;
 import com.team.azusa.yiyuan.bean.BuyRecordInfo;
@@ -39,19 +38,18 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Azusa on 2016/2/5.
  */
-public class YunRecordDetailActivity extends AppCompatActivity {
+public class YunRecordDetailActivity extends BaseActivity {
 
-    @Bind(R.id.return_yundetail)
+    @BindView(R.id.return_yundetail)
     ImageView btn_back;
-    @Bind(R.id.yunrecorddetail_lv)
+    @BindView(R.id.yunrecorddetail_lv)
     ListView listview;
     private AlertDialog dialog;
 
@@ -72,22 +70,18 @@ public class YunRecordDetailActivity extends AppCompatActivity {
     private Button btn_gotobuy; //第66云正在进行
     private Button btn_buyagain; //继续购买
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_yun_record);
-        ButterKnife.bind(this);
-        initData();
-    }
-
-    private void initData() {
+    public void initData() {
         String data = getIntent().getStringExtra("product_data");
         buyRecordInfo = JsonUtils.getObjectfromString(data, BuyRecordInfo.class);
         initView();
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_yun_record;
+    }
+
+    public void initView() {
         dialog = new MyDialog().showLodingDialog(this);
 
         initHead();
@@ -135,7 +129,7 @@ public class YunRecordDetailActivity extends AppCompatActivity {
         getYunNum();
     }
 
-    private void setListener() {
+    public void setListener() {
 
         //第666。。。云正在进行，跳转至商品详情页面
         btn_gotobuy.setOnClickListener(new View.OnClickListener() {
@@ -230,9 +224,8 @@ public class YunRecordDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         OkHttpUtils.getInstance().cancelTag("YunRecordDetailActivity");
     }
 
@@ -244,6 +237,4 @@ public class YunRecordDetailActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
 }

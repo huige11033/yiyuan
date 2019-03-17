@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.adapter;
 
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,14 +10,13 @@ import android.widget.TextView;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.RecordDto;
 import com.team.azusa.yiyuan.listener.MyOnClickListener;
-import com.team.azusa.yiyuan.listener.OnLoadListener;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.DateUtil;
 import com.team.azusa.yiyuan.utils.StringUtil;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -95,27 +93,27 @@ public class YunDetailLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_playcount)
+        @BindView(R.id.tv_playcount)
         TextView tvPlaycount;
-        @Bind(R.id.yunnum_gv)
+        @BindView(R.id.yunnum_gv)
         GridLayout yunnumGv;
-        @Bind(R.id.moreyunnum_rl)
+        @BindView(R.id.moreyunnum_rl)
         RelativeLayout moreyunnumRl;
-        @Bind(R.id.tv1)
+        @BindView(R.id.tv1)
         TextView tv1;
-        @Bind(R.id.tv2)
+        @BindView(R.id.tv2)
         TextView tv2;
-        @Bind(R.id.tv3)
+        @BindView(R.id.tv3)
         TextView tv3;
-        @Bind(R.id.tv4)
+        @BindView(R.id.tv4)
         TextView tv4;
-        @Bind(R.id.tv5)
+        @BindView(R.id.tv5)
         TextView tv5;
-        @Bind(R.id.tv6)
+        @BindView(R.id.tv6)
         TextView tv6;
-        @Bind(R.id.tv7)
+        @BindView(R.id.tv7)
         TextView tv7;
-        @Bind(R.id.tv8)
+        @BindView(R.id.tv8)
         TextView tv8;
         ArrayList<TextView> textViews;
 

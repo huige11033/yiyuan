@@ -1,8 +1,7 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
+
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,14 +10,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.team.azusa.yiyuan.app.UserManager;
-import com.team.azusa.yiyuan.base.BaseActivity;
+
 import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.database.SharedPreferenceData;
 import com.team.azusa.yiyuan.event.LoginEvent;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.model.UserBean;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
+import com.team.azusa.yiyuan.R;
+import com.team.azusa.yiyuan.bean.User;
+import com.team.azusa.yiyuan.config.Config;
+import com.team.azusa.yiyuan.database.SharedPreferenceData;
+import com.team.azusa.yiyuan.event.LoginEvent;
+import com.team.azusa.yiyuan.utils.ConstanceUtils;
+
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.StringUtil;
@@ -28,7 +41,10 @@ import com.team.azusa.yiyuan.widget.MyDialog;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
+
+import androidx.appcompat.app.AlertDialog;
+import cn.jpush.android.api.JPushInterface;
+
 import de.greenrobot.event.EventBus;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -42,14 +58,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     private AlertDialog loding_dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        iniView();
+    public int layout() {
+        return R.layout.activity_login;
     }
 
+    @Override
+    public void initData() {
 
-    private void iniView() {
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         returnLogin = (ImageView) findViewById(R.id.return_login);
         buttonLogin = (Button) findViewById(R.id.but_login);
         tvregister = (TextView) findViewById(R.id.tv_register);
@@ -106,7 +129,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
                         @Override
                         public void onError(String errMsg) {
-
+                            MyToast.showToast(errMsg);
                         }
 
                         @Override
@@ -172,11 +195,5 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             EventBus.getDefault().post(new LoginEvent(false));
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 }

@@ -2,7 +2,7 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -10,13 +10,13 @@ import android.widget.EditText;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.UserUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AlterUserNameActivity extends AppCompatActivity {
 
-    @Bind(R.id.name_ET)
+    @BindView(R.id.name_ET)
     EditText nameET;
     private String name;
     private Intent intent = new Intent();
@@ -56,11 +56,5 @@ public class AlterUserNameActivity extends AppCompatActivity {
                 name_finish("name");
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

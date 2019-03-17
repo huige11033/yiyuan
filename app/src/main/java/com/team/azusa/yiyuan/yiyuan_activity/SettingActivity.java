@@ -3,8 +3,6 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -12,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.Setting;
 import com.team.azusa.yiyuan.callback.SettingCallback;
@@ -32,26 +31,25 @@ import org.json.JSONObject;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BaseActivity {
 
 
-    @Bind(R.id.btn_unlogin)
+    @BindView(R.id.btn_unlogin)
     Button unlogin_btn;
-    @Bind(R.id.tv_newversion)
+    @BindView(R.id.tv_newversion)
     TextView tvNewversion;
-    @Bind(R.id.wiperSwitch)
+    @BindView(R.id.wiperSwitch)
     WiperSwitch wiperSwitch;
-    @Bind(R.id.cache_size)
+    @BindView(R.id.cache_size)
     TextView cacheSize;
-    @Bind(R.id.tv_callcenter)
+    @BindView(R.id.tv_callcenter)
     TextView callcenter;
-    @Bind(R.id.rl_edtmsg)
+    @BindView(R.id.rl_edtmsg)
     RelativeLayout rlCenter;
-    @Bind(R.id.rl_safeseting)
+    @BindView(R.id.rl_safeseting)
     RelativeLayout rlSafeseting;
     private MyDialog myDialog = new MyDialog();
     private Dialog dialog;
@@ -59,14 +57,11 @@ public class SettingActivity extends AppCompatActivity {
     private String callnum = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
-        initView();
+    public int layout() {
+        return R.layout.activity_setting;
     }
 
-    private void initView() {
+    public void initView() {
         initData();
         //初始化无图模式开关
         tvNewversion.setText("" + SuggestionsActivity.getVersionName(ConstanceUtils.CONTEXT));
@@ -112,6 +107,11 @@ public class SettingActivity extends AppCompatActivity {
                 callcenter.setText(callnum);
             }
         });
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     @Override
@@ -167,12 +167,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @OnClick({R.id.return_seting, R.id.rl_edtmsg, R.id.rl_safeseting, R.id.rl_helpcenter, R.id.rl_suggess, R.id.rl_callcenter, R.id.rl_noimg, R.id.rl_acceptmsg, R.id.rl_clearcash, R.id.rl_newversion, R.id.rl_aboutus, R.id.rl_serviceagreement, R.id.btn_unlogin})

@@ -1,9 +1,10 @@
 package com.team.azusa.yiyuan.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.team.azusa.yiyuan.bean.User;
 import com.team.azusa.yiyuan.model.UserBean;
@@ -20,7 +21,7 @@ public class UserUtils {
         ConstanceUtils.THE_COUNT_DOWN_TIME = System.currentTimeMillis();
     }
 
-    public static boolean isNetworkAvailable(Activity activity) {
+    public static boolean isNetworkAvailable(FragmentActivity activity) {
         Context context = activity.getApplicationContext();
         // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

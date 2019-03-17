@@ -1,9 +1,7 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AccountDetails_Chongzhi_LvAdapter;
 import com.team.azusa.yiyuan.adapter.AccountDetails_Xiaofei_LvAdapter;
@@ -28,29 +27,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * Created by Delete_exe on 2016/3/22.
  */
-public class AccountDetailsActivity extends Activity {
-    @Bind(R.id.radio_group)
+public class AccountDetailsActivity extends BaseActivity {
+    @BindView(R.id.radio_group)
     RadioGroup radioGroup;
-    @Bind(R.id.account_money_type)
+    @BindView(R.id.account_money_type)
     TextView accountMoneyType;
-    @Bind(R.id.account_money)
+    @BindView(R.id.account_money)
     TextView accountMoney;
-    @Bind(R.id.type_1)
+    @BindView(R.id.type_1)
     TextView type1;
-    @Bind(R.id.type_2)
+    @BindView(R.id.type_2)
     TextView type2;
-    @Bind(R.id.type_3)
+    @BindView(R.id.type_3)
     TextView type3;
-    @Bind(R.id.account_detials_chongzhi)
+    @BindView(R.id.account_detials_chongzhi)
     PulluptoRefreshListview accountDetialsChongzhi_lv;
-    @Bind(R.id.account_detials_xiaofei)
+    @BindView(R.id.account_detials_xiaofei)
     PulluptoRefreshListview accountDetialsXiaofei_lv;
     private MyDialog myDialog = new MyDialog();
     private AlertDialog loading_dialog;
@@ -65,16 +63,28 @@ public class AccountDetailsActivity extends Activity {
     private boolean cancelrequest = false; //是否取消网络请求
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_details);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_account_details;
+    }
+
+    @Override
+    public void initView() {
         loading_dialog = myDialog.showLodingDialog(this);
         loading_dialog.setOnKeyListener(backlistener);
         initView(1);
         initData(1);
         initView(2);
         initData(2);
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     public void initData(int part) {
@@ -221,10 +231,9 @@ public class AccountDetailsActivity extends Activity {
     };
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("AccountDetailsActivity");
-        ButterKnife.unbind(this);
     }
 }

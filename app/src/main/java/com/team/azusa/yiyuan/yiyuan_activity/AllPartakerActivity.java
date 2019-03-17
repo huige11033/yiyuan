@@ -1,12 +1,11 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.PartakerRecordAdapter;
 import com.team.azusa.yiyuan.bean.JoinRecordDto;
@@ -19,13 +18,12 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AllPartakerActivity extends Activity {
+public class AllPartakerActivity extends BaseActivity {
 
-    @Bind(R.id.all_partaker_recordlv)
+    @BindView(R.id.all_partaker_recordlv)
     PulluptoRefreshListview allPartakerRecordlv;    //Listview
 
     private PartakerRecordAdapter adapter;         //Listview adapter           //数据
@@ -36,15 +34,16 @@ public class AllPartakerActivity extends Activity {
     private int what; //区分是显示全站购买记录还是某商品的所有购买记录 1为全站，0为某商品
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_allpartaker);
-        ButterKnife.bind(this);
-        iniData();
-        setListener();
+    public int layout() {
+        return R.layout.activity_allpartaker;
     }
 
-    private void setListener() {
+    @Override
+    public void initView() {
+
+    }
+
+    public void setListener() {
         allPartakerRecordlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,7 +59,7 @@ public class AllPartakerActivity extends Activity {
         });
     }
 
-    private void iniData() {
+    public void initData() {
         Intent intent = getIntent();
         what = intent.getIntExtra("what", -1);
         if (what == -1) {
@@ -147,9 +146,8 @@ public class AllPartakerActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         cancelnet = true;
         OkHttpUtils.getInstance().cancelTag("AllPartakerActivity");
     }

@@ -13,7 +13,7 @@ import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -63,13 +63,13 @@ public class PayLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.view)
+        @BindView(R.id.view)
         View view;
-        @Bind(R.id.img_product)
+        @BindView(R.id.img_product)
         SimpleDraweeView imgProduct;
-        @Bind(R.id.tv_count)
+        @BindView(R.id.tv_count)
         TextView tvCount;
-        @Bind(R.id.tv_product_name)
+        @BindView(R.id.tv_product_name)
         TextView tvProductName;
 
         ViewHolder(View view) {

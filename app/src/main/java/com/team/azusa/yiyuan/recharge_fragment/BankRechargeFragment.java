@@ -1,11 +1,7 @@
 package com.team.azusa.yiyuan.recharge_fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.utils.StringUtil;
@@ -21,51 +18,45 @@ import com.team.azusa.yiyuan.utils.UserUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class BankRechargeFragment extends Fragment {
+public class BankRechargeFragment extends BaseFragment {
 
-    @Bind(R.id.tv_yuer)
+    @BindView(R.id.tv_yuer)
     TextView mTvYuer;
-    @Bind(R.id.radio50)
+    @BindView(R.id.radio50)
     RadioButton mRadio50;
-    @Bind(R.id.radio100)
+    @BindView(R.id.radio100)
     RadioButton mRadio100;
-    @Bind(R.id.radio200)
+    @BindView(R.id.radio200)
     RadioButton mRadio200;
-    @Bind(R.id.radio500)
+    @BindView(R.id.radio500)
     RadioButton mRadio500;
-    @Bind(R.id.radio1000)
+    @BindView(R.id.radio1000)
     RadioButton mRadio1000;
-    @Bind(R.id.edit_recharge)
+    @BindView(R.id.edit_recharge)
     EditText mEditRecharge;
-    @Bind(R.id.cb_weichatpay)
+    @BindView(R.id.cb_weichatpay)
     CheckBox mCbWeichatpay;
-    @Bind(R.id.rl_weichat_pay)
+    @BindView(R.id.rl_weichat_pay)
     RelativeLayout mRlWeichatPay;
-    @Bind(R.id.cb_alipay)
+    @BindView(R.id.cb_alipay)
     CheckBox mCbAlipay;
-    @Bind(R.id.rl_ali_pay)
+    @BindView(R.id.rl_ali_pay)
     RelativeLayout mRlAliPay;
-    @Bind(R.id.btn_recharge)
+    @BindView(R.id.btn_recharge)
     Button mBtnRecharge;
-    private View view;
     private ArrayList<RadioButton> mRadioButtons = new ArrayList<>(); //充值金额选取的btn
     private int rechargecount = 50; //充值金额
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.recharge_fg1_bank, null);
-        ButterKnife.bind(this, view);
-        initView();
-        return view;
+    public int layout() {
+        return R.layout.recharge_fg1_bank;
     }
 
-    private void initView() {
+    public void initView() {
         mRadioButtons.add(mRadio50);
         mRadioButtons.add(mRadio100);
         mRadioButtons.add(mRadio200);
@@ -76,6 +67,21 @@ public class BankRechargeFragment extends Fragment {
         mTvYuer.setText(UserUtils.user.getBalance() + ".00");
         //默认使用微信支付
         mCbWeichatpay.setChecked(true);
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     //更改按钮背景
@@ -100,12 +106,6 @@ public class BankRechargeFragment extends Fragment {
             }
 
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @OnClick({R.id.edit_recharge, R.id.radio50, R.id.radio100, R.id.radio200, R.id.radio500, R.id.radio1000, R.id.rl_weichat_pay, R.id.rl_ali_pay, R.id.btn_recharge})

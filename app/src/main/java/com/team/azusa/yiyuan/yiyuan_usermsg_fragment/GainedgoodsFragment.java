@@ -2,13 +2,8 @@ package com.team.azusa.yiyuan.yiyuan_usermsg_fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.LayoutInflater;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -16,35 +11,32 @@ import android.widget.ProgressBar;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.MygainedGoodsRviewAdapter;
 import com.team.azusa.yiyuan.bean.BuyRecordInfo;
 import com.team.azusa.yiyuan.callback.BuyRecordProductCallback;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.listener.RecyclerViewItemClickLitener;
+import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.JsonUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
-import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.yiyuan_activity.GoodsDetailsActivity;
-import com.team.azusa.yiyuan.yiyuan_activity.NewShareOrderActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.OrderProgressActivity;
-import com.team.azusa.yiyuan.yiyuan_activity.UsermsgActivity;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 /**
  * Created by Azusa on 2016/1/17.
  */
-public class GainedgoodsFragment extends Fragment {
-    @Bind(R.id.usermsg_fg2_rv)
+public class GainedgoodsFragment extends BaseFragment {
+    @BindView(R.id.usermsg_fg2_rv)
     XRecyclerView recyclerview;
-    private View view;
     private MygainedGoodsRviewAdapter adapter;
     private ArrayList<BuyRecordInfo> datas;
     private View footer;
@@ -57,19 +49,8 @@ public class GainedgoodsFragment extends Fragment {
     private int what; // 区别不同页面使用该fragment
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.usermsg_fgtab2, container, false);
-        ButterKnife.bind(this, view);
-        initData();
-        initView();
-        initAnimation();
-        what = getArguments().getInt("what", -1);
-        if (what != -1) {
-            getData(0);
-            initViewed = true;
-        }
-        return view;
+    public int layout() {
+        return R.layout.usermsg_fgtab2;
     }
 
     @Override
@@ -83,7 +64,7 @@ public class GainedgoodsFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-    private void initView() {
+    public void initView() {
         initFooter();
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ConstanceUtils.CONTEXT);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -132,9 +113,14 @@ public class GainedgoodsFragment extends Fragment {
         loadmore_pb = (ProgressBar) footer.findViewById(R.id.pull_to_refresh_load_progress);
     }
 
-    private void initData() {
+    public void initData() {
         user_id = getArguments().getString("user_id");
         datas = new ArrayList<>();
+        what = getArguments().getInt("what", -1);
+        if (what != -1) {
+            getData(0);
+            initViewed = true;
+        }
     }
 
     /**
@@ -142,7 +128,7 @@ public class GainedgoodsFragment extends Fragment {
      *
      * @param firstResult 要加载的第一条数据的position
      */
-    private void getData(final int firstResult) {
+    public void getData(final int firstResult) {
         OkHttpUtils.get().url(Config.IP + "/yiyuan/user_getUserWinProduct")
                 .addParams("userId", user_id).addParams("firstResult", firstResult + "")
                 .tag("GainedgoodsFragment")
@@ -165,8 +151,7 @@ public class GainedgoodsFragment extends Fragment {
         });
     }
 
-
-    private void initAnimation() {
+    public void initAnimation() {
         animation = AnimationUtils.loadAnimation(ConstanceUtils.CONTEXT, R.anim.myrotate);
         LinearInterpolator lin = new LinearInterpolator();
         animation.setInterpolator(lin); //设置插值器，匀速加载动画
@@ -174,8 +159,12 @@ public class GainedgoodsFragment extends Fragment {
     }
 
     @Override
+    public void setListener() {
+
+    }
+
+    @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("GainedgoodsFragment");
         super.onDestroyView();

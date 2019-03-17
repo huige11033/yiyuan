@@ -11,7 +11,7 @@ import com.team.azusa.yiyuan.bean.ProvCityAreaStreet;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -56,7 +56,7 @@ public class AddressSelectAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_recentsearchtext)
+        @BindView(R.id.tv_recentsearchtext)
         TextView tv_text;
 
         ViewHolder(View view) {

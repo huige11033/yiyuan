@@ -18,7 +18,7 @@ import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -87,15 +87,15 @@ public class PartakerRecordAdapter extends BaseAdapter {
     }
 
     static final class ViewCache {
-        @Bind(R.id.all_partaker_record)
+        @BindView(R.id.all_partaker_record)
         SimpleDraweeView img_all_partaker_record;//头像
-        @Bind(R.id.all_partaker_user_name)
+        @BindView(R.id.all_partaker_user_name)
         TextView all_partaker_user_name;//参与者名字
-        @Bind(R.id.tv_partaker_productname)
+        @BindView(R.id.tv_partaker_productname)
         TextView tv_partaker_productname;//参与记录所对应的商品名
-        @Bind(R.id.partaker_number)
+        @BindView(R.id.partaker_number)
         TextView partaker_number;//参与次数
-        @Bind(R.id.tv_lv_time)
+        @BindView(R.id.tv_lv_time)
         TextView tv_lv_time;
 
         ViewCache(View view) {

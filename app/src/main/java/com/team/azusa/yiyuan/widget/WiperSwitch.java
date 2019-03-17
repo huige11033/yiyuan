@@ -10,12 +10,11 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.team.azusa.yiyuan.R;
@@ -24,7 +23,7 @@ import com.team.azusa.yiyuan.utils.FrameAnimationController;
 /**
  * Created by Delete_exe on 2016/3/11.
  */
-public class WiperSwitch extends CheckBox {
+public class WiperSwitch extends AppCompatCheckBox {
     /**
      * 画笔
      */
@@ -363,10 +362,11 @@ public class WiperSwitch extends CheckBox {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha, Canvas.MATRIX_SAVE_FLAG
-                | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
-                | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
-                | Canvas.CLIP_TO_LAYER_SAVE_FLAG);
+//        canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha, Canvas.MATRIX_SAVE_FLAG
+//                | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
+//                | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
+//                | Canvas.CLIP_TO_LAYER_SAVE_FLAG);
+        canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha, Canvas.ALL_SAVE_FLAG);
         // 绘制蒙板
         canvas.drawBitmap(mMask, 0, mExtendOffsetY, mPaint);
         mPaint.setXfermode(mXfermode);

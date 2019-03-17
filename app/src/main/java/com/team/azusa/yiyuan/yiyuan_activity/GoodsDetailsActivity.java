@@ -1,14 +1,12 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.WinnerDto;
 import com.team.azusa.yiyuan.bean.YunNumDto;
@@ -42,73 +41,72 @@ import com.team.azusa.yiyuan.widget.MyDialog;
 import com.team.azusa.yiyuan.widget.RefreshHead;
 import com.zhy.http.okhttp.OkHttpUtils;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import cn.iwgang.countdownview.CountdownView;
 import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class GoodsDetailsActivity extends Activity implements CountdownView.OnCountdownEndListener {
+public class GoodsDetailsActivity extends BaseActivity implements CountdownView.OnCountdownEndListener {
 
-    @Bind(R.id.number_yun)
+    @BindView(R.id.number_yun)
     TextView numberYun;
-    @Bind(R.id.goods_details_tv)
+    @BindView(R.id.goods_details_tv)
     TextView goods_details;
-    @Bind(R.id.goods_details_rl)
+    @BindView(R.id.goods_details_rl)
     RelativeLayout goodsDetailsRl;
-    @Bind(R.id.cv_countdownView2)
+    @BindView(R.id.cv_countdownView2)
     CountdownView cvCountdownView2;         //倒计时
-    @Bind(R.id.goods_details_scrollview)
+    @BindView(R.id.goods_details_scrollview)
     ScrollView goods_details_scrollview;     //商品详情scrollview
-    @Bind(R.id.new_ptrpulltorefresh)
+    @BindView(R.id.new_ptrpulltorefresh)
     PtrFrameLayout newPtrpulltorefresh;     //下拉刷新
-    @Bind(R.id.details)
+    @BindView(R.id.details)
     TextView details;                       //商品介绍
-    @Bind(R.id.Price)
+    @BindView(R.id.Price)
     TextView Price;                       //商品价格
-    @Bind(R.id.number_partake)
+    @BindView(R.id.number_partake)
     TextView number_partake;                //已购买次数
-    @Bind(R.id.need_number)
+    @BindView(R.id.need_number)
     TextView need_number;                //总次数
-    @Bind(R.id.number_remainder)
+    @BindView(R.id.number_remainder)
     TextView number_remainder;                //剩余
-    @Bind(R.id.id_progressbar)
+    @BindView(R.id.id_progressbar)
     ProgressBar idProgressbar;//进度条
-    @Bind(R.id.sriv_avatar)
+    @BindView(R.id.sriv_avatar)
     SimpleDraweeView srivAvatar;                   //用户头像
-    @Bind(R.id.img_fm_allgoods)
+    @BindView(R.id.img_fm_allgoods)
     SimpleDraweeView img_fm_allgoods;                   //商品图片
-    @Bind(R.id.Countdown)
+    @BindView(R.id.Countdown)
     LinearLayout Countdown;                 //倒计时LinearLayout
-    @Bind(R.id.Calculating)
+    @BindView(R.id.Calculating)
     LinearLayout Calculating;               //水平缓冲ProgressBar  LinearLayout
-    @Bind(R.id.btn_go_shopping)
+    @BindView(R.id.btn_go_shopping)
     Button btnGoShopping;                   //立即一元云购
-    @Bind(R.id.btn_add_to_cart)
+    @BindView(R.id.btn_add_to_cart)
     Button btnAddToCart;                    //加入购物车
-    @Bind(R.id.btn_shopping_Calculation)
+    @BindView(R.id.btn_shopping_Calculation)
     Button btnShoppingCalculation;          //正在进行
-    @Bind(R.id.goods_details_layout_TV)     //无数据时文字
+    @BindView(R.id.goods_details_layout_TV)     //无数据时文字
             TextView goods_details_layout_TV;
-    @Bind(R.id.goods_details_layout)
+    @BindView(R.id.goods_details_layout)
     LinearLayout goods_details_layout;      //详情LinearLayout
-    @Bind(R.id.shaidan_number)
+    @BindView(R.id.shaidan_number)
     TextView shaidan_number;                //晒单数
-    @Bind(R.id.tv_gainer_nickname)
+    @BindView(R.id.tv_gainer_nickname)
     TextView tv_gainer_nickname;            //用户名
-    @Bind(R.id.tv_gainer_addr)
+    @BindView(R.id.tv_gainer_addr)
     TextView tv_gainer_addr;                //用户地址
-    @Bind(R.id.tv_shopping_time)
+    @BindView(R.id.tv_shopping_time)
     TextView tv_shopping_time;                //购物时间
-    @Bind(R.id.tv_announced_time)
+    @BindView(R.id.tv_announced_time)
     TextView tv_announced_time;                //揭晓时间
-    @Bind(R.id.lucky_number)
+    @BindView(R.id.lucky_number)
     TextView lucky_number;                //得奖云购码
-    @Bind(R.id.last_getter)
+    @BindView(R.id.last_getter)
     LinearLayout last_getter;      //上一获奖者
-    @Bind(R.id.layout_cart)
+    @BindView(R.id.layout_cart)
     RelativeLayout layout_cart;      //购物车
 
     private long time1 = (long) 10 * 1000;  //倒计时时间
@@ -170,16 +168,21 @@ public class GoodsDetailsActivity extends Activity implements CountdownView.OnCo
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_details);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_goods_details;
+    }
+
+    @Override
+    public void initView() {
         EventBus.getDefault().register(this);
-//        Countdown.setVisibility(View.VISIBLE);
+        //        Countdown.setVisibility(View.VISIBLE);
         cvCountdownView2.setOnCountdownEndListener(this);
         car_count = ConstanceUtils.carcount;
         initHead();
-        iniDate();
+    }
+
+    @Override
+    public void setListener() {
         badge = new BadgeView(GoodsDetailsActivity.this);
         badge.setTargetView(layout_cart);
         badge.setBackgroundResource(R.drawable.cart_count_bg);
@@ -187,8 +190,7 @@ public class GoodsDetailsActivity extends Activity implements CountdownView.OnCo
         badge.setBadgeMargin(0, 5, 3, 0);
     }
 
-
-    private void iniDate() {
+    public void initData() {
         loding_dialog = myDialog.showLodingDialog(this);
         loding_dialog.setOnKeyListener(backlistener);
         Intent intent = getIntent();
@@ -387,7 +389,7 @@ public class GoodsDetailsActivity extends Activity implements CountdownView.OnCo
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 handler_lgy.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000); //在这里进行刷新操作
-                iniDate();
+                initData();
             }
 
             @Override
@@ -534,8 +536,7 @@ public class GoodsDetailsActivity extends Activity implements CountdownView.OnCo
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         EventBus.getDefault().unregister(this);
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("GoodsDetailsActivity");

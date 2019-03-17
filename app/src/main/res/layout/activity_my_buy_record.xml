@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"
             android:padding="10dp"
-            android:src="@drawable/button_left_arrow"/>
+            cube_ptr:srcCompat="@drawable/button_left_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"

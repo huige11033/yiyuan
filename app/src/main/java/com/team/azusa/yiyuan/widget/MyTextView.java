@@ -1,13 +1,10 @@
 package com.team.azusa.yiyuan.widget;
 
-import android.app.Activity;
 import android.content.Context;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.FloatMath;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -16,7 +13,7 @@ import com.team.azusa.yiyuan.utils.ConstanceUtils;
  * Created by Azusa on 2016/3/23.
  * 重写onMeasure测量textview的高度
  */
-public class MyTextView extends TextView {
+public class MyTextView extends AppCompatTextView {
     public MyTextView(Context context) {
         super(context);
     }

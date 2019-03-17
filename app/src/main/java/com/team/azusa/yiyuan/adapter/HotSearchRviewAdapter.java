@@ -1,6 +1,6 @@
 package com.team.azusa.yiyuan.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,8 +9,6 @@ import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.listener.RecyclerViewItemClickLitener;
 
 import java.util.ArrayList;
-
-import cn.iwgang.countdownview.CountdownView;
 
 /**
  * Created by Azusa on 2015/12/27.

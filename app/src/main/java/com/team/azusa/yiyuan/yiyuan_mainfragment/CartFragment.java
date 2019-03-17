@@ -1,24 +1,21 @@
 package com.team.azusa.yiyuan.yiyuan_mainfragment;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.GoodsCarRviewAdapter;
 import com.team.azusa.yiyuan.bean.GoodsCar;
@@ -37,45 +34,53 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Azusa on 2015/1/25.
  */
-public class CartFragment extends Fragment {
-    @Bind(R.id.recyclerview_goodscar)
+public class CartFragment extends BaseFragment {
+    @BindView(R.id.recyclerview_goodscar)
     RecyclerView recyclerview;
-    @Bind(R.id.unlogin_goodscar)
+    @BindView(R.id.unlogin_goodscar)
     LinearLayout unloginlayout;
-    @Bind(R.id.nogoods_layout)
+    @BindView(R.id.nogoods_layout)
     LinearLayout nogoodsLayout;
-    @Bind(R.id.btn_envy)
+    @BindView(R.id.btn_envy)
     Button btn_login;
-    @Bind(R.id.tv_cart_count)
+    @BindView(R.id.tv_cart_count)
     TextView tv_CartCount;
-    @Bind(R.id.btn_gotobuy)
+    @BindView(R.id.btn_gotobuy)
     Button btn_Gotobuy;
-    @Bind(R.id.goodcar_bottom)
+    @BindView(R.id.goodcar_bottom)
     RelativeLayout bottom_layout;
-    private View view;
     private GoodsCarRviewAdapter adapter;
     private ArrayList<GoodsCar> datas;
     private AlertDialog mloding_dialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_fgtab04, container, false);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
-        iniView();
-        return view;
+    public int layout() {
+        return R.layout.main_fgtab04;
     }
 
-    private void iniView() {
+    @Override
+    public void initData() {
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(mLayoutManager);
@@ -227,7 +232,6 @@ public class CartFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 }

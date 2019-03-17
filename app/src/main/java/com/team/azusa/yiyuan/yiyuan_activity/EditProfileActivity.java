@@ -1,10 +1,8 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.event.AddPhotoEvent;
@@ -41,28 +40,27 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Calendar;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends BaseActivity {
 
-    @Bind(R.id.img_userhead)
+    @BindView(R.id.img_userhead)
     SimpleDraweeView img_userhead;
-    @Bind(R.id.tv_username)
+    @BindView(R.id.tv_username)
     TextView tv_username;
-    @Bind(R.id.tv_sex)
+    @BindView(R.id.tv_sex)
     TextView tv_sex;
-    @Bind(R.id.tv_birthday)
+    @BindView(R.id.tv_birthday)
     TextView tv_birthday;
-    @Bind(R.id.tv_qq)
+    @BindView(R.id.tv_qq)
     TextView tv_qq;
-    @Bind(R.id.rl_qq)
+    @BindView(R.id.rl_qq)
     RelativeLayout rlQq;
-    @Bind(R.id.tv_signname)
+    @BindView(R.id.tv_signname)
     TextView tv_signname;
-    @Bind(R.id.edit_root)
+    @BindView(R.id.edit_root)
     LinearLayout edit_root;
     private WheelView year;
     private WheelView month;
@@ -74,19 +72,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private MyDialog myDialog = new MyDialog();
     private AlertDialog loding_dialog;
     private boolean cancelreq = false;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
-        initView();
-
-        Log.e("main", "onCreate: "+UserUtils.user.getId());
-
-    }
 
     //eventbus接收选择图片界面发来的消息
     public void onEventMainThread(AddPhotoEvent event) {
@@ -127,7 +112,12 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void initView() {
+    @Override
+    public int layout() {
+        return R.layout.activity_edit_profile;
+    }
+
+    public void initView() {
         //设置头像
         if (StringUtil.isEmpty(UserUtils.user.getImgUrl())) {
             ImageLoader.getInstance().displayImage("res:///" + R.drawable.default_head_, img_userhead);
@@ -189,6 +179,17 @@ public class EditProfileActivity extends AppCompatActivity {
         };
         ensure.setOnClickListener(clickListener);
         cancel.setOnClickListener(clickListener);
+    }
+
+    @Override
+    public void initData() {
+        EventBus.getDefault().register(this);
+        Log.e("main", "onCreate: "+UserUtils.user.getId());
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     @OnClick({R.id.btn_go_back, R.id.rl_headimg, R.id.rl_name, R.id.rl_sex, R.id.rl_birthday, R.id.rl_qq,
@@ -445,8 +446,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         EventBus.getDefault().unregister(this);
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("EditProfileActivity");

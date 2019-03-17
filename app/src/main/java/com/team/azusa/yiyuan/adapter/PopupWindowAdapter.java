@@ -14,7 +14,7 @@ import com.team.azusa.yiyuan.bean.SortType;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -81,11 +81,11 @@ public class PopupWindowAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.popuwin_img)
+        @BindView(R.id.popuwin_img)
         ImageView img_type;
-        @Bind(R.id.popuwin_tv)
+        @BindView(R.id.popuwin_tv)
         TextView tv_type;
-        @Bind(R.id.popuwin_btn_arrow)
+        @BindView(R.id.popuwin_btn_arrow)
         Button btn_Arrow;
 
         ViewHolder(View view) {

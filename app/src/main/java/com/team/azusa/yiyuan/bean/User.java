@@ -1,7 +1,5 @@
 package com.team.azusa.yiyuan.bean;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.Date;
 
 public class User {

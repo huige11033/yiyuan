@@ -1,9 +1,6 @@
 package com.team.azusa.yiyuan.adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,7 +13,7 @@ import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.iwgang.countdownview.CountdownView;
 
@@ -84,15 +81,15 @@ public class NewPublishLvAdapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        @Bind(R.id.img_lv_newpublish)
+        @BindView(R.id.img_lv_newpublish)
         SimpleDraweeView imgLvNewPublish;
-        @Bind(R.id.cv_countdownView)
+        @BindView(R.id.cv_countdownView)
         CountdownView countdownView;
-        @Bind(R.id.CountdownTxt)
+        @BindView(R.id.CountdownTxt)
         TextView countdownTxt;
-        @Bind(R.id.new_publish_worth)
+        @BindView(R.id.new_publish_worth)
         TextView newpublishWorth;
-        @Bind(R.id.tv_lv_newpublish_name)
+        @BindView(R.id.tv_lv_newpublish_name)
         TextView publish_name;
 
         ViewHolder(View view) {

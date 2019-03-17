@@ -9,10 +9,9 @@ import android.widget.TextView;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.AccountDetail;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -59,9 +58,9 @@ public class AccountDetails_Xiaofei_LvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.time_xiaofei)
+        @BindView(R.id.time_xiaofei)
         TextView timeXiaofei;
-        @Bind(R.id.money_xiaofei_amount)
+        @BindView(R.id.money_xiaofei_amount)
         TextView moneyAmount;
 
         ViewHolder(View view) {

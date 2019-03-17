@@ -1,11 +1,7 @@
 package com.team.azusa.yiyuan.yiyuan_mainfragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.User;
 import com.team.azusa.yiyuan.event.AddPhotoEvent;
@@ -29,66 +26,74 @@ import com.team.azusa.yiyuan.yiyuan_activity.MyShareOrderActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.SettingActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.UsermsgActivity;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 
-public class MeFragment extends Fragment {
+public class MeFragment extends BaseFragment {
 
-    @Bind(R.id.setting)
+    @BindView(R.id.setting)
     ImageView btn_setting;  //设置按钮
-    @Bind(R.id.login)
+    @BindView(R.id.login)
     Button btn_login;  //登陆按钮
-    @Bind(R.id.layout_unlogin)
+    @BindView(R.id.layout_unlogin)
     LinearLayout layoutUnlogin;  //未登陆状态下的头部布局
-    @Bind(R.id.fg5_top_img)
+    @BindView(R.id.fg5_top_img)
     SimpleDraweeView img_userhead;  //用户头像
-    @Bind(R.id.yungou_lv_img)
+    @BindView(R.id.yungou_lv_img)
     ImageView Img_yungouLv;  //云购等级图标
-    @Bind(R.id.yungou_lv_tv)
+    @BindView(R.id.yungou_lv_tv)
     TextView tv_yungouLv;  //云购等级
-    @Bind(R.id.fg5_jinyan_tv)
+    @BindView(R.id.fg5_jinyan_tv)
     TextView tv_exprence;  //经验值
-    @Bind(R.id.charge_money)
+    @BindView(R.id.charge_money)
     Button chargeMoney;  //登录后的充值按钮
-    @Bind(R.id.me1)
+    @BindView(R.id.me1)
     RelativeLayout play_record; //我的云购记录栏
-    @Bind(R.id.me2)
+    @BindView(R.id.me2)
     RelativeLayout my_gaintedgoods; //获得的商品栏
-    @Bind(R.id.me3)
+    @BindView(R.id.me3)
     RelativeLayout my_shareorder; //我的晒单栏
-    @Bind(R.id.me4)
+    @BindView(R.id.me4)
     RelativeLayout my_frient; //我的朋友栏
-    @Bind(R.id.me5)
+    @BindView(R.id.me5)
     RelativeLayout message_center; //消息中心栏
-    @Bind(R.id.me6)
+    @BindView(R.id.me6)
     RelativeLayout account_detail; //账户明细栏
-    @Bind(R.id.me7)
+    @BindView(R.id.me7)
     RelativeLayout address;  //收货地址栏
-    @Bind(R.id.fg5_login_toplayout)
+    @BindView(R.id.fg5_login_toplayout)
     LinearLayout loginToplayout; //登录后显示的头部
-    @Bind(R.id.fg5_username)
+    @BindView(R.id.fg5_username)
     TextView userName;
-    @Bind(R.id.tv_fufen)
+    @BindView(R.id.tv_fufen)
     TextView tvFufen;
-    @Bind(R.id.tv_balance)
+    @BindView(R.id.tv_balance)
     TextView tvBalance;
-    private View view;
     private User user;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_fgtab05, container, false);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
-        iniView();
-        return view;
+    public int layout() {
+        return R.layout.main_fgtab05;
     }
 
-    private void iniView() {
+    @Override
+    public void initData() {
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void initAnimation() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         if (UserUtils.userisLogin) {
             setLoginView();
         } else {
@@ -172,7 +177,6 @@ public class MeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 

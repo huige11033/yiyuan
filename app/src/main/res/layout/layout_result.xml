@@ -90,7 +90,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="8.0dip"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/goods_gainer_indicator" />
+                    fresco:srcCompat="@drawable/goods_gainer_indicator" />
                 <!--<ImageView-->
                 <!--android:id="@+id/tv_shaidan_time"-->
                 <!--android:layout_width="wrap_content"-->

@@ -1,12 +1,11 @@
 package com.team.azusa.yiyuan.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.azusa.yiyuan.R;

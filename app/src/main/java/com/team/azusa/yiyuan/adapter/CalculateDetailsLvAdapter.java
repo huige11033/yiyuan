@@ -13,7 +13,7 @@ import com.team.azusa.yiyuan.utils.DateUtil;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -72,17 +72,17 @@ public class CalculateDetailsLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_timehead)
+        @BindView(R.id.tv_timehead)
         TextView tvTimehead;
-        @Bind(R.id.tv_timenum)
+        @BindView(R.id.tv_timenum)
         TextView tvTimenum;
-        @Bind(R.id.view_triangle)
+        @BindView(R.id.view_triangle)
         View viewTriangle;
-        @Bind(R.id.tv_username)
+        @BindView(R.id.tv_username)
         TextView tvUsername;
-        @Bind(R.id.view_fgx)
+        @BindView(R.id.view_fgx)
         View viewFgx;
-        @Bind(R.id.rl_jiexiao)
+        @BindView(R.id.rl_jiexiao)
         RelativeLayout rlJiexiao;
 
         ViewHolder(View view) {

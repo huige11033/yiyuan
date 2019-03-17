@@ -1,15 +1,12 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.RecordDto;
 import com.team.azusa.yiyuan.bean.WinnerDto;
@@ -32,42 +30,41 @@ import com.team.azusa.yiyuan.widget.WrapHeightGridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ResultActivity extends Activity {
+public class ResultActivity extends BaseActivity {
 
 
-    @Bind(R.id.WHGV1)
+    @BindView(R.id.WHGV1)
     WrapHeightGridView WHGV1;                   //WrapHeightGridView
-    @Bind(R.id.result_avatar)     //获奖者头像touxiang
+    @BindView(R.id.result_avatar)     //获奖者头像touxiang
             SimpleDraweeView result_avatar;
-    @Bind(R.id.touxiang)     //商品小图
+    @BindView(R.id.touxiang)     //商品小图
             SimpleDraweeView touxiang;
-    @Bind(R.id.tv_nickname)     //获奖名
+    @BindView(R.id.tv_nickname)     //获奖名
             TextView tv_nickname;
-    @Bind(R.id.tv_shaidan_title)     //客户地点
+    @BindView(R.id.tv_shaidan_title)     //客户地点
             TextView tv_shaidan_title;
-    @Bind(R.id.tv_time)     //揭晓时间
+    @BindView(R.id.tv_time)     //揭晓时间
             TextView tv_time;
-    @Bind(R.id.tv_time2)     //云购时间
+    @BindView(R.id.tv_time2)     //云购时间
             TextView tv_time2;
-    @Bind(R.id.lucky_number)     //幸运码
+    @BindView(R.id.lucky_number)     //幸运码
             TextView lucky_number;
-    @Bind(R.id.Calculation_details)     //计算详情按钮
+    @BindView(R.id.Calculation_details)     //计算详情按钮
             Button Calculation_details;
-    @Bind(R.id.more_number)     //更多
+    @BindView(R.id.more_number)     //更多
             RelativeLayout more_number;
-    @Bind(R.id.TextView_number)     //获奖者参与人次
+    @BindView(R.id.TextView_number)     //获奖者参与人次
             TextView TextView_number;
-    @Bind(R.id.show_order_number)     //商品晒单数
+    @BindView(R.id.show_order_number)     //商品晒单数
             TextView show_order_number;
-    @Bind(R.id.shopping_time)
+    @BindView(R.id.shopping_time)
     TextView shopping_time; //购物时间
-    @Bind(R.id.jieguo_number_yun)
+    @BindView(R.id.jieguo_number_yun)
     TextView jieguo_number_yun;//云期数
-    @Bind(R.id.btn_result_shopping)
+    @BindView(R.id.btn_result_shopping)
     Button btn_result_shopping;//跳转到正在进行按钮
 
     private YunNumDto yunNumDto;
@@ -98,18 +95,19 @@ public class ResultActivity extends Activity {
     private int showYunCode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_result;
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initData() {
         myDialog = new MyDialog();
         loding_dialog = myDialog.showLodingDialog(this);
         loding_dialog.setOnKeyListener(backlistener);
-        iniDate();
-        iniView();
-    }
-
-    private void iniDate() {
 
         Intent intent = getIntent();
         strYunNumDto = intent.getStringExtra("data");
@@ -162,7 +160,7 @@ public class ResultActivity extends Activity {
         return c;
     }
 
-    private void iniView() {
+    public void initView() {
         jieguo_number_yun.setText("第" + jieguoNumbYun + "云");
         blackTextView = "获得者本云总共参与";
         builder = new SpannableStringBuilder(joinnumber + "人次");
@@ -262,11 +260,5 @@ public class ResultActivity extends Activity {
                 startActivity(OpenYunNumberActivity);
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

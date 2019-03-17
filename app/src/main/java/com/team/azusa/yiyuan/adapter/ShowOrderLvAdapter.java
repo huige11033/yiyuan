@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -164,33 +164,33 @@ public class ShowOrderLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.show_order_touxiang)
+        @BindView(R.id.show_order_touxiang)
         SimpleDraweeView show_order_touxiang;
-        @Bind(R.id.siv_shaidan_summary1)
+        @BindView(R.id.siv_shaidan_summary1)
         SimpleDraweeView siv_shaidan_summary1;
-        @Bind(R.id.siv_shaidan_summary2)
+        @BindView(R.id.siv_shaidan_summary2)
         SimpleDraweeView siv_shaidan_summary2;
-        @Bind(R.id.siv_shaidan_summary3)
+        @BindView(R.id.siv_shaidan_summary3)
         SimpleDraweeView siv_shaidan_summary3;
-        @Bind(R.id.tv_shaidan_summary)
+        @BindView(R.id.tv_shaidan_summary)
         TextView tv_shaidan_summary;
-        @Bind(R.id.tv_nickname)
+        @BindView(R.id.tv_nickname)
         TextView tv_nickname;
-        @Bind(R.id.tv_shaidan_time)
+        @BindView(R.id.tv_shaidan_time)
         TextView tv_shaidan_time;
-        @Bind(R.id.tv_shaidan_title)
+        @BindView(R.id.tv_shaidan_title)
         TextView tv_shaidan_title;
-        @Bind(R.id.tv_envy)
+        @BindView(R.id.tv_envy)
         TextView tv_envy;
-        @Bind(R.id.tv_envy_anim)
+        @BindView(R.id.tv_envy_anim)
         TextView tv_envy_anim;
-        @Bind(R.id.tv_comment)
+        @BindView(R.id.tv_comment)
         TextView tv_comment;
-        @Bind(R.id.rl_envy)
+        @BindView(R.id.rl_envy)
         RelativeLayout rl_like;
-        @Bind(R.id.rl_comment)
+        @BindView(R.id.rl_comment)
         RelativeLayout rl_comment;
-        @Bind(R.id.rl_share)
+        @BindView(R.id.rl_share)
         RelativeLayout rl_share;
 
         ViewHolder(View view) {

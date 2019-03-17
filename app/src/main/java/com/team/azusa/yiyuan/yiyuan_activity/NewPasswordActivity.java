@@ -1,15 +1,13 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
-import com.team.azusa.yiyuan.base.BaseActivity;
 import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.network.RequestService;
@@ -25,15 +23,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class NewPasswordActivity extends BaseActivity {
 
-    @Bind(R.id.newpass_edit)
+    @BindView(R.id.newpass_edit)
     ClearEditText newpassEdit;
-    @Bind(R.id.cb_newpass)
+    @BindView(R.id.cb_newpass)
     CheckBox cbNewpass;
 
     private String phone;
@@ -42,13 +39,24 @@ public class NewPasswordActivity extends BaseActivity {
     private boolean cancelrequest = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_password);
+    public int layout() {
+        return R.layout.activity_new_password;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
         phone = getIntent().getStringExtra("phone");
         type = getIntent().getIntExtra("type", 0);
         time = getIntent().getStringExtra("time");
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void setListener() {
         cbNewpass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -102,8 +110,7 @@ public class NewPasswordActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         OkHttpUtils.getInstance().cancelTag("NewPasswordActivity");
         super.onDestroy();
     }

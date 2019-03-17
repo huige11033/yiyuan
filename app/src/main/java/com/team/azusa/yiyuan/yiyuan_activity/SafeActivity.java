@@ -2,51 +2,56 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.StringUtil;
 import com.team.azusa.yiyuan.utils.UserUtils;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SafeActivity extends AppCompatActivity {
+public class SafeActivity extends BaseActivity {
 
-    @Bind(R.id.safe_go_back)
+    @BindView(R.id.safe_go_back)
     ImageView safeGoBack;
-    @Bind(R.id.tv_login_password)
+    @BindView(R.id.tv_login_password)
     TextView tvLoginPassword;
-    @Bind(R.id.tv_pay_password)
+    @BindView(R.id.tv_pay_password)
     TextView tvPayPassword;
-    //    @Bind(R.id.tv_no_password)
+    //    @BindView(R.id.tv_no_password)
 //    TextView tvNoPassword;
-    @Bind(R.id.tv_phone_binding)
+    @BindView(R.id.tv_phone_binding)
     TextView tvPhoneBinding;
-    //    @Bind(R.id.tv_email_binding)
+    //    @BindView(R.id.tv_email_binding)
 //    TextView tvEmailBinding;
-//    @Bind(R.id.tv_login_protection)
+//    @BindView(R.id.tv_login_protection)
 //    TextView tvLoginProtection;
-    @Bind(R.id.user_phone_number)
+    @BindView(R.id.user_phone_number)
     TextView userPhoneNumber;
     private Drawable drawable;
     private String uerPhone;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_safe);
-        ButterKnife.bind(this);
-        showdrawableLeft();
+    public int layout() {
+        return R.layout.activity_safe;
     }
 
-    private void showdrawableLeft() {
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
+    }
+
+    public void initView() {
         drawable = SafeActivity.this.getResources().getDrawable(R.drawable.pay_success);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
         if (UserUtils.userisLogin) {
@@ -116,11 +121,5 @@ public class SafeActivity extends AppCompatActivity {
 //                startActivity(new Intent(SafeActivity.this, ProtectLoginActivity.class));
 //                break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

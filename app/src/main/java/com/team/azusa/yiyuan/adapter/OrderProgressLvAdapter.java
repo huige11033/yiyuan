@@ -14,7 +14,7 @@ import com.team.azusa.yiyuan.widget.MyTextView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -76,17 +76,17 @@ public class OrderProgressLvAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.step_offline)
+        @BindView(R.id.step_offline)
         View view_stepOffline;
-        @Bind(R.id.step_circular)
+        @BindView(R.id.step_circular)
         View view_stepCircular;
-        @Bind(R.id.step_raw)
+        @BindView(R.id.step_raw)
         View view_stepRaw;
-        @Bind(R.id.tv_msg)
+        @BindView(R.id.tv_msg)
         MyTextView tv_msg;
-        @Bind(R.id.tv_optime)
+        @BindView(R.id.tv_optime)
         TextView tv_time;
-        @Bind(R.id.view_divider)
+        @BindView(R.id.view_divider)
         View divider;
 
         ViewHolder(View view) {

@@ -1,14 +1,14 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
-import com.team.azusa.yiyuan.base.BaseActivity;
 import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.event.LoginEvent;
@@ -22,26 +22,37 @@ import com.team.azusa.yiyuan.widget.ClearEditText;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
 
-    @Bind(R.id.regisiter_edit)
+    @BindView(R.id.regisiter_edit)
     ClearEditText regisiterEdit;
-    @Bind(R.id.cb_newpass)
+    @BindView(R.id.cb_newpass)
     CheckBox cbNewpass;
-    @Bind(R.id.regisiter_ensure)
+    @BindView(R.id.regisiter_ensure)
     Button ensure;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
         cbNewpass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -100,11 +111,5 @@ public class RegisterActivity extends BaseActivity {
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             finish();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

@@ -1,31 +1,41 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.widget.ClearEditText;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AlterQQActivity extends AppCompatActivity {
+public class AlterQQActivity extends BaseActivity {
 
-    @Bind(R.id.qq_ET)
+    @BindView(R.id.qq_ET)
     ClearEditText qqET;
     private String qq;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alter_qq);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_alter_qq;
+    }
+
+    @Override
+    public void initView() {
         qqET.setText(UserUtils.user.getQQ());
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     @Override
@@ -56,11 +66,5 @@ public class AlterQQActivity extends AppCompatActivity {
                 qq_finish("qq");
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 }

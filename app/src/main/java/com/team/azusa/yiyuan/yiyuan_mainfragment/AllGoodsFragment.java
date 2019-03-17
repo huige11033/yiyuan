@@ -1,23 +1,21 @@
 package com.team.azusa.yiyuan.yiyuan_mainfragment;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AllgoodsLvAdapter;
 import com.team.azusa.yiyuan.bean.ProductDto;
@@ -39,37 +37,35 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Azusa on 2016/1/10.
  */
-public class AllGoodsFragment extends Fragment {
+public class AllGoodsFragment extends BaseFragment {
 
-    @Bind(R.id.search_orange)
+    @BindView(R.id.search_orange)
     ImageView searchOrange;
-    @Bind(R.id.fg2_topbar_typerl)
+    @BindView(R.id.fg2_topbar_typerl)
     RelativeLayout TopbarTyperl;
-    @Bind(R.id.fg2_topbar_publicrl)
+    @BindView(R.id.fg2_topbar_publicrl)
     RelativeLayout TopbarPublicrl;
-    @Bind(R.id.fg2_topll)
+    @BindView(R.id.fg2_topll)
     LinearLayout Topll;
-    @Bind(R.id.allgoods_lv)
+    @BindView(R.id.allgoods_lv)
     PulluptoRefreshListview allgoodsLv;
-    @Bind(R.id.sort_arrow)
+    @BindView(R.id.sort_arrow)
     View sortArrow1;
-    @Bind(R.id.sort_arrow2)
+    @BindView(R.id.sort_arrow2)
     View sortArrow2;
-    @Bind(R.id.sort_tv1)
+    @BindView(R.id.sort_tv1)
     TextView sortTv1;
-    @Bind(R.id.sort_tv2)
+    @BindView(R.id.sort_tv2)
     TextView sortTv2;
 
     private ArrayList<ProductDto> datas;
-    private View view;
     private AllgoodsLvAdapter adapter;
     private int mTopbarHeight; //顶部toolbar高度
     private int mpwindow_TopbarHeight;
@@ -86,20 +82,8 @@ public class AllGoodsFragment extends Fragment {
     private MyPopupWindow pwin1 = new MyPopupWindow();
     private MyPopupWindow pwin2 = new MyPopupWindow();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_fgtab02, container, false);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
-        activity = (MainActivity) getActivity();
-        iniView();
+    public void setListener() {
         setHead();
-        setListener();
-        return view;
-    }
-
-    private void setListener() {
         adapter.SetOnAddCarClickListener(new AllgoodsLvAdapter.AddCarClickListener() {
             @Override
             public void onAddCarClick(int position, Bitmap drawable, int[] start_location) {
@@ -151,8 +135,26 @@ public class AllGoodsFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-    private void iniView() {
-        initData();
+    public void initView() {
+        EventBus.getDefault().register(this);
+        activity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public int layout() {
+        return R.layout.main_fgtab02;
+    }
+
+    public void initData() {
+        mTopbarHeight = getResources().getDimensionPixelSize(R.dimen.mTopbar_height);
+        mpwindow_TopbarHeight = getResources().getDimensionPixelSize(R.dimen.mpwindow_Topbar_height);
+        datas = new ArrayList<>();
+        adapter = new AllgoodsLvAdapter(datas, getContext());
+        allgoodsLv.setAdapter(adapter);
+    }
+
+    @Override
+    public void initAnimation() {
         allgoodsLv.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onLoad() {
@@ -165,14 +167,6 @@ public class AllGoodsFragment extends Fragment {
         if (!topbarAnimation.getisShow()) {
             topbarAnimation.showTopbar();
         }
-    }
-
-    private void initData() {
-        mTopbarHeight = getResources().getDimensionPixelSize(R.dimen.mTopbar_height);
-        mpwindow_TopbarHeight = getResources().getDimensionPixelSize(R.dimen.mpwindow_Topbar_height);
-        datas = new ArrayList<>();
-        adapter = new AllgoodsLvAdapter(datas, getContext());
-        allgoodsLv.setAdapter(adapter);
     }
 
     /**
@@ -253,7 +247,6 @@ public class AllGoodsFragment extends Fragment {
         super.onDestroyView();
         cancelrequest = true;
         OkHttpUtils.getInstance().cancelTag("AllGoodsFragment");
-        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 

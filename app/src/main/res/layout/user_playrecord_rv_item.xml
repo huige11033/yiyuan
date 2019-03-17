@@ -32,7 +32,7 @@
                 android:id="@+id/usermsg_imgbg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/label_announced"
+                fresco:srcCompat="@drawable/label_announced"
                 android:visibility="gone" />
         </RelativeLayout>
 

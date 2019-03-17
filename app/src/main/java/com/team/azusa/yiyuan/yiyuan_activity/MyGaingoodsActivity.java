@@ -1,21 +1,21 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.utils.UserUtils;
 import com.team.azusa.yiyuan.yiyuan_usermsg_fragment.GainedgoodsFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MyGaingoodsActivity extends AppCompatActivity {
 
-    @Bind(R.id.return_mygaingoods)
+    @BindView(R.id.return_mygaingoods)
     ImageView return_btn;
     private String user_id;
 

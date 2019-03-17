@@ -1,7 +1,5 @@
 package com.team.azusa.yiyuan.adapter;
 
-import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.squareup.okhttp.Request;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.AddressMessage;
@@ -22,7 +21,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -163,17 +162,17 @@ public class AddressLvAdapter extends BaseSwipeAdapter {
 }
 
 class ViewHolder {
-    @Bind(R.id.bt_default_addr)
+    @BindView(R.id.bt_default_addr)
     Button btDefaultAddr;
-    @Bind(R.id.bt_delete_addr)
+    @BindView(R.id.bt_delete_addr)
     ImageButton btDeleteAddr;
-    @Bind(R.id.tv_lv_address)
+    @BindView(R.id.tv_lv_address)
     TextView tvLvAddress;
-    @Bind(R.id.tv_address_userinfo)
+    @BindView(R.id.tv_address_userinfo)
     TextView tvAddressUserInfo;
-    @Bind(R.id.example)
+    @BindView(R.id.example)
     SwipeLayout swipeLayout;
-    @Bind(R.id.img_address_select)
+    @BindView(R.id.img_address_select)
     ImageView imgaddressselect;
 
     ViewHolder(View view) {

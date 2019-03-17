@@ -1,14 +1,13 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
@@ -23,23 +22,22 @@ import org.json.JSONObject;
 
 import java.util.TimerTask;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AlterPhoneActivity extends AppCompatActivity {
+public class AlterPhoneActivity extends BaseActivity {
 
-    @Bind(R.id.alter_phone_edit)
+    @BindView(R.id.alter_phone_edit)
     ClearEditText alterPhoneEdit;
-    @Bind(R.id.alter_phone_second)
+    @BindView(R.id.alter_phone_second)
     TextView alterPhoneSecond;
-    @Bind(R.id.alter_phone_again)
+    @BindView(R.id.alter_phone_again)
     Button alterPhoneAgain;
-    @Bind(R.id.alter_phone_tx)
+    @BindView(R.id.alter_phone_tx)
     TextView alterPhoneTx;
-    @Bind(R.id.tx1)
+    @BindView(R.id.tx1)
     TextView tx1;
-    @Bind(R.id.tx2)
+    @BindView(R.id.tx2)
     TextView tx2;
     private boolean cancelreq = false;
     private String phone;
@@ -75,10 +73,17 @@ public class AlterPhoneActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alter_phone);
-        ButterKnife.bind(this);
+    public int layout() {
+        return R.layout.activity_alter_phone;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
         Intent intent = getIntent();
         phone = intent.getStringExtra("newPhone");
         if (StringUtil.isMobileNo(phone)) {
@@ -90,6 +95,11 @@ public class AlterPhoneActivity extends AppCompatActivity {
         if (second < 0)
             second = 0;
         handler.post(runnable);
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     private void updateSendAgainView() {
@@ -177,8 +187,7 @@ public class AlterPhoneActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
+    public void onDestroy() {
         cancelreq = true;
         OkHttpUtils.getInstance().cancelTag("AlterPhoneActivity");
         super.onDestroy();

@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"
             android:padding="10dp"
-            android:src="@drawable/button_left_arrow" />
+            fresco:srcCompat="@drawable/button_left_arrow" />
 
         <TextView
             android:id="@+id/textView9"

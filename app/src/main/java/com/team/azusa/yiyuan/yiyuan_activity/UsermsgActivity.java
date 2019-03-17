@@ -3,17 +3,17 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.TabFragmentPagerAdapter;
 import com.team.azusa.yiyuan.utils.ImageLoader;
@@ -24,15 +24,14 @@ import com.team.azusa.yiyuan.yiyuan_usermsg_fragment.ShareOrderFragment;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UsermsgActivity extends AppCompatActivity {
+public class UsermsgActivity extends BaseActivity {
 
-    @Bind(R.id.usermsg_userhead)
+    @BindView(R.id.usermsg_userhead)
     SimpleDraweeView img_head;
-    @Bind(R.id.vp_body)
+    @BindView(R.id.vp_body)
     ViewPager viewpager;
     ArrayList<Fragment> fragmentsList;
     ArrayList<String> titles;
@@ -41,19 +40,11 @@ public class UsermsgActivity extends AppCompatActivity {
     private String user_headimgurl = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usermsg);
-        ButterKnife.bind(this);
-        Intent intent = getIntent();
-        username = intent.getStringExtra("user_name");
-        user_id = intent.getStringExtra("user_id");
-        user_headimgurl = intent.getStringExtra("userhead_img");
-        initView();
-        initViewPager();
+    public int layout() {
+        return R.layout.activity_usermsg;
     }
 
-    private void initView() {
+    public void initView() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,6 +67,21 @@ public class UsermsgActivity extends AppCompatActivity {
         } else {
             ImageLoader.getInstance().displayImage(user_headimgurl, img_head);
         }
+
+        initViewPager();
+    }
+
+    @Override
+    public void initData() {
+        Intent intent = getIntent();
+        username = intent.getStringExtra("user_name");
+        user_id = intent.getStringExtra("user_id");
+        user_headimgurl = intent.getStringExtra("userhead_img");
+    }
+
+    @Override
+    public void setListener() {
+
     }
 
     private void initViewPager() {
@@ -136,12 +142,6 @@ public class UsermsgActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
     }
 
     @OnClick(R.id.usermsg_userhead)

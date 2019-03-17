@@ -17,7 +17,7 @@ import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
@@ -101,23 +101,23 @@ public class AllgoodsLvAdapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        @Bind(R.id.img_lv_allgoods)
+        @BindView(R.id.img_lv_allgoods)
         SimpleDraweeView img_product;
-        @Bind(R.id.fg2_limibg)
+        @BindView(R.id.fg2_limibg)
         ImageView img_Limibg;
-        @Bind(R.id.fg2_product_name)
+        @BindView(R.id.fg2_product_name)
         TextView tv_productName;
-        @Bind(R.id.fg2_product_value)
+        @BindView(R.id.fg2_product_value)
         TextView tv_productValue;
-        @Bind(R.id.fg2_addtocar)
+        @BindView(R.id.fg2_addtocar)
         Button btn_gouwuche;
-        @Bind(R.id.fg2_product_joinedcount)
+        @BindView(R.id.fg2_product_joinedcount)
         TextView tv_playcount;
-        @Bind(R.id.fg2_product_allcount)
+        @BindView(R.id.fg2_product_allcount)
         TextView tv_allplaycount;
-        @Bind(R.id.fg2_product_remaincount)
+        @BindView(R.id.fg2_product_remaincount)
         TextView tv_remaincount;
-        @Bind(R.id.fg2_product_pb)
+        @BindView(R.id.fg2_product_pb)
         ProgressBar pb;
 
         ViewHolder(View view) {

@@ -1,6 +1,5 @@
 package com.team.azusa.yiyuan.bean;
 
-import java.util.Date;
 import java.util.List;
 
 public class WinnerDto {
