@@ -1,39 +1,41 @@
 package com.team.azusa.yiyuan.yiyuan_activity;
 
 import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.squareup.okhttp.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.ShowOrderLvAdapter;
-import com.team.azusa.yiyuan.bean.ShowOrderDto;
-import com.team.azusa.yiyuan.callback.ShowOrderCallback;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
-import com.team.azusa.yiyuan.listener.MyOnClickListener;
-import com.team.azusa.yiyuan.listener.OnLoadListener;
+import com.team.azusa.yiyuan.model.ShowOrderBean;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.JsonUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
-import com.team.azusa.yiyuan.widget.PulluptoRefreshListview;
-import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ShowOrderActivity extends BaseActivity {
 
-    @BindView(R.id.listview_shaidan)
-    PulluptoRefreshListview listviewShaidan;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     private ShowOrderLvAdapter adapter;
-    private String productId = "";//晒单ID
-    private ArrayList<ShowOrderDto> datas = new ArrayList<>();//得到的晒单数据
-    private int what; //区分是要显示哪个页面
-    private String url;
-    private boolean cancelrequest = false;
+    private ArrayList<ShowOrderBean> datas = new ArrayList<>();//得到的晒单数据
+    private int position = 0;
 
     @Override
     public int layout() {
@@ -41,31 +43,33 @@ public class ShowOrderActivity extends BaseActivity {
     }
 
     public void initView() {
-        adapter = new ShowOrderLvAdapter(ConstanceUtils.CONTEXT, datas, R.layout.show_order_item);
-        listviewShaidan.setFooterDividersEnabled(false);
-        listviewShaidan.setAdapter(adapter);
-        listviewShaidan.setOnLoadListener(new OnLoadListener() {
+
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+
             @Override
-            public void onLoad() {
-                getData(datas.size());
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                position = 0;
+                getData(position);
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getData(position);
             }
         });
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        adapter = new ShowOrderLvAdapter(ConstanceUtils.CONTEXT, datas);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     public void setListener() {
-        listviewShaidan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                turntoDetailPage(position);
-            }
-        });
 
-        adapter.setOnClickListener(new MyOnClickListener() {
-            @Override
-            public void onClick(int position) {
-                turntoDetailPage(position);
-            }
-        });
     }
 
     //跳转至订单详情页面
@@ -79,42 +83,39 @@ public class ShowOrderActivity extends BaseActivity {
     }
 
     public void initData() {
-        Intent intent = getIntent();
-        what = intent.getIntExtra("what", -1);
-        if (what == -1) {
-            productId = intent.getStringExtra("productId");
-            url = "/yiyuan/b_getShaiDan";
-            getData(0);
-        } else {
-            url = "/yiyuan/b_getAllShowOrders";
-            getData(0);
-        }
-
+        getData(position);
     }
 
     private void getData(int firstResult) {
-        OkHttpUtils.get().url(Config.IP + url)
-                .addParams("productId", productId)
-                .addParams("firstResult", firstResult + "")
-                .tag("ShowOrderActivity")
-                .build().execute(new ShowOrderCallback() {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("position", firstResult + "");
+        RequestService.request(Config.SHARE_LIST_URL, params, TAG, new RequestCallBack<List<ShowOrderBean>>() {
             @Override
-            public void onError(Request request, Exception e) {
-                if (cancelrequest) {
-                    return;
-                }
-                MyToast.showToast("网络连接出错");
+            public void onError(String errMsg) {
+                MyToast.showToast(errMsg);
             }
 
             @Override
-            public void onResponse(ArrayList<ShowOrderDto> response) {
-                if (response == null || response.isEmpty()) {
-                    listviewShaidan.setLoadComplete(true);
+            public void onResult(List<ShowOrderBean> result) {
+                if (result.isEmpty()) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    refreshLayout.setEnableLoadMore(false);
                     return;
                 }
-                listviewShaidan.setLoading(false);
-                datas.addAll(response);
+                if(position == 0){
+                    datas.clear();
+                }
+                refreshLayout.setEnableLoadMore(true);
+                datas.addAll(result);
+                position = datas.size();
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onAfter() {
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadMore();
             }
         });
     }
@@ -124,10 +125,4 @@ public class ShowOrderActivity extends BaseActivity {
         this.finish();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        cancelrequest = true;
-        OkHttpUtils.getInstance().cancelTag("ShowOrderActivity");
-    }
 }

@@ -62,4 +62,8 @@ dependencies {
     implementation 'com.commit451:PhotoView:1.2.5'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-4'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-4'
+    implementation 'com.superluo:textbannerview:1.0.5'
+    implementation 'com.zhy:base-rvadapter:3.0.3'
 }

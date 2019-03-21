@@ -135,6 +135,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                         @Override
                         public void onResult(UserBean result) {
                             UserManager.getInstance().login(result);
+                            MyToast.showToast("登录成功");
+                            finish();
                         }
 
 

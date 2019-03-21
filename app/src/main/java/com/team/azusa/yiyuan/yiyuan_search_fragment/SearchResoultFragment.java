@@ -27,6 +27,7 @@ import com.team.azusa.yiyuan.callback.SearchResultCallback;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.event.AddCarsEvent;
 import com.team.azusa.yiyuan.event.IntParameterEvent;
+import com.team.azusa.yiyuan.listener.AddCarClickListener;
 import com.team.azusa.yiyuan.listener.OnLoadListener;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
@@ -123,7 +124,7 @@ public class SearchResoultFragment extends BaseFragment {
             }
         });
 
-        adapter.SetOnAddCarClickListener(new AllgoodsLvAdapter.AddCarClickListener() {
+        adapter.SetOnAddCarClickListener(new AddCarClickListener() {
             @Override
             public void onAddCarClick(int position, Bitmap drawable, int[] start_location) {
                 int[] car_location = new int[2];

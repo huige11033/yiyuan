@@ -3,43 +3,49 @@ package com.team.azusa.yiyuan.yiyuan_mainfragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import androidx.appcompat.app.AlertDialog;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.okhttp.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.team.azusa.yiyuan.BaseFragment;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.AllgoodsLvAdapter;
-import com.team.azusa.yiyuan.bean.ProductDto;
-import com.team.azusa.yiyuan.callback.AllProductCallback;
+import com.team.azusa.yiyuan.adapter_new.ProductAdapter;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
-import com.team.azusa.yiyuan.event.SortEvent;
-import com.team.azusa.yiyuan.listener.OnLoadListener;
+import com.team.azusa.yiyuan.listener.AddCarClickListener;
+import com.team.azusa.yiyuan.model.CategoryInfo;
+import com.team.azusa.yiyuan.model.ProductInfo;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.widget.AddCarAnimation;
+import com.team.azusa.yiyuan.widget.DividerGridItemDecoration;
 import com.team.azusa.yiyuan.widget.MyDialog;
 import com.team.azusa.yiyuan.widget.MyPopupWindow;
-import com.team.azusa.yiyuan.widget.PulluptoRefreshListview;
 import com.team.azusa.yiyuan.widget.TopbarAnimation;
-import com.team.azusa.yiyuan.yiyuan_activity.GoodsDetailsActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.MainActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.SearchActivity;
-import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Azusa on 2016/1/10.
@@ -54,8 +60,10 @@ public class AllGoodsFragment extends BaseFragment {
     RelativeLayout TopbarPublicrl;
     @BindView(R.id.fg2_topll)
     LinearLayout Topll;
-    @BindView(R.id.allgoods_lv)
-    PulluptoRefreshListview allgoodsLv;
+    @BindView(R.id.refresh_layout)
+    SmartRefreshLayout refreshLayout;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     @BindView(R.id.sort_arrow)
     View sortArrow1;
     @BindView(R.id.sort_arrow2)
@@ -65,79 +73,53 @@ public class AllGoodsFragment extends BaseFragment {
     @BindView(R.id.sort_tv2)
     TextView sortTv2;
 
-    private ArrayList<ProductDto> datas;
-    private AllgoodsLvAdapter adapter;
+    private ArrayList<ProductInfo> datas;
+    private ProductAdapter adapter;
     private int mTopbarHeight; //顶部toolbar高度
     private int mpwindow_TopbarHeight;
     private TopbarAnimation topbarAnimation;
-    private PopupWindow mypopupWindow1, mypopupWindow2;
     private MyDialog myDialog;
     private AlertDialog loding_dialog;
     private boolean isinited = false;
-    private String orderBy = ""; //排序
-    private String category = ""; //分类
+    private int orderBy; //排序
+    private int category; //分类
     private int[] car_location; //购物车的位置
     private MainActivity activity;
-    private boolean cancelrequest = false; //是否取消网络请求
     private MyPopupWindow pwin1 = new MyPopupWindow();
     private MyPopupWindow pwin2 = new MyPopupWindow();
+    private List<CategoryInfo> mCategories;
+    private View pwindow1;
+    private View pwindow2;
+    private int startPosition = 0;
+    private boolean isLoaded;
 
-    public void setListener() {
-        setHead();
-        adapter.SetOnAddCarClickListener(new AllgoodsLvAdapter.AddCarClickListener() {
-            @Override
-            public void onAddCarClick(int position, Bitmap drawable, int[] start_location) {
-                new AddCarAnimation(getActivity()).doAnim(drawable, start_location, car_location);
-            }
-        });
-
-        allgoodsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == datas.size() + 1) {
-                    return;
-                }
-                String productId = datas.get(position - 1).getProductId();
-                int yunNum = datas.get(position - 1).getYunNum();
-
-                Intent intent = new Intent(getActivity(), GoodsDetailsActivity.class);
-                intent.putExtra("productId", productId);
-                intent.putExtra("yunNum", yunNum + "");
-                startActivity(intent);
-            }
-        });
-    }
-
-    //添加头部
-    private void setHead() {
-        View head = View.inflate(getContext(), R.layout.null_headview, null);
-        allgoodsLv.addHeaderView(head);
-        allgoodsLv.setHeaderDividersEnabled(false);
-    }
 
     //当前页面可见时再加载页面数据
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
-            allgoodsLv.setLoadComplete(false);
-            getData(0, 0, category, orderBy);
             if (!isinited) {
                 myDialog = new MyDialog();
                 loding_dialog = myDialog.showLodingDialog(getActivity());
                 loding_dialog.setOnKeyListener(backlistener);
                 car_location = activity.getCar_location();
                 isinited = true;
+                requestCategory();
             } else {
-                loding_dialog.show();
-                myDialog.initAnimation();
+                if(!isLoaded){
+                    loding_dialog.show();
+                    myDialog.initAnimation();
+                    requestCategory();
+                }
+
             }
         }
         super.setUserVisibleHint(isVisibleToUser);
     }
 
     public void initView() {
-        EventBus.getDefault().register(this);
         activity = (MainActivity) getActivity();
+        initRecyclerView();
     }
 
     @Override
@@ -149,106 +131,52 @@ public class AllGoodsFragment extends BaseFragment {
         mTopbarHeight = getResources().getDimensionPixelSize(R.dimen.mTopbar_height);
         mpwindow_TopbarHeight = getResources().getDimensionPixelSize(R.dimen.mpwindow_Topbar_height);
         datas = new ArrayList<>();
-        adapter = new AllgoodsLvAdapter(datas, getContext());
-        allgoodsLv.setAdapter(adapter);
+        adapter = new ProductAdapter(getActivity(), datas);
+        recyclerView.setAdapter(adapter);
+        adapter.SetOnAddCarClickListener(new AddCarClickListener() {
+            @Override
+            public void onAddCarClick(int position, Bitmap drawable, int[] start_location) {
+                new AddCarAnimation(getActivity()).doAnim(drawable, start_location, car_location);
+            }
+        });
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                requestProduct(datas.size(),orderBy,category);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                requestProduct(0,orderBy,category);
+                refreshLayout.setEnableLoadMore(true);
+            }
+        });
+    }
+
+    //初始化新品上线
+    private void initRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), R.drawable.rv_divider));
+        recyclerView.setHasFixedSize(true);
+
     }
 
     @Override
     public void initAnimation() {
-        allgoodsLv.setOnLoadListener(new OnLoadListener() {
-            @Override
-            public void onLoad() {
-                getData((datas.size()), 1, category, orderBy);
-            }
-        });
         topbarAnimation = new TopbarAnimation();
         topbarAnimation.build(mTopbarHeight, Topll);
-        allgoodsLv.setFloatTopbaranimation(topbarAnimation);
         if (!topbarAnimation.getisShow()) {
             topbarAnimation.showTopbar();
         }
     }
 
-    /**
-     * 从服务器获取数据
-     *
-     * @param firstResult 要加载的第一条数据的position
-     */
-    private void getData(final int firstResult, final int what, String category, String orderBy) {
-        OkHttpUtils.get().url(Config.IP + "/yiyuan/b_getCurrentYunNums")
-                .addParams("category", category)
-                .addParams("orderBy", orderBy)
-                .addParams("firstResult", firstResult + "")
-                .tag("AllGoodsFragment")
-                .build().execute(new AllProductCallback() {
-            @Override
-            public void onError(Request request, Exception e) {
-                if (cancelrequest) {
-                    return;
-                }
-                MyToast.showToast("网络连接出错");
-                loding_dialog.dismiss();
-            }
-
-            @Override
-            public void onResponse(ArrayList<ProductDto> response) {
-                //response为空表示没有更多数据了
-                if (response == null || response.size() == 0) {
-                    allgoodsLv.setLoadComplete(true);
-                    loding_dialog.dismiss();
-                    return;
-                } else if (0 == what) {
-                    allgoodsLv.smoothScrollToPosition(0);
-                    topbarAnimation.showTopbar();
-                    datas.clear(); // 如果respomse不为空且what为0，表示刷新数据，先清空数据集合
-                }
-                if (0 == what) {
-                    loding_dialog.dismiss();
-                }
-                allgoodsLv.setLoading(false);
-                datas.addAll(response);
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    //eventbus接收popupwindow点击发来的消息
-    public void onEventMainThread(SortEvent event) {
-        switch (event.getWhat()) {
-            case 1:
-                category = event.getSort();
-                break;
-            case 2:
-                category = "全部分类";
-                orderBy = "人气";
-                if (mypopupWindow1 != null) {
-                    Log.e("main", "onEventMainThread: kkkkkkkkkk");
-                    pwin1.setCheck(0);
-
-                }
-                if (mypopupWindow2 != null) {
-                    pwin2.setCheck(0);
-                    Log.e("main", "onEventMainThread: qqqqqqqqqqqqqq");
-                }
-                return;
-            case 3:
-                orderBy = event.getSort();
-                break;
-        }
-        loding_dialog.show();
-        myDialog.initAnimation();
-        allgoodsLv.setLoadComplete(false);
-        getData(0, 0, category, orderBy);
-    }
-
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        cancelrequest = true;
-        OkHttpUtils.getInstance().cancelTag("AllGoodsFragment");
-        EventBus.getDefault().unregister(this);
+    public void setListener() {
+
     }
+
 
     @OnClick({R.id.search_orange, R.id.fg2_topbar_typerl, R.id.fg2_topbar_publicrl})
     public void onClick(View view) {
@@ -267,19 +195,13 @@ public class AllGoodsFragment extends BaseFragment {
     }
 
     private void showPopupWindow(int what) {
-        View pwindow = View.inflate(getActivity(), R.layout.popupwindow_alltype, null);
+
         switch (what) {
             case 1:
-                if (null == mypopupWindow1) {
-                    mypopupWindow1 = pwin1.build(ConstanceUtils.CONTEXT, pwindow, view, mpwindow_TopbarHeight, 1, sortTv1);
-                }
-                pwin1.showLocation(mypopupWindow1, TopbarTyperl, sortArrow1);
+                pwin1.showLocation(TopbarTyperl, sortArrow1);
                 break;
             case 2:
-                if (null == mypopupWindow2) {
-                    mypopupWindow2 = pwin2.build(ConstanceUtils.CONTEXT, pwindow, view, mpwindow_TopbarHeight, 3, sortTv2);
-                }
-                pwin2.showLocation(mypopupWindow2, TopbarPublicrl, sortArrow2);
+                pwin2.showLocation(TopbarPublicrl, sortArrow2);
                 break;
         }
     }
@@ -294,4 +216,101 @@ public class AllGoodsFragment extends BaseFragment {
             return false;
         }
     };
+
+
+    private void requestCategory() {
+        RequestService.request(Config.PRODUCT_CATEGORY_LIST_URL, TAG, new RequestCallBack<List<CategoryInfo>>() {
+            @Override
+            public void onError(String errMsg) {
+                MyToast.showToast(errMsg);
+            }
+
+            @Override
+            public void onResult(List<CategoryInfo> result) {
+                if (result != null && result.size() > 0) {
+                    mCategories = result;
+                    orderBy = 1;
+                    category = result.get(0).id;
+                    buildPopupWindow();
+                    requestProduct(0,orderBy,category);
+                    isLoaded = true;
+                }
+            }
+
+            @Override
+            public void onAfter() {
+                loding_dialog.dismiss();
+            }
+        });
+    }
+
+    private void requestProduct(int position, int orderType, int categoryId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("position", position + "");
+        params.put("orderType", orderType + "");
+        params.put("cateId", categoryId + "");
+        RequestService.request(Config.PRODUCT_ALL_LIST_URL,params,TAG,new RequestCallBack<List<ProductInfo>>(){
+
+            @Override
+            public void onError(String errMsg) {
+                MyToast.showToast(errMsg);
+            }
+
+            @Override
+            public void onResult(List<ProductInfo> result) {
+                if(result.size()>0){
+                    if(position == 0){
+                        datas.clear();
+                    }
+                    datas.addAll(result);
+                    startPosition = datas.size();
+                    adapter.notifyDataSetChanged();
+                }else{
+                    refreshLayout.setEnableLoadMore(false);
+                }
+            }
+
+            @Override
+            public void onAfter() {
+                refreshLayout.finishLoadMore();
+                refreshLayout.finishRefresh();
+            }
+        });
+    }
+
+    private void buildPopupWindow() {
+        pwindow1 = View.inflate(getActivity(), R.layout.popupwindow_alltype, null);
+        pwindow2 = View.inflate(getActivity(), R.layout.popupwindow_alltype, null);
+        List<String> strings = Arrays.asList(getResources().getStringArray(R.array.order_type));
+        pwin1.build(ConstanceUtils.CONTEXT, pwindow1,
+                view, mpwindow_TopbarHeight, sortTv1).setData(parseCategory(mCategories));
+        pwin2.build(ConstanceUtils.CONTEXT, pwindow2,
+                view, mpwindow_TopbarHeight, sortTv2).setData(strings);
+        pwin1.setOnItemClick(new MyPopupWindow.OnPopupItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                category = mCategories.get(position).id;
+                requestProduct(0,orderBy,category);
+            }
+        });
+        pwin2.setOnItemClick(new MyPopupWindow.OnPopupItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                orderBy = position + 1;
+                requestProduct(0,orderBy,category);
+            }
+        });
+    }
+
+    private List<String> parseCategory(List<CategoryInfo> mCategorys) {
+        List<String> categories = new ArrayList<>();
+        for (CategoryInfo mCategory : mCategorys) {
+            if (!TextUtils.isEmpty(mCategory.displayName)) {
+                categories.add(mCategory.displayName);
+            } else {
+                categories.add(mCategory.name);
+            }
+        }
+        return categories;
+    }
 }

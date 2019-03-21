@@ -80,7 +80,6 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -263,5 +262,11 @@ public class MeFragment extends BaseFragment {
                 startActivity(intent1);
                 break;
         }
+
+    }
+
+    @Override
+    public boolean isUseEvent() {
+        return true;
     }
 }

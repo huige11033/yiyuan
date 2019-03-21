@@ -29,6 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        turnToMainActivity();
         getUserId();
     }
 
@@ -44,41 +45,6 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void getUserId() {
-        OkHttpUtils.get().url(Config.IP + "/yiyuan/user_userBuy")
-                .build().execute(new StringCallback() {
-            @Override
-            public void onError(Request request, Exception e) {
-                turnToMainActivity();
-            }
 
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String responses = jsonObject.get("messageInfo").toString();
-                    ObjectMapper mapper = new ObjectMapper();
-                    Log.e("main", response);
-                    if ("未登陆".equals(responses)) {
-                        UserUtils.userisLogin = false;
-                        UserUtils.user = null;
-                    } else {
-                        if ("已登陆".equals(responses)) {
-                            UserUtils.userisLogin = true;
-                            String userJson = jsonObject.get("user").toString();
-                            UserUtils.user = mapper.readValue(userJson, User.class);
-                        }
-                    }
-                    turnToMainActivity();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    e.printStackTrace();
-                } catch (JsonParseException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }

@@ -37,7 +37,7 @@ public class RequestService {
 
         OkHttpUtils.postString().mediaType(MediaType.parse("application/json")).tag(tag)
                 .url(url)
-                .content(JSONObject.toJSONString(SignUtil.doSign(secretKey,new HashMap<String, String>())))
+                .content(JSONObject.toJSONString(SignUtil.doSign(secretKey,new HashMap<>())))
                 .build().execute(callBack);
     }
 

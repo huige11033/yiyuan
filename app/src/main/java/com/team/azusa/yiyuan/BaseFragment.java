@@ -6,11 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.team.azusa.yiyuan.network.RequestService;
+import com.zhy.http.okhttp.OkHttpUtils;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import de.greenrobot.event.EventBus;
 
 public abstract class BaseFragment extends Fragment {
     private Unbinder unbinder;
+    public String TAG = getClass().getSimpleName();
 
     protected View view;
 
@@ -31,6 +36,9 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(layout(), null);
         unbinder = ButterKnife.bind(this, view);
+        if(isUseEvent()){
+            EventBus.getDefault().register(this);
+        }
         initView();
         initData();
         initAnimation();
@@ -38,8 +46,16 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
+    public boolean isUseEvent() {
+        return false;
+    }
+
     @Override
     public void onDestroyView() {
+        OkHttpUtils.getInstance().cancelTag(TAG);
+        if(isUseEvent()){
+            EventBus.getDefault().unregister(this);
+        }
         super.onDestroyView();
         unbinder.unbind();
     }

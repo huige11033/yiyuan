@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/product_img"
+        android:layout_width="168dp"
+        android:layout_height="64dp" />
+
+    <TextView
+        android:paddingLeft="10dp"
+        android:paddingRight="10dip"
+        android:paddingTop="4dp"
+        android:textStyle="bold"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="18dp"
+        android:id="@+id/product_name"
+        android:text="阿斯顿马丁"
+        android:textColor="#333333"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/progress_score"
+        android:max="100"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/total_score"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="共需30000积分"
+            android:textSize="@dimen/bodyfont_15"
+            android:textColor="#CCCCCC" />
+
+        <TextView
+            android:id="@+id/lack_score"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="@dimen/bodyfont_15"
+            android:text="还需30000积分"
+            android:textColor="@color/red" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/go_lottery"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#f74750"
+        android:gravity="center"
+        android:text="积分抽奖"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/white" />
+</LinearLayout>

@@ -15,9 +15,24 @@ public class Config {
 
 
     public static String LOGIN_URL = IP + "/app/login/login";
+    //发送验证码
     public static String SEND_CODE_URL = IP + "/app/register/sendCode";
+    //验证验证码
     public static String CHECK_CODE_URL = IP + "/app/register/checkMsg";
+    //重设密码
     public static String SAVE_PASSWORD_URL = IP + "/app/register/savePasswd";
+    //晒单列表
+    public static String SHARE_LIST_URL = IP + "/app/share/findByAudit";
+    //广告列表
+    public static String AD_LIST_URL = IP + "/app/index/findByAdv";
+    //热门礼品
+    public static String PRODUCT_HOT_LIST_URL = IP + "/app/index/findHotProduct";
+    //新品上线
+    public static String PRODUCT_NEW_LIST_URL = IP + "/app/index/findLastestPubProduct";
+    //全部商品分类
+    public static String PRODUCT_CATEGORY_LIST_URL = IP + "/app/category/findCategoryList";
+    //全部商品
+    public static String PRODUCT_ALL_LIST_URL = IP + "/app/category/findProductByCategory";
 
 
 }

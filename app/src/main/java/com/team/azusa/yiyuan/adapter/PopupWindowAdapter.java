@@ -23,12 +23,10 @@ import butterknife.ButterKnife;
 public class PopupWindowAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<SortType> datas;
-    private int what;
 
-    public PopupWindowAdapter(Context context, ArrayList<SortType> datas, int what) {
+    public PopupWindowAdapter(Context context, ArrayList<SortType> datas) {
         this.context = context;
         this.datas = datas;
-        this.what = what;
     }
 
     @Override
@@ -57,25 +55,14 @@ public class PopupWindowAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_type.setText(datas.get(position).getStringdatas());
-        if (1 == what || 2 == what) {
-            if (datas.get(position).ischeck()) {
-                holder.btn_Arrow.setVisibility(View.VISIBLE);
-                holder.img_type.setImageResource(datas.get(position).getImgcheckid());
-                holder.tv_type.setTextColor(Color.parseColor("#ff7700"));
-            } else {
-                holder.btn_Arrow.setVisibility(View.GONE);
-                holder.img_type.setImageResource(datas.get(position).getImgid());
-                holder.tv_type.setTextColor(Color.parseColor("#aaaaaa"));
-            }
+        if (datas.get(position).ischeck()) {
+            holder.btn_Arrow.setVisibility(View.VISIBLE);
+            holder.img_type.setImageResource(datas.get(position).getImgcheckid());
+            holder.tv_type.setTextColor(Color.parseColor("#ff7700"));
         } else {
-            holder.img_type.setVisibility(View.GONE);
-            if (datas.get(position).ischeck()) {
-                holder.btn_Arrow.setVisibility(View.VISIBLE);
-                holder.tv_type.setTextColor(Color.parseColor("#ff7700"));
-            } else {
-                holder.btn_Arrow.setVisibility(View.GONE);
-                holder.tv_type.setTextColor(Color.parseColor("#aaaaaa"));
-            }
+            holder.btn_Arrow.setVisibility(View.GONE);
+            holder.img_type.setImageResource(datas.get(position).getImgid());
+            holder.tv_type.setTextColor(Color.parseColor("#aaaaaa"));
         }
         return convertView;
     }

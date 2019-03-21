@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.bean.ProductDto;
+import com.team.azusa.yiyuan.listener.AddCarClickListener;
 import com.team.azusa.yiyuan.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -129,7 +130,5 @@ public class AllgoodsLvAdapter extends BaseAdapter {
         this.mAddCarClickListener = ClickListener;
     }
 
-    public interface AddCarClickListener {
-        public void onAddCarClick(int position, Bitmap drawable, int[] start_location);
-    }
+
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.team.azusa.yiyuan.yiyuan_activity.ConfirmationActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.NewPasswordActivity;
+import com.team.azusa.yiyuan.yiyuan_activity.ShowOrderActivity;
 
 /**
  * @author : chenru
@@ -27,5 +28,12 @@ public class JumpUtils {
         intent.putExtra("phone", phone);
         intent.putExtra("time", time);
         activity.startActivityForResult(intent, 200);
+    }
+
+
+    //跳转到所有晒单页面
+    public static void jumpShowOrder(Context context) {
+        Intent intent = new Intent(context, ShowOrderActivity.class);
+        context.startActivity(intent);
     }
 }

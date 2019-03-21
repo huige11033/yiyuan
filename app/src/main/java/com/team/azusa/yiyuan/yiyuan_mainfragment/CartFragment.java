@@ -67,7 +67,6 @@ public class CartFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -79,6 +78,8 @@ public class CartFragment extends BaseFragment {
     public void setListener() {
 
     }
+
+
 
     public void initView() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -230,8 +231,7 @@ public class CartFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
+    public boolean isUseEvent() {
+        return true;
     }
 }

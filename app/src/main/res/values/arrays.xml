@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="order_type">
+        <item >人气商品</item>
+        <item >即将揭晓</item>
+        <item >最新</item>
+        <item >价格由低到高</item>
+    </string-array>
+    
+</resources>
