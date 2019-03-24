@@ -26,6 +26,7 @@ import com.team.azusa.yiyuan.callback.RecordDtoCallback;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.event.IntParameterEvent;
 import com.team.azusa.yiyuan.listener.MyOnClickListener;
+import com.team.azusa.yiyuan.model.UserYgEntity;
 import com.team.azusa.yiyuan.utils.ConstanceUtils;
 import com.team.azusa.yiyuan.utils.DateUtil;
 import com.team.azusa.yiyuan.utils.MyToast;
@@ -66,7 +67,7 @@ public class ChoujiangjiluFragment extends BaseFragment {
     @BindView(R.id.yunrecorddetail_lv)
     ListView listview;
 
-    private BuyRecordInfo buyRecordInfo;
+    private UserYgEntity buyRecordInfo;
     private AlertDialog dialog;
 
     @Override
@@ -76,51 +77,51 @@ public class ChoujiangjiluFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        dialog = new MyDialog().showLodingDialog(getActivity());
-        buyRecordInfo = (BuyRecordInfo) getArguments().getSerializable("record");
+//        dialog = new MyDialog().showLodingDialog(getActivity());
+        buyRecordInfo = (UserYgEntity)getArguments().getSerializable("record");
         initHead();
         //设置产品图片
-        getInstance().displayImage(buyRecordInfo.getProImgUrl(), img_product);
+        getInstance().displayImage(buyRecordInfo.getYgProduct().getLogoPath(), img_product);
         //设置是否为限购
-        if ("1".equals(buyRecordInfo.getXianGou())) {
-            img_limit.setVisibility(View.VISIBLE);
-        } else {
-            img_limit.setVisibility(View.GONE);
-        }
+//        if ("1".equals(buyRecordInfo.getYgProduct().isRecommend())) {
+//            img_limit.setVisibility(View.VISIBLE);
+//        } else {
+//            img_limit.setVisibility(View.GONE);
+//        }
         //设置产品标题
-        tv_productname.setText(buyRecordInfo.getTitle());
+        tv_productname.setText(buyRecordInfo.getYgProduct().getTitle());
 
         //状态为2已开奖时的布局,其他为未开奖时的布局
-        if (buyRecordInfo.getStatus().equals("2")) {
+        if (buyRecordInfo.getStatus() == 2) {
             Status1.setVisibility(View.VISIBLE);
             Status2.setVisibility(View.GONE);
             //设置获奖者名字
-            tv_winnername.setText(buyRecordInfo.getWinnerName());
+            tv_winnername.setText(buyRecordInfo.getYgProduct().getWinUserNickName());
             //设置揭晓时间
             tv_jiexiaoTime.setText("揭晓时间:" +
-                    DateUtil.getStringbylong(buyRecordInfo.getJieXiaoTime(), DateUtil.dateFormatYMDHMS));
+                    DateUtil.getStringbylong(buyRecordInfo.getYgProduct().getPublishDate(), DateUtil.dateFormatYMDHMS));
         } else {
             Status1.setVisibility(View.GONE);
             Status2.setVisibility(View.VISIBLE);
             //设置购买人数进度条
             float buynum = buyRecordInfo.getBuyNum();
-            float totalnum = buyRecordInfo.getValue();
+            float totalnum = buyRecordInfo.getTotalNum();
             productPb.setProgress((int) ((buynum / totalnum) * 100));
             //设置已购买人数
             productJoinedcount.setText("" + buyRecordInfo.getBuyNum());
             //设置总需人数
-            productAllcount.setText("" + buyRecordInfo.getValue());
+            productAllcount.setText("" + buyRecordInfo.getTotalNum());
             //设置剩余购买人数
-            productRemaincount.setText("" + (buyRecordInfo.getValue() - buyRecordInfo.getBuyNum()));
+            productRemaincount.setText("" + (buyRecordInfo.getTotalNum() - buyRecordInfo.getBuyNum()));
             //人数已满，揭晓中状态
-            if (buyRecordInfo.getStatus().equals("1")) {
+            if (buyRecordInfo.getStatus() == 1) {
                 btn_buyagain.setText("揭晓中");
                 btn_buyagain.setEnabled(false);
             }
         }
         setListener();
 
-        getYunNum();
+//        getYunNum();
         listview.addHeaderView(headView);
     }
 
@@ -162,7 +163,7 @@ public class ChoujiangjiluFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GoodsDetailsActivity.class);
                 intent.putExtra("productId", buyRecordInfo.getProductId());
-                intent.putExtra("yunNum", buyRecordInfo.getYunNum() + "");
+                intent.putExtra("yunNum", buyRecordInfo.getTotalNum() + "");
                 startActivity(intent);
             }
         });
@@ -171,10 +172,10 @@ public class ChoujiangjiluFragment extends BaseFragment {
         btn_buyagain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductDto productDto = new ProductDto(buyRecordInfo.getProductId()
-                        , buyRecordInfo.getTitle(), buyRecordInfo.getProImgUrl()
-                        , buyRecordInfo.getXianGou(), buyRecordInfo.getValue(), buyRecordInfo.getBuyNum()
-                        , buyRecordInfo.getValue(), buyRecordInfo.getYunNum());
+                ProductDto productDto = new ProductDto(buyRecordInfo.getProductId()+""
+                        , buyRecordInfo.getYgProduct().getTitle(), buyRecordInfo.getYgProduct().getLogoPath()
+                        , "", buyRecordInfo.getTotalNum(), buyRecordInfo.getBuyNum()
+                        , buyRecordInfo.getTotalNum(), buyRecordInfo.getTotalNum());
                 EventBus.getDefault().post(productDto); //添加至购物车
                 EventBus.getDefault().post(new IntParameterEvent(3)); //跳转至购物车页面
                 getActivity().setResult(Activity.RESULT_OK);
@@ -187,8 +188,8 @@ public class ChoujiangjiluFragment extends BaseFragment {
     private void getYunNum() {
         OkHttpUtils.get().url(Config.IP + "/yiyuan/user_getYunCode")
                 .addParams("userId", UserUtils.user.getId())
-                .addParams("yunNumId", buyRecordInfo.getYunNumId())
-                .addParams("productId", buyRecordInfo.getProductId())
+                .addParams("yunNumId", buyRecordInfo.getYgProduct().getProductId()+"")
+                .addParams("productId", buyRecordInfo.getProductId()+"")
                 .tag("YunRecordDetailActivity")
                 .build().execute(new RecordDtoCallback() {
             @Override
@@ -212,8 +213,8 @@ public class ChoujiangjiluFragment extends BaseFragment {
                     }
                 });
 
-                if (buyRecordInfo.getStatus().equals("2")) {
-                    buyRecordInfo.setYunNum(Integer.valueOf(map.get("count").toString()));
+                if (buyRecordInfo.getStatus() == 2) {
+//                    buyRecordInfo.setYunNum(Integer.valueOf(map.get("count").toString()));
                     btn_gotobuy.setText("第" + map.get("count").toString() + "云正在进行...");
                 }
 

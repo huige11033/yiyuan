@@ -1,58 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/status0"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/tv_lv_mygainedgoods_product"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    android:orientation="vertical"
-    android:weightSum="3">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="5">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="阿斯顿马丁，撩妹神车"
-        android:textColor="@color/black_title" />
+    <LinearLayout
+        android:id="@+id/status0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/fg2_product_joinedcount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="期号：13222"
-            android:textColor="#ff7700"
-            android:textSize="11sp" />
-
-        <TextView
-            android:id="@+id/fg2_product_remaincount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="总需9000积分/还需800积分"
-            android:textColor="@color/product_winner_color_sel"
-            android:textSize="11sp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ProgressBar
-            android:id="@+id/fg2_product_pb"
-            style="?android:attr/progressBarStyleHorizontal"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_centerInParent="true"
-            android:progressDrawable="@drawable/progressbar_color" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/qihao_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FA4819"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="第13222期"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/choujiang_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="阿斯顿马丁，撩妹神车"
+                android:textColor="#333333"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="3dp">
+
+            <ProgressBar
+                android:id="@+id/product_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_centerInParent="true"
+                android:max="100"
+                android:min="0"
+                android:progress="50"
+                android:progressDrawable="@drawable/progressbar_color" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/totalNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="共需9000积分"
+                android:textColor="#cccccc"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/remainNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="还需800积分"
+                android:textColor="#FF9600"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="倒计时"
+            android:textColor="#282828"/>
+
+        <cn.iwgang.countdownview.CountdownView
+            android:id="@+id/time_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            app:isHideTimeBackground="false"
+            app:isShowDay="false"
+            app:isShowHour="false"
+            app:isShowMillisecond="true"
+            app:isShowMinute="true"
+            app:isShowSecond="true"
+            app:isShowTimeBgDivisionLine="false"
+            app:suffixGravity="center"
+            app:suffixTextColor="#000000"
+            app:suffixTextSize="20dp"
+            app:timeBgColor="#000000"
+            app:timeBgRadius="4dp"
+            app:timeBgSize="30dp"
+            app:timeTextColor="#FFFFFF"
+            app:timeTextSize="20sp" />
+    </LinearLayout>
 
 </LinearLayout>

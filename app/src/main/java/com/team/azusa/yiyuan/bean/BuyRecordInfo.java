@@ -141,4 +141,24 @@ public class BuyRecordInfo implements Serializable {
         this.winnerImgUrl = winnerImgUrl;
     }
 
+    @Override
+    public String toString() {
+        return "BuyRecordInfo{" +
+                "yunNumId='" + yunNumId + '\'' +
+                ", productId='" + productId + '\'' +
+                ", proImgUrl='" + proImgUrl + '\'' +
+                ", title='" + title + '\'' +
+                ", xianGou='" + xianGou + '\'' +
+                ", value=" + value +
+                ", yunNum=" + yunNum +
+                ", status='" + status + '\'' +
+                ", buyNum=" + buyNum +
+                ", winnerId='" + winnerId + '\'' +
+                ", winnerName='" + winnerName + '\'' +
+                ", winnerImgUrl='" + winnerImgUrl + '\'' +
+                ", jieXiaoTime=" + jieXiaoTime +
+                ", winCode='" + winCode + '\'' +
+                ", buyRecordId='" + buyRecordId + '\'' +
+                '}';
+    }
 }

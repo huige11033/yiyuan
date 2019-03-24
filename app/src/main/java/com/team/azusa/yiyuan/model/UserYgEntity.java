@@ -2,6 +2,8 @@ package com.team.azusa.yiyuan.model;
 
 import java.util.Date;
 
+import androidx.annotation.NonNull;
+
 /**
  * 用户云购商品记录表
  *
@@ -504,4 +506,28 @@ public class UserYgEntity extends BaseEntity {
         this.ygProduct = ygProduct;
     }
 
+    @Override
+    public String toString() {
+        return "UserYgEntity{" +
+                "productId=" + productId +
+                ", ygProductId=" + ygProductId +
+                ", ygProduct=" + ygProduct +
+                ", period=" + period +
+                ", productName='" + productName + '\'' +
+                ", totalNum=" + totalNum +
+                ", singlePrice=" + singlePrice +
+                ", buyUserId=" + buyUserId +
+                ", buyUserNickName='" + buyUserNickName + '\'' +
+                ", buyUserLogoPath='" + buyUserLogoPath + '\'' +
+                ", buyNum=" + buyNum +
+                ", status=" + status +
+                ", buyDateLong=" + buyDateLong +
+                ", buyNos='" + buyNos + '\'' +
+                ", win=" + win +
+                ", winNo=" + winNo +
+                ", payTradeId=" + payTradeId +
+                ", clientIp='" + clientIp + '\'' +
+                ", ipAddr='" + ipAddr + '\'' +
+                '}';
+    }
 }

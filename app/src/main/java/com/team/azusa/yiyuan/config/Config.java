@@ -34,5 +34,6 @@ public class Config {
     //全部商品
     public static String PRODUCT_ALL_LIST_URL = IP + "/app/category/findProductByCategory";
 
-
+    // 抽奖记录
+    public static String CHOUJIANG_JILU_URL = IP + "/app/member/findUserYgByUserId";
 }

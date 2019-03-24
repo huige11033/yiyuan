@@ -1,7 +1,7 @@
 package com.team.azusa.yiyuan.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public abstract class BaseEntity implements Serializable {
 
@@ -30,7 +30,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 创建时间.
      */
-    private Date createTime;
+    private String createTime;
     /**
      * 创建人.
      */
@@ -42,7 +42,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 最后修改时间.
      */
-    private Date lastModifyTime;
+    private String lastModifyTime;
     /**
      * 最后修改人.
      */
@@ -51,4 +51,76 @@ public abstract class BaseEntity implements Serializable {
      * 最后修改人.
      */
     private Long lastModifyById;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isDeleteStatus() {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(boolean deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Long getCreateById() {
+        return createById;
+    }
+
+    public void setCreateById(Long createById) {
+        this.createById = createById;
+    }
+
+    public String getLastModifyBy() {
+        return lastModifyBy;
+    }
+
+    public void setLastModifyBy(String lastModifyBy) {
+        this.lastModifyBy = lastModifyBy;
+    }
+
+    public Long getLastModifyById() {
+        return lastModifyById;
+    }
+
+    public void setLastModifyById(Long lastModifyById) {
+        this.lastModifyById = lastModifyById;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(String lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
 }

@@ -8,15 +8,15 @@ public class ProductDto {
     private String imgUrl;                    //商品图片
     private String xianGou;                    //是否为限购，1为是，0为否
     private int daojishi;    //倒计时时间
-    private int yunNum;                        //云购期数
-    private int value;                        //价值
-    private int buyNum;                        //已购买人数
-    private int totalNum;                    //总人数
+    private long yunNum;                        //云购期数
+    private long value;                        //价值
+    private long buyNum;                        //已购买人数
+    private long totalNum;                    //总人数
 
     public ProductDto() {
     }
 
-    public ProductDto(String productId, String title, String imgUrl, String xianGou, int value, int buyNum, int totalNum, int yunNum) {
+    public ProductDto(String productId, String title, String imgUrl, String xianGou, long value, long buyNum, long totalNum, long yunNum) {
         this.productId = productId;
         this.title = title;
         this.imgUrl = imgUrl;
@@ -75,35 +75,35 @@ public class ProductDto {
         this.xianGou = xianGou;
     }
 
-    public int getYunNum() {
+    public long getYunNum() {
         return yunNum;
     }
 
-    public void setYunNum(int yunNum) {
+    public void setYunNum(long yunNum) {
         this.yunNum = yunNum;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
-    public int getBuyNum() {
+    public long getBuyNum() {
         return buyNum;
     }
 
-    public void setBuyNum(int buyNum) {
+    public void setBuyNum(long buyNum) {
         this.buyNum = buyNum;
     }
 
-    public int getTotalNum() {
+    public long getTotalNum() {
         return totalNum;
     }
 
-    public void setTotalNum(int totalNum) {
+    public void setTotalNum(long totalNum) {
         this.totalNum = totalNum;
     }
 

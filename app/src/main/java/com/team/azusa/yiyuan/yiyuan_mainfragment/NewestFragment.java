@@ -206,7 +206,7 @@ public class NewestFragment extends BaseFragment {
                     return;
                 }
                 String productId = datas_jiexiaoing.get(position).getProductId();
-                int yunNum = datas_jiexiaoing.get(position).getYunNum();
+                long yunNum = datas_jiexiaoing.get(position).getYunNum();
 
                 Intent intent = new Intent(getActivity(), GoodsDetailsActivity.class);
                 intent.putExtra("productId", productId);

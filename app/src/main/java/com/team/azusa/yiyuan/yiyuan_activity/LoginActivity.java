@@ -134,12 +134,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
                         @Override
                         public void onResult(UserBean result) {
+                            SharedPreferenceData.getInstance().saveLoginName(LoginActivity.this, username);
                             UserManager.getInstance().login(result);
                             MyToast.showToast("登录成功");
                             finish();
                         }
-
-
                     });
 
 //            OkHttpUtils.get().url(Config.IP + "/yiyuan/user_UserLogin")

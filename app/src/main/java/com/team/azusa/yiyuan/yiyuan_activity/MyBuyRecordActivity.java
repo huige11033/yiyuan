@@ -3,17 +3,23 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.google.gson.JsonArray;
 import com.squareup.okhttp.Request;
 import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.MyBuyRecordLvAdapter;
+import com.team.azusa.yiyuan.app.UserManager;
 import com.team.azusa.yiyuan.bean.BuyRecordInfo;
 import com.team.azusa.yiyuan.callback.BuyRecordProductCallback;
+import com.team.azusa.yiyuan.callback.RequestCallBack;
 import com.team.azusa.yiyuan.config.Config;
 import com.team.azusa.yiyuan.listener.OnLoadListener;
+import com.team.azusa.yiyuan.model.UserYgEntity;
+import com.team.azusa.yiyuan.network.RequestService;
 import com.team.azusa.yiyuan.utils.JsonUtils;
 import com.team.azusa.yiyuan.utils.MyToast;
 import com.team.azusa.yiyuan.utils.UserUtils;
@@ -22,7 +28,11 @@ import com.team.azusa.yiyuan.widget.PulluptoRefreshListview;
 import com.team.azusa.yiyuan.widget.RefreshHead;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,7 +47,7 @@ public class MyBuyRecordActivity extends BaseActivity {
     @BindView(R.id.buyrecordptrpulltorefresh)
     PtrFrameLayout buyrecordptrpulltorefresh;
     private MyBuyRecordLvAdapter adapter;
-    private ArrayList<BuyRecordInfo> datas;
+    private ArrayList<UserYgEntity> datas;
     private RefreshHead refreshHead;
     private boolean cancelrequest = false; //是否取消网络请求
     private MyDialog myDialog;
@@ -46,7 +56,7 @@ public class MyBuyRecordActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             if (1 == msg.what) {
                 Intent intent = new Intent(MyBuyRecordActivity.this, YunRecordDetailActivity.class);
-                intent.putExtra("product_data", msg.obj.toString());
+                intent.putExtra("product_data", (Serializable) msg.obj);
                 startActivityForResult(intent, 1);
                 myDialog.dismissDialog();
             }
@@ -74,10 +84,10 @@ public class MyBuyRecordActivity extends BaseActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String data = JsonUtils.getJsonStringformat(datas.get(position));
+//                        String data = JsonUtils.getJsonStringformat(datas.get(position));
                         Message message = Message.obtain();
                         message.what = 1;
-                        message.obj = data;
+                        message.obj = datas.get(position);
                         handler.sendMessageDelayed(message, 500);
                     }
                 }).start();
@@ -98,40 +108,41 @@ public class MyBuyRecordActivity extends BaseActivity {
      * @param firstResult 要加载的第一条数据的position
      */
     private void getData(final int firstResult, final int what) {
-        OkHttpUtils.get().url(Config.IP + "/yiyuan/user_getUserRecord")
-                .addParams("userId", UserUtils.user.getId())
-                .addParams("firstResult", firstResult + "")
-                .tag("MyBuyRecordActivity")
-                .build().execute(new BuyRecordProductCallback() {
-            @Override
-            public void onError(Request request, Exception e) {
-                if (cancelrequest) {
-                    return;
-                }
-                MyToast.showToast("网络连接出错");
-                mybuyrecordlv.setLoadComplete(true);
-            }
-
-            @Override
-            public void onResponse(ArrayList<BuyRecordInfo> response) {
-                if (null == response || response.size() == 0) {
-                    mybuyrecordlv.setLoadComplete(true);
-                    buyrecordptrpulltorefresh.refreshComplete();
-                    return;
-                } else if (1 == what) {
-                    datas.clear();
-                }
-                if (1 == what) {
-                    if (cancelrequest) {
-                        return;
+        Map<String,String> param = new HashMap<>();
+        param.put("userId", UserManager.getInstance().getUser().id+"");
+        param.put("position", firstResult + "");
+        RequestService.request(Config.CHOUJIANG_JILU_URL, param, "MyBuyRecordActivity",
+                new RequestCallBack<List<UserYgEntity>>() {
+                    @Override
+                    public void onError(String errMsg) {
+                        if (cancelrequest) {
+                            return;
+                        }
+                        MyToast.showToast("网络连接出错");
+                        mybuyrecordlv.setLoadComplete(true);
                     }
-                    buyrecordptrpulltorefresh.refreshComplete();
-                }
-                mybuyrecordlv.setLoading(false);
-                datas.addAll(response);
-                adapter.notifyDataSetChanged();
-            }
-        });
+
+                    @Override
+                    public void onResult(List<UserYgEntity> result) {
+                        Log.d(MyBuyRecordActivity.class.getSimpleName(), result + "");
+                        if (null == result) {
+                            mybuyrecordlv.setLoadComplete(true);
+                            buyrecordptrpulltorefresh.refreshComplete();
+                            return;
+                        } else if (1 == what) {
+                            datas.clear();
+                        }
+                        if (1 == what) {
+                            if (cancelrequest) {
+                                return;
+                            }
+                            buyrecordptrpulltorefresh.refreshComplete();
+                        }
+                        mybuyrecordlv.setLoading(false);
+                        datas.addAll(result);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override

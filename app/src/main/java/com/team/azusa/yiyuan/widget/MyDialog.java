@@ -38,7 +38,7 @@ public class MyDialog {
         params.height = (int) (display.getHeight() * 0.3);
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setContentView(view_dialog);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         return dialog;
     }
 

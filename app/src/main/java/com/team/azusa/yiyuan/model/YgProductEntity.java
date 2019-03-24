@@ -106,9 +106,16 @@ public class YgProductEntity extends BaseEntity {
 //	@Column(nullable = false, columnDefinition = " int default 0")
     private int status;
 
-//    public String getStatusName() {
-//        return YgProductStatusEnum.getName(status);
-//    }
+    public String getStatusName() {
+        switch (status) {
+            case 0:return "进行中";
+            case 1:return "即将揭晓";
+            case 2:return "开奖计算中";
+            case 3:return "已揭晓";
+            case 4:return "删除";
+        }
+        return "";
+    }
 
     /**
      * 推荐
@@ -123,17 +130,17 @@ public class YgProductEntity extends BaseEntity {
     /**
      * 揭晓时间
      */
-    private Date publishDate;
+    private Long publishDate;
 
     /**
      * 揭晓时间长
      */
-    public Long getPublishDateLong() {
-        if (publishDate != null) {
-            return publishDate.getTime() - System.currentTimeMillis();
-        }
-        return 0L;
-    }
+//    public Long getPublishDateLong() {
+//        if (publishDate != null) {
+//            return publishDate.getTime() - System.currentTimeMillis();
+//        }
+//        return 0L;
+//    }
 
     /**
      * 老老时彩号码
@@ -180,7 +187,7 @@ public class YgProductEntity extends BaseEntity {
     /**
      * 中奖时间
      */
-    private Date winDate;
+    private Long winDate;
     /**
      * 购买（夺宝）时间
      */
@@ -523,7 +530,7 @@ public class YgProductEntity extends BaseEntity {
      * @return
      * @author lvzf 2016年8月27日
      */
-    public Date getPublishDate() {
+    public Long getPublishDate() {
         return publishDate;
     }
 
@@ -533,7 +540,7 @@ public class YgProductEntity extends BaseEntity {
      * @param publishDate
      * @author lvzf 2016年8月27日
      */
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(Long publishDate) {
         this.publishDate = publishDate;
     }
 
@@ -683,7 +690,7 @@ public class YgProductEntity extends BaseEntity {
      * @return
      * @author lvzf 2016年8月27日
      */
-    public Date getWinDate() {
+    public Long getWinDate() {
         return winDate;
     }
 
@@ -693,7 +700,7 @@ public class YgProductEntity extends BaseEntity {
      * @param winDate
      * @author lvzf 2016年8月27日
      */
-    public void setWinDate(Date winDate) {
+    public void setWinDate(Long winDate) {
         this.winDate = winDate;
     }
 
@@ -837,5 +844,7 @@ public class YgProductEntity extends BaseEntity {
         this.winUserIpAddr = winUserIpAddr;
     }
 
-
+    public String getLogoPath() {
+        return logoPath;
+    }
 }

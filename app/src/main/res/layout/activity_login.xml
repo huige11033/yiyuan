@@ -48,7 +48,8 @@
             style="@style/edit_username"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:text="13560725992"/>
 
         <View
             android:layout_width="match_parent"
@@ -62,7 +63,8 @@
             android:layout_width="fill_parent"
             android:layout_height="48dp"
             android:layout_below="@id/username"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:text="kk831120"/>
     </RelativeLayout>
 
     <LinearLayout

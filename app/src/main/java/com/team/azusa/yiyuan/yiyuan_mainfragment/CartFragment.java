@@ -83,7 +83,7 @@ public class CartFragment extends BaseFragment {
 
     public void initView() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerview.setLayoutManager(mLayoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerview.setHasFixedSize(true);
@@ -105,7 +105,7 @@ public class CartFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 String productId = datas.get(position).getProductDto().getProductId();
-                int yunNum = datas.get(position).getProductDto().getYunNum();
+                long yunNum = datas.get(position).getProductDto().getYunNum();
 
                 Intent intent = new Intent(getActivity(), GoodsDetailsActivity.class);
                 intent.putExtra("productId", productId);

@@ -140,7 +140,7 @@ public class SearchResoultFragment extends BaseFragment {
                     return;
                 }
                 String productId = datas.get(position).getProductId();
-                int yunNum = datas.get(position).getYunNum();
+                long yunNum = datas.get(position).getYunNum();
 
                 Intent intent = new Intent(getActivity(), GoodsDetailsActivity.class);
                 intent.putExtra("productId", productId);

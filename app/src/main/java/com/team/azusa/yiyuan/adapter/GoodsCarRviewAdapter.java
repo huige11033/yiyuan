@@ -33,7 +33,7 @@ import de.greenrobot.event.EventBus;
 public class GoodsCarRviewAdapter extends RecyclerView.Adapter<GoodsCarRviewAdapter.ViewHolder> {
     private ArrayList<GoodsCar> datas = null;
     private Context context;
-    private int buy_count;
+    private long buy_count;
     private RecyclerViewItemClickLitener recyclerViewItemClickLitener;
 
     public void setOnItemClickLitener(RecyclerViewItemClickLitener onItemClickLitener) {
@@ -116,7 +116,7 @@ public class GoodsCarRviewAdapter extends RecyclerView.Adapter<GoodsCarRviewAdap
         final Button btn_sure = (Button) dialogview.findViewById(R.id.dialog_surebtn);
         final EditText edt_count = (EditText) dialogview.findViewById(R.id.dialog_edt_count);
         ProductDto productDto = datas.get(position).getProductDto();
-        final int remain_count; //剩余购买人次
+        final long remain_count; //剩余购买人次
         //判断是否限购
         if (productDto.getXianGou().equals("1")) {
             remain_count = 5;
@@ -199,7 +199,7 @@ public class GoodsCarRviewAdapter extends RecyclerView.Adapter<GoodsCarRviewAdap
         btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datas.get(position).setBuyCount(buy_count);
+                datas.get(position).setBuyCount((int)buy_count);
                 notifyItemChanged(position);
                 dialog.dismiss();
                 ProductDto dto = new ProductDto();
