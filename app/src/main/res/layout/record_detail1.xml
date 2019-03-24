@@ -40,6 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="阿斯顿马丁，撩妹神车"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textColor="#333333"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -121,9 +123,9 @@
             app:suffixTextSize="20dp"
             app:timeBgColor="#000000"
             app:timeBgRadius="4dp"
-            app:timeBgSize="30dp"
+            app:timeBgSize="20dp"
             app:timeTextColor="#FFFFFF"
-            app:timeTextSize="20sp" />
+            app:timeTextSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>
