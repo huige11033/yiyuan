@@ -122,8 +122,8 @@ public class MyPlayRecordRviewAdapter extends RecyclerView.Adapter<MyPlayRecordR
             status2 = (RelativeLayout) view.findViewById(R.id.status2);
             img_product = (SimpleDraweeView) view.findViewById(R.id.img_rv_playrcord);
             tv_productname = (TextView) view.findViewById(R.id.tv_lv_mygainedgoods_product);
-            tv_winner = (TextView) view.findViewById(R.id.tv_lv_winnername);
-            tv_luckcode = (TextView) view.findViewById(R.id.tv_luckcode);
+//            tv_winner = (TextView) view.findViewById(R.id.tv_lv_winnername);
+//            tv_luckcode = (TextView) view.findViewById(R.id.tv_luckcode);
             pb = (ProgressBar) view.findViewById(R.id.fg2_product_pb);
             tv_joinedcount = (TextView) view.findViewById(R.id.fg2_product_joinedcount);
             tv_totalcount = (TextView) view.findViewById(R.id.fg2_product_allcount);

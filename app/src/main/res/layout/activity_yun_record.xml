@@ -28,17 +28,76 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="云购详情"
+            android:text="抽奖详情"
             android:textColor="#555555"
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/yunrecorddetail_lv"
+    <!--app:banner_default_image="@drawable/placeholder_home_banner"-->
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/banner_radius_selected"
+        app:indicator_drawable_unselected="@drawable/banner_radius_default"
+        app:indicator_height="8dp"
+        app:indicator_margin="4dp"
+        app:indicator_width="8dp"
+        app:layout_collapseMode="parallax"
+        android:layout_below="@id/title_yundetail"/>
+
+    <include
+        android:id="@+id/record_detail1"
+        layout="@layout/record_detail1"
+        android:layout_below="@id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/live_bom_lay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_yundetail"
-        android:divider="#dddddd"
-        android:dividerHeight="0.5dp" />
+        android:layout_below="@+id/record_detail1"
+        android:orientation="vertical"
+        android:layout_above="@+id/bottom"
+        android:background="@color/red">
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            app:tabBackground="@color/transparent"
+            app:tabIndicatorColor="@null"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_title" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </RelativeLayout>
 </RelativeLayout>

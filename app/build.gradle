@@ -10,7 +10,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-//        multiDexEnabled true
+        multiDexEnabled true
     }
     buildTypes {
         assembleRelease {
@@ -45,6 +45,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "com.android.support:multidex:1.0.3"
     implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'com.yqritc:recyclerview-flexibledivider:1.2.6'
     implementation 'com.github.iwgang:countdownview:1.2'
@@ -52,9 +53,9 @@ dependencies {
     implementation 'de.greenrobot:eventbus:2.4.0'
     implementation 'com.zhy:okhttputils:2.0.2'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation files('libs/jackson-annotations-2.5.3.jar')
-    implementation files('libs/jackson-core-2.5.3.jar')
-    implementation files('libs/jackson-databind-2.5.3.jar')
+//    implementation files('libs/jackson-annotations-2.5.3.jar')
+//    implementation files('libs/jackson-core-2.5.3.jar')
+//    implementation files('libs/jackson-databind-2.5.3.jar')
     implementation files('libs/jpush-android-2.1.0.jar')
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
     implementation 'com.jcodecraeer:xrecyclerview:1.2.6'
@@ -66,4 +67,18 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-4'
     implementation 'com.superluo:textbannerview:1.0.5'
     implementation 'com.zhy:base-rvadapter:3.0.3'
+
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+    implementation 'com.youth.banner:banner:1.4.10'
+//    implementation 'com.google.guava:guava:24.1-jre'
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:4.8.0"
+    implementation "com.github.bumptech.glide:annotations:4.8.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.8.0"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:3.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
 }

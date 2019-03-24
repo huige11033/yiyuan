@@ -29,12 +29,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="我的云购记录"
+            android:text="抽奖记录"
             android:textColor="#555555"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <in.srain.cube.views.ptr.PtrFrameLayout

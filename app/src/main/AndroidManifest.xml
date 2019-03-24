@@ -30,6 +30,9 @@
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme,android:appComponentFactory"
         android:appComponentFactory="111">
+        <meta-data
+            android:name="com.team.azusa.yiyuan.utils.glide.OkHttpLibraryGlideModule"
+            android:value="LibraryGlideModules" />
         <activity
             android:name=".yiyuan_activity.WelcomeActivity"
             android:label="@string/app_name" >

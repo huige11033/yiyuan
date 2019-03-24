@@ -25,6 +25,7 @@ import com.zhy.http.okhttp.cookie.PersistentCookieStore;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
+import androidx.multidex.MultiDex;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
@@ -87,5 +88,9 @@ public class app extends Application {
 //        LeakCanary.install(this);
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

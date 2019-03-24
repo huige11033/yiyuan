@@ -39,39 +39,32 @@ public class MeFragment extends BaseFragment {
     Button btn_login;  //登陆按钮
     @BindView(R.id.layout_unlogin)
     LinearLayout layoutUnlogin;  //未登陆状态下的头部布局
-    @BindView(R.id.fg5_top_img)
-    SimpleDraweeView img_userhead;  //用户头像
-    @BindView(R.id.yungou_lv_img)
-    ImageView Img_yungouLv;  //云购等级图标
-    @BindView(R.id.yungou_lv_tv)
-    TextView tv_yungouLv;  //云购等级
-    @BindView(R.id.fg5_jinyan_tv)
-    TextView tv_exprence;  //经验值
-    @BindView(R.id.charge_money)
-    Button chargeMoney;  //登录后的充值按钮
-    @BindView(R.id.me1)
-    RelativeLayout play_record; //我的云购记录栏
-    @BindView(R.id.me2)
-    RelativeLayout my_gaintedgoods; //获得的商品栏
-    @BindView(R.id.me3)
-    RelativeLayout my_shareorder; //我的晒单栏
-    @BindView(R.id.me4)
-    RelativeLayout my_frient; //我的朋友栏
-    @BindView(R.id.me5)
-    RelativeLayout message_center; //消息中心栏
-    @BindView(R.id.me6)
-    RelativeLayout account_detail; //账户明细栏
-    @BindView(R.id.me7)
-    RelativeLayout address;  //收货地址栏
-    @BindView(R.id.fg5_login_toplayout)
-    LinearLayout loginToplayout; //登录后显示的头部
-    @BindView(R.id.fg5_username)
-    TextView userName;
-    @BindView(R.id.tv_fufen)
-    TextView tvFufen;
-    @BindView(R.id.tv_balance)
-    TextView tvBalance;
-    private User user;
+    @BindView(R.id.my_head)
+    RelativeLayout my_head; //登录后显示的头部
+    @BindView(R.id.head)
+    SimpleDraweeView head;  //用户头像
+    @BindView(R.id.mobile)
+    TextView mobile;//积分
+    @BindView(R.id.score)
+    TextView score;//积分
+
+    @BindView(R.id.chongzhi)
+    View chongzhi;  //登录后的充值按钮
+
+    @BindView(R.id.chongzhijilu)
+    RelativeLayout chongzhijilu; //充值记录
+    @BindView(R.id.choujiangjilu)
+    RelativeLayout choujiangjilu; //抽奖记录
+    @BindView(R.id.xingyunjilu)
+    RelativeLayout xingyunjilu; //幸运记录
+    @BindView(R.id.dizhiguanli)
+    RelativeLayout dizhiguanli; //地址管理
+    @BindView(R.id.shaidanjilu)
+    RelativeLayout shaidanjilu; //晒单记录
+    @BindView(R.id.lebiduihuan)
+    RelativeLayout lebiduihuan; //乐币兑换
+
+    private User user;//用户对象
 
     @Override
     public int layout() {
@@ -103,7 +96,7 @@ public class MeFragment extends BaseFragment {
     //eventbus接收选择图片界面发来的消息
     public void onEventMainThread(AddPhotoEvent event) {
         //更新头像
-        ImageLoader.getInstance().displayImage(event.getImgurl().get(0), img_userhead);
+        ImageLoader.getInstance().displayImage(event.getImgurl().get(0), head);
     }
 
     //eventbus接收登陆界面发来的消息
@@ -118,8 +111,8 @@ public class MeFragment extends BaseFragment {
     //设置为登陆的界面
     private void setUnLoginView() {
         layoutUnlogin.setVisibility(View.VISIBLE);
-        if (loginToplayout.getVisibility() == View.VISIBLE) {
-            loginToplayout.setVisibility(View.GONE);
+        if (my_head.getVisibility() == View.VISIBLE) {
+            my_head.setVisibility(View.GONE);
         }
     }
 
@@ -128,27 +121,28 @@ public class MeFragment extends BaseFragment {
         if (layoutUnlogin.getVisibility() == View.VISIBLE) {
             layoutUnlogin.setVisibility(View.GONE);
         }
-        loginToplayout.setVisibility(View.VISIBLE);
+        my_head.setVisibility(View.VISIBLE);
         user = UserUtils.user;
         //设置头像
         if (StringUtil.isEmpty(UserUtils.user.getImgUrl())) {
-            ImageLoader.getInstance().displayImage("res:///" + R.drawable.default_head_, img_userhead);
-        } else ImageLoader.getInstance().displayImage(UserUtils.user.getImgUrl(), img_userhead);
+            ImageLoader.getInstance().displayImage("res:///" + R.drawable.default_head_, head);
+        } else ImageLoader.getInstance().displayImage(UserUtils.user.getImgUrl(), head);
 
         //设置用户账号名
         if (StringUtil.isEmpty(user.getName())) {
-            userName.setText(user.getMobile());
+            mobile.setText(user.getMobile());
         } else {
-            userName.setText(user.getName() + "(" + user.getMobile() + ")");
+            mobile.setText(user.getName() + "(" + user.getMobile() + ")");
         }
         //设置用户等级
-        setUserLv(Img_yungouLv, tv_yungouLv, user.getJingyan());
-        //设置经验值
-        tv_exprence.setText(user.getJingyan() + "");
-        //设置可用福分
-        tvFufen.setText(user.getJifen() + "");
-        //设置可用余额
-        tvBalance.setText("￥" + user.getBalance() + ".00");
+//        setUserLv(Img_yungouLv, tv_yungouLv, user.getJingyan());
+//        //设置经验值
+//        tv_exprence.setText(user.getJingyan() + "");
+//        //设置可用福分
+//        tvFufen.setText(user.getJifen() + "");
+//        //设置可用余额
+//        tvBalance.setText("￥" + user.getBalance() + ".00");
+        score.setText(String.valueOf(user.getJifen()));
     }
 
     public void setUserLv(ImageView img_lv, TextView tv_lv, int exprence) {
@@ -179,8 +173,8 @@ public class MeFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.setting, R.id.login, R.id.fg5_top_img, R.id.yungou_lv_img, R.id.yungou_lv_tv, R.id.fg5_jinyan_tv,
-            R.id.charge_money, R.id.me1, R.id.me2, R.id.me3, R.id.me4, R.id.me5, R.id.me6, R.id.me7})
+    @OnClick({R.id.setting, R.id.login, R.id.head, R.id.chongzhi, R.id.chongzhijilu, R.id.xingyunjilu, R.id.lebiduihuan,
+            R.id.dizhiguanli, R.id.shaidanjilu, R.id.choujiangjilu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setting:
@@ -191,7 +185,7 @@ public class MeFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.fg5_top_img:
+            case R.id.head://点击头像
                 Intent intent2 = new Intent(getActivity(), UsermsgActivity.class);
                 intent2.putExtra("user_id", user.getId());
                 if (StringUtil.isEmpty(user.getName())) {
@@ -202,15 +196,9 @@ public class MeFragment extends BaseFragment {
                 intent2.putExtra("userhead_img", user.getImgUrl());
                 startActivity(intent2);
                 break;
-            case R.id.yungou_lv_img:
+            case R.id.chongzhi:
                 break;
-            case R.id.yungou_lv_tv:
-                break;
-            case R.id.fg5_jinyan_tv:
-                break;
-            case R.id.charge_money:
-                break;
-            case R.id.me1:
+            case R.id.choujiangjilu:
                 Intent intent3;
                 if (UserUtils.userisLogin) {
                     intent3 = new Intent(getActivity(), MyBuyRecordActivity.class);
@@ -219,7 +207,7 @@ public class MeFragment extends BaseFragment {
                 }
                 startActivity(intent3);
                 break;
-            case R.id.me2:
+            case R.id.xingyunjilu:
                 Intent intentme2;
                 if (UserUtils.userisLogin) {
                     intentme2 = new Intent(getActivity(), MyGaingoodsActivity.class);
@@ -228,7 +216,7 @@ public class MeFragment extends BaseFragment {
                 }
                 startActivity(intentme2);
                 break;
-            case R.id.me3:
+            case R.id.shaidanjilu:
                 Intent intentme3;
                 if (UserUtils.userisLogin) {
                     intentme3 = new Intent(getActivity(), MyShareOrderActivity.class);
@@ -237,22 +225,20 @@ public class MeFragment extends BaseFragment {
                 }
                 startActivity(intentme3);
                 break;
-            case R.id.me4:
+            case R.id.lebiduihuan:
                 break;
-            case R.id.me5:
-                break;
-            case R.id.me6:
-
-                Intent intentme6;
-                if (UserUtils.userisLogin) {
-                    intentme6 = new Intent(getActivity(), AccountDetailsActivity.class);
-                } else {
-                    intentme6 = new Intent(getActivity(), LoginActivity.class);
-                }
-                startActivity(intentme6);
-
-                break;
-            case R.id.me7:
+//            case R.id.me6:
+//
+//                Intent intentme6;
+//                if (UserUtils.userisLogin) {
+//                    intentme6 = new Intent(getActivity(), AccountDetailsActivity.class);
+//                } else {
+//                    intentme6 = new Intent(getActivity(), LoginActivity.class);
+//                }
+//                startActivity(intentme6);
+//
+//                break;
+            case R.id.dizhiguanli:
                 Intent intent1;
                 if (UserUtils.userisLogin) {
                     intent1 = new Intent(getActivity(), MyAddressActivity.class);

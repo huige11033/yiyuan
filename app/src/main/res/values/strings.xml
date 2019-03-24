@@ -704,4 +704,11 @@ APP接口测试：%10$s"</string>
         <item>售后服务</item>
     </string-array>
     <string name="title_activity_calculate_details">CalculateDetailsActivity</string>
+
+    <string-array name="record_tab_title">
+        <item>抽奖记录</item>
+        <item>商品详情</item>
+        <item>往期中奖</item>
+        <item>晒单分享</item>
+    </string-array>
 </resources>

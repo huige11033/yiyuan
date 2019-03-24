@@ -54,4 +54,6 @@
     <color name="black_title">#FF1f1f1f</color>
     <color name="black_title2">#FF323232</color>
     <color name="red_title">#FFdf1932</color>
+
+    <color name="color_blue_theme">#ff5D76F5</color>
 </resources>

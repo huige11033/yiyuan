@@ -1,14 +1,16 @@
 package com.team.azusa.yiyuan.bean;
 
 
-public class BuyRecordInfo {
+import java.io.Serializable;
+
+public class BuyRecordInfo implements Serializable {
 
     private String yunNumId;                  //云期数ID
     private String productId;                //商品ID
     private String proImgUrl;                //商品缩略图
     private String title;                    //商品名称
     private String xianGou;                    //是否为限购，1是，0否
-    private int value;                        //商品价值
+    private int value;                        //商品价值,总共需要人数
     private int yunNum;                        //商品期数
     private String status;                    //状态 ，0为进行中，1为人数已满未开奖，2为已开奖
     private int buyNum;                        //参与次数
