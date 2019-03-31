@@ -8,6 +8,8 @@
     <color name="red">#ff403c</color>
     <color name="geek_green">#35b558</color>
 
+    <color name="title_line">#e6e6e6</color>
+
     <color name="primary_dark">#5d4037</color>
     <color name="primary">#FA4819</color>
     <color name="primary_light">#d7ccc8</color>

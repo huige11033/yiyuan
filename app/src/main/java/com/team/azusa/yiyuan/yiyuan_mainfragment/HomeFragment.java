@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment {
     NestedScrollView homescrollview;
     private ArrayList<String> advImageUrls = new ArrayList<>(); //广告为图片url集合
     private ArrayList<ProductInfo> hotProducts = new ArrayList<>(); //热门礼品
-    private ArrayList<ProductInfo> newProducts = new ArrayList<>(); //热门礼品
+    private ArrayList<ProductInfo> newProducts = new ArrayList<>(); //新品上线
     private boolean adv_refresh_ok, notice_refresh_ok = true, new_refresh_ok = true, hot_refresh_ok;
 
 
@@ -123,6 +123,7 @@ public class HomeFragment extends BaseFragment {
                 getNewProduct();
                 hotPosition = 0;
                 getHotProduct(hotPosition);
+//                getPrizeNotice();
             }
         });
         homescrollview.scrollTo(0, 0);
@@ -133,13 +134,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        List<String> stringList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            stringList.add("中奖用户" + i);
-        }
-        noticeBanner.setDatasWithDrawableIcon(stringList,
-                getResources().getDrawable(R.drawable.new_notice_icon),16, Gravity.LEFT);
-    }
+         }
 
     @Override
     public void initAnimation() {
@@ -287,6 +282,34 @@ public class HomeFragment extends BaseFragment {
                 });
     }
 
+    private void getPrizeNotice(){
+        notice_refresh_ok = false;
+        Map<String, String> params = new HashMap<>();
+        params.put("position", 0 + "");
+        RequestService.request(Config.PRODUCT_NOTICE_PRIZE_URL, params, TAG,
+                new RequestCallBack<List<String>>() {
+                    @Override
+                    public void onError(String errMsg) {
+                        MyToast.showToast(errMsg);
+                    }
+
+                    @Override
+                    public void onResult(List<String> result) {
+                        if (result != null && !result.isEmpty()) {
+                            noticeBanner.setDatasWithDrawableIcon(result,
+                                    getResources().getDrawable(R.drawable.new_notice_icon),16, Gravity.LEFT);
+
+                        }
+                    }
+
+                    @Override
+                    public void onAfter() {
+                        notice_refresh_ok = true;
+                        refreshComplete();
+                    }
+                });
+    }
+
 
     private void refreshComplete() {
         if (adv_refresh_ok && notice_refresh_ok && new_refresh_ok && hot_refresh_ok) {
@@ -302,6 +325,7 @@ public class HomeFragment extends BaseFragment {
         switch (view.getId()) {
 
             case R.id.nav_help:
+                JumpUtils.jumpHelpCenter(getActivity());
                 break;
             case R.id.nav_notice:
                 break;

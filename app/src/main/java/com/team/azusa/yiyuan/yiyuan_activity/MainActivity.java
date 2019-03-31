@@ -25,6 +25,7 @@ import com.team.azusa.yiyuan.utils.DepthPageTransformer;
 import com.team.azusa.yiyuan.widget.BadgeView;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.AllGoodsFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.CartFragment;
+import com.team.azusa.yiyuan.yiyuan_mainfragment.DiscoveryFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.HomeFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.MeFragment;
 import com.team.azusa.yiyuan.yiyuan_mainfragment.NewestFragment;
@@ -133,7 +134,7 @@ public class MainActivity extends BaseActivity {
         mFragments = new ArrayList<>();
         Fragment mTab01 = new HomeFragment();
         Fragment mTab02 = new AllGoodsFragment();
-        Fragment mTab03 = new NewestFragment();
+        Fragment mTab03 = new DiscoveryFragment();
         Fragment mTab04 = new CartFragment();
         Fragment mTab05 = new MeFragment();
 

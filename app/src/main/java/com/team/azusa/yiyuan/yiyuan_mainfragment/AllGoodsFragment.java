@@ -157,7 +157,6 @@ public class AllGoodsFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), R.drawable.rv_divider));
         recyclerView.setHasFixedSize(true);
-
     }
 
     @Override

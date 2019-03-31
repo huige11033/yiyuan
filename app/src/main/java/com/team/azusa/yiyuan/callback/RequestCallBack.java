@@ -30,7 +30,7 @@ public abstract class RequestCallBack<T> extends Callback<ResultBean<T>> {
     public ResultBean<T> parseNetworkResponse(Response response) throws IOException {
         if (response.isSuccessful()) {
             String result = new String(Base64Utils.decode(response.body().string()));
-            Log.d("RequestCallBack", result);
+            Log.d("RequestCallBack--->", result);
             Type type = getClass().getGenericSuperclass();
             if(type instanceof ParameterizedType) {
                 Type[] types = ((ParameterizedType) type).getActualTypeArguments();

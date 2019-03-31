@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.team.azusa.yiyuan.yiyuan_activity.ConfirmationActivity;
+import com.team.azusa.yiyuan.yiyuan_activity.HelpCenterActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.NewPasswordActivity;
 import com.team.azusa.yiyuan.yiyuan_activity.ShowOrderActivity;
 
@@ -34,6 +35,11 @@ public class JumpUtils {
     //跳转到所有晒单页面
     public static void jumpShowOrder(Context context) {
         Intent intent = new Intent(context, ShowOrderActivity.class);
+        context.startActivity(intent);
+    }
+    //跳转到帮助中心
+    public static void jumpHelpCenter(Context context) {
+        Intent intent = new Intent(context, HelpCenterActivity.class);
         context.startActivity(intent);
     }
 }
