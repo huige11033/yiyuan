@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginBottom="@dimen/dp_8"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8">
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="15602911675"
+            android:textColor="#282828"
+            android:textSize="@dimen/dp_14" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/nickname"
+            android:background="@drawable/btn_status"
+            android:padding="@dimen/dp_1"
+            android:text="审核失败"
+            android:textColor="@color/status_red"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2019-01-12 12:00:00"
+            android:textColor="#CFCFCF"
+            android:textSize="@dimen/dp_12" />
+
+
+        <TextView
+            android:id="@+id/product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nickname"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="(第1234云)苹果（Apple）iphon 6s plus 64G版 4G手机"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/product"
+            android:layout_alignLeft="@+id/product"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="终于中大家了，好开心，好嗨哟，希望自己天天好运哦"
+            android:textColor="#ff282828"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/shareImg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_below="@+id/message"
+            android:layout_alignLeft="@+id/product"
+            android:background="@color/gray_title" />
+    </RelativeLayout>
+</LinearLayout>

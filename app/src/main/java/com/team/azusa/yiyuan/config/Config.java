@@ -33,7 +33,16 @@ public class Config {
     public static String PRODUCT_CATEGORY_LIST_URL = IP + "/app/category/findCategoryList";
     //全部商品
     public static String PRODUCT_ALL_LIST_URL = IP + "/app/category/findProductByCategory";
-
-    // 抽奖记录
+    //抽奖记录
     public static String CHOUJIANG_JILU_URL = IP + "/app/member/findUserYgByUserId";
+    //中奖记录
+    public static String WIN_LIST_URL = IP + "/app/member/findUserWinList";
+    //商品晒单列表
+    public static String PRODUCT_SHARE_LIST_URL = IP + "/app/index/findProductShareList";
+    //商品购买记录列表
+    public static String PRODUCT_BUY_LIST_URL = IP + "/app/index/findBuyProductRecord";
+    //商品历史中奖记录列表
+    public static String PRODUCT_HISTORY_WIN_LIST_URL = IP + "/app/index/findProductPastWinList";
+    //商品详情
+    public static String PRODUCT_DETAIL_URL = IP + "/app/index/findProductDetail";
 }

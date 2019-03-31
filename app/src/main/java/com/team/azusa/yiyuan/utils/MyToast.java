@@ -1,6 +1,7 @@
 package com.team.azusa.yiyuan.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ public class MyToast extends Toast {
     }
 
     private static void showToast(String s, int gravity) {
+        if(TextUtils.isEmpty(s))
+            return;
         if (toast == null) {
             toast = Toast.makeText(ConstanceUtils.CONTEXT, s, Toast.LENGTH_SHORT);
             toast.setGravity(gravity, 0, 100);

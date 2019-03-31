@@ -1,5 +1,7 @@
 package com.team.azusa.yiyuan.bean;
 
+import android.text.TextUtils;
+
 import java.util.Date;
 
 public class User {
@@ -27,6 +29,12 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public String getMobileEx(){
+        if(TextUtils.isEmpty(mobile))
+            return "";
+        return mobile.substring(0, 5) + "****" + mobile.substring(9, 11);
     }
 
     public void setId(String id) {

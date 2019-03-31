@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author : chenru
- * @功能描述: 晒单类
+ * @功能描述: 用户晒单类
  * @创建时间: 2019/3/18
  */
 public class ShowOrderBean {

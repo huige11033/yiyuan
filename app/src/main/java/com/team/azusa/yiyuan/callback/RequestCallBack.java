@@ -1,6 +1,7 @@
 package com.team.azusa.yiyuan.callback;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +30,7 @@ public abstract class RequestCallBack<T> extends Callback<ResultBean<T>> {
     public ResultBean<T> parseNetworkResponse(Response response) throws IOException {
         if (response.isSuccessful()) {
             String result = new String(Base64Utils.decode(response.body().string()));
+            Log.d("RequestCallBack", result);
             Type type = getClass().getGenericSuperclass();
             if(type instanceof ParameterizedType) {
                 Type[] types = ((ParameterizedType) type).getActualTypeArguments();

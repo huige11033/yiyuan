@@ -43,7 +43,7 @@ public class ShareDetailGvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (null == convertView) {
-            convertView = View.inflate(ConstanceUtils.CONTEXT, R.layout.sharephoto_gridview_item, null);
+            convertView = View.inflate(ConstanceUtils.CONTEXT, R.layout.item_sharephoto_gridview, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

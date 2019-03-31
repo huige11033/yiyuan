@@ -80,7 +80,6 @@ public class AllGoodsFragment extends BaseFragment {
     private TopbarAnimation topbarAnimation;
     private MyDialog myDialog;
     private AlertDialog loding_dialog;
-    private boolean isinited = false;
     private int orderBy; //排序
     private int category; //分类
     private int[] car_location; //购物车的位置
@@ -91,19 +90,17 @@ public class AllGoodsFragment extends BaseFragment {
     private View pwindow1;
     private View pwindow2;
     private int startPosition = 0;
-    private boolean isLoaded;
-
 
     //当前页面可见时再加载页面数据
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
-            if (!isinited) {
+            if (!isInited) {
                 myDialog = new MyDialog();
                 loding_dialog = myDialog.showLodingDialog(getActivity());
                 loding_dialog.setOnKeyListener(backlistener);
                 car_location = activity.getCar_location();
-                isinited = true;
+                isInited = true;
                 requestCategory();
             } else {
                 if(!isLoaded){

@@ -56,4 +56,8 @@
     <color name="red_title">#FFdf1932</color>
 
     <color name="color_blue_theme">#ff5D76F5</color>
+
+    <color name="status_green">#3FBC5C</color>
+    <color name="status_red">#EE4A29</color>
+    <color name="status_yellow">#F7BB18</color>
 </resources>

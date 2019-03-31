@@ -115,6 +115,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     private void login() {
         username = etUserName.getText().toString();
         password = eTpassword.getText().toString();
+
+        username = "13560725992";
         if (!StringUtil.isEmpty(username) && !StringUtil.isEmpty(password)) {
             Map<String,String> params = new HashMap<>();
             params.put("mobile",username);

@@ -189,7 +189,7 @@ public class MeFragment extends BaseFragment {
                 Intent intent2 = new Intent(getActivity(), UsermsgActivity.class);
                 intent2.putExtra("user_id", user.getId());
                 if (StringUtil.isEmpty(user.getName())) {
-                    intent2.putExtra("user_name",  user.getMobile().substring(0, 5) + "****" + user.getMobile().substring(9, 11));
+                    intent2.putExtra("user_name", user.getMobileEx());
                 } else {
                     intent2.putExtra("user_name", user.getName());
                 }

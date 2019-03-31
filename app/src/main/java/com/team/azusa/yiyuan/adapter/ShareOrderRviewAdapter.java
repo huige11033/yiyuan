@@ -44,7 +44,7 @@ public class ShareOrderRviewAdapter extends RecyclerView.Adapter<ShareOrderRview
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.usershare_orderrv_item, null);
+        View view = View.inflate(parent.getContext(), R.layout.item_usershare_orderrv, null);
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }

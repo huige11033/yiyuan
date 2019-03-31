@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_65"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/image"
+            android:layout_width="168dp"
+            android:layout_height="64dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:text="15602911675"
+            android:textColor="#282828"
+            android:textSize="@dimen/dp_16" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019-01-12 12:00:00"
+            android:textColor="#CFCFCF"
+            android:textSize="@dimen/dp_12" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:layout_weight="2"
+        android:gravity="left"
+        android:text="30000分"
+        android:textColor="#FA4819"
+        android:textSize="@dimen/dp_14" />
+</LinearLayout>

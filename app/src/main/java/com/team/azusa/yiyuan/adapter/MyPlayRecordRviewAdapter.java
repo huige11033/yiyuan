@@ -38,7 +38,7 @@ public class MyPlayRecordRviewAdapter extends RecyclerView.Adapter<MyPlayRecordR
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.user_playrecord_rv_item, null);
+        View view = View.inflate(parent.getContext(), R.layout.item_user_playrecord_rv, null);
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }

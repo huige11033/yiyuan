@@ -1,9 +1,6 @@
 package com.team.azusa.yiyuan.widget;
 
 import android.content.Context;
-import androidx.fragment.app.FragmentActivity;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +10,10 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 
 import com.team.azusa.yiyuan.R;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 
 /**
@@ -84,6 +85,8 @@ public class MyDialog {
     }
 
     public void dismissDialog() {
+        if (dialog == null)
+            return;
         dialog.dismiss();
         if (progressBar != null) {
             progressBar.clearAnimation();

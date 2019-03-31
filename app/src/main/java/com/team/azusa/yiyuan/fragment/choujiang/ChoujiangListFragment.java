@@ -46,7 +46,10 @@ import de.greenrobot.event.EventBus;
 
 import static com.team.azusa.yiyuan.utils.ImageLoader.getInstance;
 
-public class ChoujiangjiluFragment extends BaseFragment {
+/**
+ * 抽奖记录列表。
+ */
+public class ChoujiangListFragment extends BaseFragment {
     private View headView; //listview头部
 
     private SimpleDraweeView img_product; //产品的图片

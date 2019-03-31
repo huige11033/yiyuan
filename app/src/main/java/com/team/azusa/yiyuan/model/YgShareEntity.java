@@ -10,7 +10,7 @@ package com.team.azusa.yiyuan.model;
 //import cn.com.yyg.front.utils.BaseConfig;
 
 /**
- * 分享晒单表
+ * 商品分享晒单表
  *
  * @author lvzf
  */

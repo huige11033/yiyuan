@@ -48,7 +48,7 @@ public class MyBuyRecordLvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (null == convertView) {
-            convertView = View.inflate(context, R.layout.user_playrecord_rv_item, null);
+            convertView = View.inflate(context, R.layout.item_user_playrecord_rv, null);
             holder = new ViewHolder();
             holder.status3 = convertView.findViewById(R.id.status3);
 //            holder.status2 = (RelativeLayout) convertView.findViewById(R.id.status2);

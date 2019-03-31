@@ -3,6 +3,7 @@ package com.team.azusa.yiyuan.yiyuan_activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,7 +15,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.team.azusa.yiyuan.BaseActivity;
 import com.team.azusa.yiyuan.R;
 import com.team.azusa.yiyuan.adapter.FragmentAdapter;
-import com.team.azusa.yiyuan.fragment.choujiang.ChoujiangjiluFragment;
+import com.team.azusa.yiyuan.fragment.choujiang.HistoryWinListFragment;
+import com.team.azusa.yiyuan.fragment.choujiang.ProductDetailFragment;
+import com.team.azusa.yiyuan.fragment.choujiang.ShareProductListFragment;
+import com.team.azusa.yiyuan.fragment.choujiang.WinListFragment;
 import com.team.azusa.yiyuan.model.UserYgEntity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -68,6 +72,12 @@ public class YunRecordDetailActivity extends BaseActivity {
     @BindView(R.id.time_count)
     CountdownView time_count;//倒计时
 
+    @BindView(R.id.joinin)
+    Button joinin;//参与
+
+    @BindView(R.id.addcart)
+    Button addcart;//加入购物车
+
     //中心viewpager
     private List<Fragment> mFragmentList = new ArrayList<>();
 
@@ -93,7 +103,7 @@ public class YunRecordDetailActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        OkHttpUtils.getInstance().cancelTag("YunRecordDetailActivity");
+        OkHttpUtils.getInstance().cancelTag(YunRecordDetailActivity.class.getName());
     }
 
     @OnClick({R.id.return_yundetail})
@@ -101,6 +111,10 @@ public class YunRecordDetailActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.return_yundetail:
                 finish();
+                break;
+            case R.id.joinin:
+                break;
+            case R.id.addcart:
                 break;
         }
     }
@@ -144,9 +158,9 @@ public class YunRecordDetailActivity extends BaseActivity {
             @Override
             public void displayImage(Context context, Object url, ImageView imageView) {
                 RequestOptions options = new RequestOptions()
-//                        .placeholder(R.drawable.placeholder_home_banner)
-//                        .error(R.drawable.placeholder_home_banner)
-//                        .fallback(R.drawable.placeholder_home_banner)
+//                        .placeholder(R.drawable.detail)
+//                        .error(R.drawable.detail)
+//                        .fallback(R.drawable.detail)
                         .transform(new RoundedCorners(10));
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(context).load((String) url).apply(options).into(imageView);
@@ -199,13 +213,19 @@ public class YunRecordDetailActivity extends BaseActivity {
         });
 
         Bundle bundle = new Bundle();
-        ChoujiangjiluFragment choujiangjiluFragment = new ChoujiangjiluFragment();
+        WinListFragment winListFragment = new WinListFragment();
+        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+        HistoryWinListFragment historyWinListFragment = new HistoryWinListFragment();
+        ShareProductListFragment shareProductListFragment = new ShareProductListFragment();
         bundle.putSerializable("record", buyRecordInfo);
-        choujiangjiluFragment.setArguments(bundle);
-        mFragmentList.add(choujiangjiluFragment);
-//        mFragmentList.add(new ShangpingDetailFragment());
-//        mFragmentList.add(new OldZhongjiangFragment());
-//        mFragmentList.add(new ShaidanShareFragment());
+        winListFragment.setArguments(bundle);
+        productDetailFragment.setArguments(bundle);
+        historyWinListFragment.setArguments(bundle);
+        shareProductListFragment.setArguments(bundle);
+        mFragmentList.add(winListFragment);
+        mFragmentList.add(productDetailFragment);
+        mFragmentList.add(historyWinListFragment);
+        mFragmentList.add(shareProductListFragment);
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragmentList);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -233,7 +253,7 @@ public class YunRecordDetailActivity extends BaseActivity {
      * 自定义Tab的View
      */
     private View getTabView(int position, String title) {
-        View view = View.inflate(getBaseContext(), R.layout.item_diagnose_tab_view, null);
+        View view = View.inflate(getBaseContext(), R.layout.item_tab_view, null);
         TextView textView = view.findViewById(R.id.title_name);
         TextView indicator = view.findViewById(R.id.indicator_view);
         textView.setText(title);

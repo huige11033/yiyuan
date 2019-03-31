@@ -847,4 +847,41 @@ public class YgProductEntity extends BaseEntity {
     public String getLogoPath() {
         return logoPath;
     }
+
+    @Override
+    public String toString() {
+        return "YgProductEntity{" +
+                "productId=" + productId +
+                ", preYgProductId=" + preYgProductId +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", logoPath='" + logoPath + '\'' +
+                ", brandId=" + brandId +
+                ", cateId='" + cateId + '\'' +
+                ", origPrice=" + origPrice +
+                ", singlePrice=" + singlePrice +
+                ", totalNum=" + totalNum +
+                ", leaveBuyNosContentId=" + leaveBuyNosContentId +
+                ", usedNum=" + usedNum +
+                ", leaveNum=" + leaveNum +
+                ", limitPeriods=" + limitPeriods +
+                ", period=" + period +
+                ", status=" + status +
+                ", recommend=" + recommend +
+                ", seqNo=" + seqNo +
+                ", publishDate=" + publishDate +
+                ", llscNo=" + llscNo +
+                ", llscPeriodNo=" + llscPeriodNo +
+                ", zdWin=" + zdWin +
+                ", winNo=" + winNo +
+                ", winUserId=" + winUserId +
+                ", winUserNickName='" + winUserNickName + '\'' +
+                ", winUserLogoPath='" + winUserLogoPath + '\'' +
+                ", winUserBuyNum=" + winUserBuyNum +
+                ", winUserIpAddr='" + winUserIpAddr + '\'' +
+                ", winDate=" + winDate +
+                ", winUserBuyDateLong=" + winUserBuyDateLong +
+                ", lastUserBuyDateLong=" + lastUserBuyDateLong +
+                '}';
+    }
 }

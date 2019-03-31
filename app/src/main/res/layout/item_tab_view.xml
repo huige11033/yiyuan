@@ -7,11 +7,12 @@
     <TextView
         android:id="@+id/title_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/black_title"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/indicator_view"
